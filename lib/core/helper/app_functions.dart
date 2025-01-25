@@ -64,3 +64,4 @@ bool isRtl(BuildContext context) {
   final isRtl = textDirection == TextDirection.rtl;
   return isRtl;
 }
+

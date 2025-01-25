@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../theme/app_colors.dart';
 import '../../utils/constants/app_images.dart';
 import '../../utils/constants/app_numbers.dart';
 
@@ -46,7 +45,7 @@ class MyPlaceHolder extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
-                color: AppColors.grayColor,
+                // color: AppColors.grayColor,
               ),
             ),
           ],

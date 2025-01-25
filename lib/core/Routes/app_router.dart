@@ -1,7 +1,7 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/Routes/app_routes.dart';
+import 'package:sites_management/features/vist_form/presentation/cubit/visit_form_cubit.dart';
 import 'package:sites_management/features/vist_form/presentation/visit_form.dart';
 
 import '../../features/home/presentation/home_page.dart';
@@ -22,7 +22,10 @@ class AppRouter {
       case AppRoutes.siteInformationFormPage:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const SiteInformationForm(),
+          builder: (_) => BlocProvider(
+            create: (context) => VisitFormCubit(),
+            child: const SiteInformationForm(),
+          ),
         );
 
       //!default route:
