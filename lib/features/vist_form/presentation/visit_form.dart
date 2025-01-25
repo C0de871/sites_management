@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -61,21 +62,21 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
               const SizedBox(height: 16),
               _buildSiteConfiguration(visitFormCubit),
               const SizedBox(height: 16),
-              _buildSiteAdditionalInfo(),
+              _buildSiteAdditionalInfo(visitFormCubit),
               const SizedBox(height: 16),
-              _buildAmpereSection(),
+              _buildAmpereSection(visitFormCubit),
               const SizedBox(height: 16),
               _buildTCUSection(visitFormCubit),
               const SizedBox(height: 16),
-              _buildFiberSection(),
+              _buildFiberSection(visitFormCubit),
               const SizedBox(height: 16),
-              _buildGSMSection("GSM 900"),
+              _buildGSMSection("GSM 900", visitFormCubit),
               const SizedBox(height: 16),
-              _buildGSMSection("GSM 1800"),
+              _buildGSMSection("GSM 1800", visitFormCubit),
               const SizedBox(height: 16),
-              _build3GSection(),
+              _build3GSection(visitFormCubit),
               const SizedBox(height: 16),
-              _buildLTESection(),
+              _buildLTESection(visitFormCubit),
               const SizedBox(height: 16),
               _buildRectifierSection(visitFormCubit),
               const SizedBox(height: 16),
@@ -107,23 +108,86 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
           alignment: Alignment.center,
           child: _buildCheckboxList(visitFormCubit.structureOptions, visitFormCubit),
         ),
-        const SizedBox(
-          height: 16,
+        const SizedBox(height: 16),
+        BuildTextField(
+          'Number of Mast',
+          icon: Icons.format_list_numbered,
+          isNumber: true,
+          controller: visitFormCubit.mastNumberController,
         ),
-        const BuildTextField('Number of Mast', icon: Icons.format_list_numbered, isNumber: true),
-        const BuildTextField('Masts Status', icon: Icons.check_circle_outline),
-        const BuildTextField('Number of Tower', icon: Icons.format_list_numbered, isNumber: true),
-        const BuildTextField('Tower Status', icon: Icons.check_circle_outline),
-        const BuildTextField('Beacon Status', icon: Icons.warning),
-        const BuildTextField('Number of Monopole', icon: Icons.format_list_numbered, isNumber: true),
-        const BuildTextField('Monopole Status', icon: Icons.check_circle_outline),
-        const BuildTextField('Mast 1 Height (m)', icon: Icons.height, isNumber: true),
-        const BuildTextField('Tower 1 Height (m)', icon: Icons.height, isNumber: true),
-        const BuildTextField('Mast 2 Height (m)', icon: Icons.height, isNumber: true),
-        const BuildTextField('Tower 2 Height (m)', icon: Icons.height, isNumber: true),
-        const BuildTextField('Mast 3 Height (m)', icon: Icons.height, isNumber: true),
-        const BuildTextField('Monopole Height (m)', icon: Icons.height, isNumber: true),
-        const BuildTextField('Towers, Masts, and Monopole Remarks', icon: Icons.notes),
+        BuildTextField(
+          'Masts Status',
+          icon: Icons.check_circle_outline,
+          controller: visitFormCubit.mastStatusController,
+        ),
+        BuildTextField(
+          'Number of Tower',
+          icon: Icons.format_list_numbered,
+          isNumber: true,
+          controller: visitFormCubit.towerNumberController,
+        ),
+        BuildTextField(
+          'Tower Status',
+          icon: Icons.check_circle_outline,
+          controller: visitFormCubit.towerStatusController,
+        ),
+        BuildTextField(
+          'Beacon Status',
+          icon: Icons.warning,
+          controller: visitFormCubit.beaconStatusController,
+        ),
+        BuildTextField(
+          'Number of Monopole',
+          icon: Icons.format_list_numbered,
+          isNumber: true,
+          controller: visitFormCubit.monopoleNumberController,
+        ),
+        BuildTextField(
+          'Monopole Status',
+          icon: Icons.check_circle_outline,
+          controller: visitFormCubit.monopoleStatusController,
+        ),
+        BuildTextField(
+          'Mast 1 Height (m)',
+          icon: Icons.height,
+          isNumber: true,
+          controller: visitFormCubit.mastHeightController,
+        ),
+        BuildTextField(
+          'Tower 1 Height (m)',
+          icon: Icons.height,
+          isNumber: true,
+          controller: visitFormCubit.towerHeightController,
+        ),
+        BuildTextField(
+          'Mast 2 Height (m)',
+          icon: Icons.height,
+          isNumber: true,
+          controller: visitFormCubit.mast2HeightController,
+        ),
+        BuildTextField(
+          'Tower 2 Height (m)',
+          icon: Icons.height,
+          isNumber: true,
+          controller: visitFormCubit.tower2HeightController,
+        ),
+        BuildTextField(
+          'Mast 3 Height (m)',
+          icon: Icons.height,
+          isNumber: true,
+          controller: visitFormCubit.mast3HeightController,
+        ),
+        BuildTextField(
+          'Monopole Height (m)',
+          icon: Icons.height,
+          isNumber: true,
+          controller: visitFormCubit.monopoleHeightController,
+        ),
+        BuildTextField(
+          'Towers, Masts, and Monopole Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.remarksController,
+        ),
       ],
     );
   }
@@ -135,139 +199,242 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         _buildCard(
           title: "Gen 1",
           children: [
-            const BuildTextField('Gen 1 Type and Capacity', icon: Icons.electrical_services),
-            const BuildTextField('Gen 1 Hour Meter (h)', icon: Icons.timer, isNumber: true),
-            const BuildTextField('Gen 1 Fuel Consumption (h)', icon: Icons.local_gas_station, isNumber: true),
-            _buildFuelTank(
-              "Internal Fuel Tank 1",
-              fuelCage: visitFormCubit.internalFuelTankCage1,
-              onFuelCageChanged: (value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.internalFuelTankCage1 = value;
-                });
+            BuildTextField(
+              'Gen 1 Type and Capacity',
+              icon: Icons.electrical_services,
+              controller: visitFormCubit.gen1TypeController,
+            ),
+            BuildTextField(
+              'Gen 1 Hour Meter (h)',
+              icon: Icons.timer,
+              isNumber: true,
+              controller: visitFormCubit.gen1HourMeterController,
+            ),
+            BuildTextField(
+              'Gen 1 Fuel Consumption (h)',
+              icon: Icons.local_gas_station,
+              isNumber: true,
+              controller: visitFormCubit.gen1FuelConsumptionController,
+            ),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return _buildFuelTank(
+                  "Internal Fuel Tank 1",
+                  fuelCage: visitFormCubit.internalFuelTankCage1,
+                  onFuelCageChanged: (value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.internalFuelTankCage1 = value;
+                    });
+                  },
+                  visitFormCubit: visitFormCubit,
+                );
               },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            _buildFuelTank(
-              "External Fuel Tank 1",
-              fuelCage: visitFormCubit.externalFuelTankCage1,
-              onFuelCageChanged: (value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.externalFuelTankCage1 = value;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const BuildTextField('Fuel Sensor 1 Type', icon: Icons.sensors),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Fuel Sensor 1 Existing'),
-              value: visitFormCubit.fuelSensor1Existing, // Replace with your state variable
-              onChanged: (bool value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.fuelSensor1Existing = value;
-                });
-              },
-              activeColor: mtnDarkYellow,
-            ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Fuel Sensor 1 Working'),
-              value: visitFormCubit.fuelSensor1Working, // Replace with your state variable
-              onChanged: (bool value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.fuelSensor1Working = value;
-                });
-              },
-              activeColor: mtnDarkYellow,
             ),
             const SizedBox(height: 16),
-            const BuildTextField('Ampere to Owner', icon: Icons.flash_on),
-            const BuildTextField('Circuit Breakers Quantity', icon: Icons.power_settings_new, isNumber: true),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return _buildFuelTank(
+                  "External Fuel Tank 1",
+                  fuelCage: visitFormCubit.externalFuelTankCage1,
+                  onFuelCageChanged: (value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.externalFuelTankCage1 = value;
+                    });
+                  },
+                  visitFormCubit: visitFormCubit,
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            BuildTextField(
+              'Fuel Sensor 1 Type',
+              icon: Icons.sensors,
+              controller: visitFormCubit.gen1FuelSensorTypeController,
+            ),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Fuel Sensor 1 Existing'),
+                  value: visitFormCubit.fuelSensor1Existing,
+                  onChanged: (bool value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.fuelSensor1Existing = value;
+                    });
+                  },
+                  activeColor: mtnDarkYellow,
+                );
+              },
+            ),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Fuel Sensor 1 Working'),
+                  value: visitFormCubit.fuelSensor1Working,
+                  onChanged: (bool value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.fuelSensor1Working = value;
+                    });
+                  },
+                  activeColor: mtnDarkYellow,
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            BuildTextField(
+              'Ampere to Owner',
+              icon: Icons.flash_on,
+              controller: visitFormCubit.gen1AmpereToOwnerController,
+            ),
+            BuildTextField(
+              'Circuit Breakers Quantity',
+              icon: Icons.power_settings_new,
+              isNumber: true,
+              controller: visitFormCubit.gen1CircuitBreakersController,
+            ),
           ],
         ),
         const SizedBox(height: 16),
         _buildCard(
           title: "Gen 2",
           children: [
-            const BuildTextField('Gen 2 Type and Capacity', icon: Icons.electrical_services),
-            const BuildTextField('Gen 2 Hour Meter (h)', icon: Icons.timer, isNumber: true),
-            const BuildTextField('Gen 2 Fuel Consumption (h)', icon: Icons.local_gas_station, isNumber: true),
-            _buildFuelTank(
-              "Internal Fuel Tank 2",
-              fuelCage: visitFormCubit.internalFuelTankCage2,
-              onFuelCageChanged: (value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.internalFuelTankCage2 = value;
-                });
+            BuildTextField(
+              'Gen 2 Type and Capacity',
+              icon: Icons.electrical_services,
+              controller: visitFormCubit.gen2TypeController,
+            ),
+            BuildTextField(
+              'Gen 2 Hour Meter (h)',
+              icon: Icons.timer,
+              isNumber: true,
+              controller: visitFormCubit.gen2HourMeterController,
+            ),
+            BuildTextField(
+              'Gen 2 Fuel Consumption (h)',
+              icon: Icons.local_gas_station,
+              isNumber: true,
+              controller: visitFormCubit.gen2FuelConsumptionController,
+            ),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return _buildFuelTank(
+                  "Internal Fuel Tank 2",
+                  fuelCage: visitFormCubit.internalFuelTankCage2,
+                  onFuelCageChanged: (value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.internalFuelTankCage2 = value;
+                    });
+                  },
+                  visitFormCubit: visitFormCubit,
+                );
               },
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            _buildFuelTank(
-              "External Fuel Tank 2",
-              fuelCage: visitFormCubit.externalFuelTankCage2,
-              onFuelCageChanged: (value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.externalFuelTankCage2 = value;
-                });
-              },
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const BuildTextField('Fuel Sensor 2 Type', icon: Icons.sensors),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Fuel Sensor 2 Existing'),
-              value: visitFormCubit.fuelSensor2Existing, // Replace with your state variable
-              onChanged: (bool value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.fuelSensor2Existing = value;
-                });
-              },
-              activeColor: mtnDarkYellow,
-            ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('Fuel Sensor 2 Working'),
-              value: visitFormCubit.fuelSensor2Working, // Replace with your state variable
-              onChanged: (bool value) {
-                visitFormCubit.changeSwitchStatus(() {
-                  visitFormCubit.fuelSensor2Working = value;
-                });
-              },
-              activeColor: mtnDarkYellow,
             ),
             const SizedBox(height: 16),
-            const BuildTextField('Ampere to Owner', icon: Icons.flash_on),
-            const BuildTextField('Circuit Breakers Quantity', icon: Icons.power_settings_new, isNumber: true),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return _buildFuelTank(
+                  "External Fuel Tank 2",
+                  fuelCage: visitFormCubit.externalFuelTankCage2,
+                  onFuelCageChanged: (value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.externalFuelTankCage2 = value;
+                    });
+                  },
+                  visitFormCubit: visitFormCubit,
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            BuildTextField(
+              'Fuel Sensor 2 Type',
+              icon: Icons.sensors,
+              controller: visitFormCubit.gen2FuelSensorTypeController,
+            ),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Fuel Sensor 2 Existing'),
+                  value: visitFormCubit.fuelSensor2Existing,
+                  onChanged: (bool value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.fuelSensor2Existing = value;
+                    });
+                  },
+                  activeColor: mtnDarkYellow,
+                );
+              },
+            ),
+            BlocBuilder<VisitFormCubit, VisitFormState>(
+              builder: (context, state) {
+                return SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Fuel Sensor 2 Working'),
+                  value: visitFormCubit.fuelSensor2Working,
+                  onChanged: (bool value) {
+                    visitFormCubit.changeSwitchStatus(() {
+                      visitFormCubit.fuelSensor2Working = value;
+                    });
+                  },
+                  activeColor: mtnDarkYellow,
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            BuildTextField(
+              'Ampere to Owner',
+              icon: Icons.flash_on,
+              controller: visitFormCubit.gen2AmpereToOwnerController,
+            ),
+            BuildTextField(
+              'Circuit Breakers Quantity',
+              icon: Icons.power_settings_new,
+              isNumber: true,
+              controller: visitFormCubit.gen2CircuitBreakersController,
+            ),
           ],
         ),
-        const SizedBox(
-          height: 16,
-        ),
+        const SizedBox(height: 16),
         _buildPhotosPicker(visitFormCubit.generatorImages, "Generator images:", visitFormCubit),
       ],
     );
   }
 
-
   Widget _buildSiteGeneralInfo(VisitFormCubit visitFormCubit) {
     return _buildCard(
       title: 'General Information',
       children: [
-        const BuildTextField('Site Name', icon: Icons.location_on),
-        const BuildTextField('Site Code', icon: Icons.code),
-        const BuildTextField('Governorate', icon: Icons.location_city),
-        const BuildTextField('Street', icon: Icons.add_road),
-        const BuildTextField('Area', icon: Icons.map),
-        const BuildTextField('City', icon: Icons.place),
+        BuildTextField(
+          'Site Name',
+          icon: Icons.location_on,
+          controller: visitFormCubit.siteNameController,
+        ),
+        BuildTextField(
+          'Site Code',
+          icon: Icons.code,
+          controller: visitFormCubit.siteCodeController,
+        ),
+        BuildTextField(
+          'Governorate',
+          icon: Icons.location_city,
+          controller: visitFormCubit.governorateController,
+        ),
+        BuildTextField(
+          'Street',
+          icon: Icons.add_road,
+          controller: visitFormCubit.streetController,
+        ),
+        BuildTextField(
+          'Area',
+          icon: Icons.map,
+          controller: visitFormCubit.areaController,
+        ),
+        BuildTextField(
+          'City',
+          icon: Icons.place,
+          controller: visitFormCubit.cityController,
+        ),
         _buildPhotosPicker(visitFormCubit.generalSitePhotos, "General Site Photos", visitFormCubit),
       ],
     );
@@ -277,31 +444,47 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     return _buildCard(
       title: 'LVDP Information',
       children: [
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('LVDP Existing'),
-          value: visitFormCubit.lVDPExiting, 
-          onChanged: (bool value) {
-            visitFormCubit.changeSwitchStatus(() {
-              visitFormCubit.lVDPExiting = value;
-            });
+        BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('LVDP Existing'),
+              value: visitFormCubit.lVDPExiting,
+              onChanged: (bool value) {
+                visitFormCubit.changeSwitchStatus(() {
+                  visitFormCubit.lVDPExiting = value;
+                });
+              },
+              activeColor: mtnDarkYellow,
+            );
           },
-          activeColor: mtnDarkYellow,
         ),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('LVDP Working'),
-          value: visitFormCubit.lVDPWorking, 
-          onChanged: (bool value) {
-            visitFormCubit.changeSwitchStatus(() {
-              visitFormCubit.lVDPWorking = value;
-            });
+        BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('LVDP Working'),
+              value: visitFormCubit.lVDPWorking,
+              onChanged: (bool value) {
+                visitFormCubit.changeSwitchStatus(() {
+                  visitFormCubit.lVDPWorking = value;
+                });
+              },
+              activeColor: mtnDarkYellow,
+            );
           },
-          activeColor: mtnDarkYellow,
         ),
         const SizedBox(height: 16),
-        const BuildTextField('LVDP Status', icon: Icons.check_circle_outline),
-        const BuildTextField('LVDP Remarks', icon: Icons.notes),
+        BuildTextField(
+          'LVDP Status',
+          icon: Icons.check_circle_outline,
+          controller: visitFormCubit.lvdPStatusController,
+        ),
+        BuildTextField(
+          'LVDP Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.lvdPRemarksController,
+        ),
       ],
     );
   }
@@ -310,13 +493,46 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     return _buildCard(
       title: 'Solar and Wind System Information',
       children: [
-        const BuildTextField('Solar Type', icon: Icons.solar_power),
-        const BuildTextField('Solar Capacity', icon: Icons.battery_charging_full, isNumber: true),
-        const BuildTextField('No. of Panels', icon: Icons.view_carousel, isNumber: true),
-        const BuildTextField('No. of Modules', icon: Icons.view_module, isNumber: true),
-        const BuildTextField('No. of Faulty Modules', icon: Icons.warning, isNumber: true),
-        const BuildTextField('No. of Batteries', icon: Icons.battery_std, isNumber: true),
-        const BuildTextField('Batteries Type', icon: Icons.battery_unknown),
+        BuildTextField(
+          'Solar Type',
+          icon: Icons.solar_power,
+          controller: visitFormCubit.solarTypeController,
+        ),
+        BuildTextField(
+          'Solar Capacity',
+          icon: Icons.battery_charging_full,
+          isNumber: true,
+          controller: visitFormCubit.solarCapacityController,
+        ),
+        BuildTextField(
+          'No. of Panels',
+          icon: Icons.view_carousel,
+          isNumber: true,
+          controller: visitFormCubit.numPanelsController,
+        ),
+        BuildTextField(
+          'No. of Modules',
+          icon: Icons.view_module,
+          isNumber: true,
+          controller: visitFormCubit.numModulesController,
+        ),
+        BuildTextField(
+          'No. of Faulty Modules',
+          icon: Icons.warning,
+          isNumber: true,
+          controller: visitFormCubit.numFaultyModulesController,
+        ),
+        BuildTextField(
+          'No. of Batteries',
+          icon: Icons.battery_std,
+          isNumber: true,
+          controller: visitFormCubit.solarAndWindBatteriesNumController,
+        ),
+        BuildTextField(
+          'Batteries Type',
+          icon: Icons.battery_unknown,
+          controller: visitFormCubit.solarAndWindBatteriesbatteriesTypeController,
+        ),
         const Text('Batteries Status:'),
         Align(
           alignment: Alignment.center,
@@ -325,21 +541,47 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         const SizedBox(
           height: 16,
         ),
-        const BuildTextField('Wind Remarks', icon: Icons.air),
-        const BuildTextField('Solar and Wind Remarks', icon: Icons.notes),
+        BuildTextField(
+          'Wind Remarks',
+          icon: Icons.air,
+          controller: visitFormCubit.windRemarksController,
+        ),
+        BuildTextField(
+          'Solar and Wind Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.solarAndWindRemarksController,
+        ),
         _buildPhotosPicker(visitFormCubit.solarAndWindBatteriesImages, "Solar and Wind Batteries images:", visitFormCubit),
       ],
     );
   }
 
-  Widget _buildAmpereSection() {
+  Widget _buildAmpereSection(VisitFormCubit visitFormCubit) {
     return _buildCard(
       title: 'Ampere Information',
       children: [
-        const BuildTextField('Ampere Capacity', icon: Icons.flash_on, isNumber: true),
-        const BuildTextField('Ampere Time', icon: Icons.timer),
-        const BuildTextField('Ampere Cable Length', icon: Icons.cable, isNumber: true),
-        const BuildTextField('Ampere Details', icon: Icons.description),
+        BuildTextField(
+          'Ampere Capacity',
+          icon: Icons.flash_on,
+          isNumber: true,
+          controller: visitFormCubit.ampereCapacityController,
+        ),
+        BuildTextField(
+          'Ampere Time',
+          icon: Icons.timer,
+          controller: visitFormCubit.ampereTimeController,
+        ),
+        BuildTextField(
+          'Ampere Cable Length',
+          icon: Icons.cable,
+          isNumber: true,
+          controller: visitFormCubit.ampereCableLengthController,
+        ),
+        BuildTextField(
+          'Ampere Details',
+          icon: Icons.description,
+          controller: visitFormCubit.ampereDetailsController,
+        ),
       ],
     );
   }
@@ -413,7 +655,11 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
   Widget _buildConfigurationCheckboxes(VisitFormCubit visitFormCubit) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return _buildCheckboxList(visitFormCubit.configurations, visitFormCubit);
+        return BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return _buildCheckboxList(visitFormCubit.configurations, visitFormCubit);
+          },
+        );
       },
     );
   }
@@ -427,56 +673,118 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
           child: _buildCheckboxList(visitFormCubit.tcuConfigurations, visitFormCubit),
         ),
         const SizedBox(height: 8),
-        const BuildTextField('TCU Remarks', icon: Icons.notes),
+        BuildTextField(
+          'TCU Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.tcuRemarksController,
+        ),
       ],
     );
   }
 
-  Widget _buildFiberSection() {
+  Widget _buildFiberSection(VisitFormCubit visitFormCubit) {
     return _buildCard(
       title: 'Fiber Information',
       children: [
-        const BuildTextField('Fiber Destination', icon: Icons.directions),
-        const BuildTextField('Fiber Remarks', icon: Icons.notes),
+        BuildTextField(
+          'Fiber Destination',
+          icon: Icons.directions,
+          controller: visitFormCubit.fiberDestinationController,
+        ),
+        BuildTextField(
+          'Fiber Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.fiberRemarksController,
+        ),
       ],
     );
   }
 
-  Widget _buildGSMSection(String band) {
+  Widget _buildGSMSection(String band, VisitFormCubit visitFormCubit) {
     return _buildCard(
-      title: '$band Brand Information',
+      title: '$band Band Information',
       children: [
-        const BuildTextField('RBS 1 Type', icon: Icons.device_hub),
-        const BuildTextField('RBS 2 Type', icon: Icons.device_hub),
-        const BuildTextField('DU 1 Type', icon: Icons.device_hub),
-        const BuildTextField('RU Type', icon: Icons.device_hub),
-        const BuildTextField('DU 3 Type', icon: Icons.device_hub),
-        const BuildTextField('RU Type', icon: Icons.device_hub),
-        BuildTextField('$band Remarks', icon: Icons.notes),
+        BuildTextField(
+          'RBS 1 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, 'RBS1Type'),
+        ),
+        BuildTextField(
+          'RBS 2 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, 'RBS2Type'),
+        ),
+        BuildTextField(
+          'DU 1 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, 'DU1Type'),
+        ),
+        BuildTextField(
+          'RU Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, 'RUType'),
+        ),
+        BuildTextField(
+          '$band Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.getGSMController(band, 'Remarks'),
+        ),
       ],
     );
   }
 
-  Widget _build3GSection() {
+  Widget _build3GSection(VisitFormCubit visitFormCubit) {
     return _buildCard(
       title: '3G Band Information',
       children: [
-        const BuildTextField('RBS 1 Type', icon: Icons.device_hub),
-        const BuildTextField('DU 1 Type', icon: Icons.device_hub),
-        const BuildTextField('RU Type', icon: Icons.device_hub),
-        const BuildTextField('3G Remarks', icon: Icons.notes),
+        BuildTextField(
+          'RBS 1 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.rbs1Type3GController,
+        ),
+        BuildTextField(
+          'DU 1 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.du1Type3GController,
+        ),
+        BuildTextField(
+          'RU Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.ruType3GController,
+        ),
+        BuildTextField(
+          '3G Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.remarks3GController,
+        ),
       ],
     );
   }
 
-  Widget _buildLTESection() {
+  Widget _buildLTESection(VisitFormCubit visitFormCubit) {
     return _buildCard(
       title: 'LTE Band Information',
       children: [
-        const BuildTextField('RBS 1 Type', icon: Icons.device_hub),
-        const BuildTextField('DU 1 Type', icon: Icons.device_hub),
-        const BuildTextField('RU Type', icon: Icons.device_hub),
-        const BuildTextField('LTE Remarks', icon: Icons.notes),
+        BuildTextField(
+          'RBS 1 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.rbs1TypeLTEController,
+        ),
+        BuildTextField(
+          'DU 1 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.du1TypeLTEController,
+        ),
+        BuildTextField(
+          'RU Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.ruTypeLTEController,
+        ),
+        BuildTextField(
+          'LTE Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.remarksLTEController,
+        ),
       ],
     );
   }
@@ -486,26 +794,71 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
       title: 'Rectifier Information',
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const BuildTextField('Rectifier 1 Type & Voltage', icon: Icons.power),
-        const BuildTextField('Module Quantity', icon: Icons.format_list_numbered, isNumber: true),
-        const BuildTextField('Faulty Module Quantity', icon: Icons.warning, isNumber: true),
-        const BuildTextField('Rectifier 2 Type & Voltage', icon: Icons.power),
-        const BuildTextField('Module Quantity', icon: Icons.format_list_numbered, isNumber: true),
-        const BuildTextField('Faulty Module Quantity', icon: Icons.warning, isNumber: true),
-        const BuildTextField('Number of Batteries', icon: Icons.battery_std, isNumber: true),
-        const BuildTextField('Batteries Type', icon: Icons.battery_unknown),
-        const BuildTextField('Batteries Cabinet Type', icon: Icons.work_outline),
+        BuildTextField(
+          'Rectifier 1 Type & Voltage',
+          icon: Icons.power,
+          controller: visitFormCubit.rectifier1TypeController,
+        ),
+        BuildTextField(
+          'Module Quantity',
+          icon: Icons.format_list_numbered,
+          isNumber: true,
+          controller: visitFormCubit.rectifier1ModuleQuantityController,
+        ),
+        BuildTextField(
+          'Faulty Module Quantity',
+          icon: Icons.warning,
+          isNumber: true,
+          controller: visitFormCubit.rectifier1FaultyModuleController,
+        ),
+        BuildTextField(
+          'Rectifier 2 Type & Voltage',
+          icon: Icons.power,
+          controller: visitFormCubit.rectifier2TypeController,
+        ),
+        BuildTextField(
+          'Module Quantity',
+          icon: Icons.format_list_numbered,
+          isNumber: true,
+          controller: visitFormCubit.rectifier2ModuleQuantityController,
+        ),
+        BuildTextField(
+          'Faulty Module Quantity',
+          icon: Icons.warning,
+          isNumber: true,
+          controller: visitFormCubit.rectifier2FaultyModuleController,
+        ),
+        BuildTextField(
+          'Number of Batteries',
+          icon: Icons.battery_std,
+          isNumber: true,
+          controller: visitFormCubit.rectifierBatteriesNumController,
+        ),
+        BuildTextField(
+          'Batteries Type',
+          icon: Icons.battery_unknown,
+          controller: visitFormCubit.rectifierbatteriesTypeController,
+        ),
+        BuildTextField(
+          'Batteries Cabinet Type',
+          icon: Icons.work_outline,
+          controller: visitFormCubit.batteriesCabinetTypeController,
+        ),
         _buildPhotosPicker(visitFormCubit.rectifierImages, "Rectifier images:", visitFormCubit),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Cabinet Cage'),
-          value: visitFormCubit.cabinetCage,
-          onChanged: (bool value) {
-            visitFormCubit.changeSwitchStatus(() {
-              visitFormCubit.cabinetCage = value;
-            });
+        BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Cabinet Cage'),
+              value: visitFormCubit.cabinetCage,
+              onChanged: (bool value) {
+                visitFormCubit.changeSwitchStatus(() {
+                  visitFormCubit.cabinetCage = value;
+                });
+              },
+              activeColor: mtnDarkYellow,
+            );
           },
-          activeColor: mtnDarkYellow,
         ),
         const SizedBox(height: 8),
         const Align(
@@ -514,34 +867,42 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         ),
         _buildCheckboxList(visitFormCubit.batteriesStatus, visitFormCubit),
         const SizedBox(height: 16),
-        const BuildTextField('Rectifier and Batteries Remarks', icon: Icons.notes),
+        BuildTextField(
+          'Rectifier and Batteries Remarks',
+          icon: Icons.notes,
+          controller: visitFormCubit.rectifierBatteriesRemarksController,
+        ),
         _buildPhotosPicker(visitFormCubit.rectifierBatteriesImages, "Rectifier Batteries images:", visitFormCubit),
       ],
     );
   }
 
   Widget _buildCheckboxList(Map<String, bool> checkboxOptions, VisitFormCubit visitFormCubit) {
-    return Wrap(
-      spacing: 16, // Horizontal spacing between checkboxes
-      runSpacing: 8, // Vertical spacing between rows
-      children: checkboxOptions.keys.map((String key) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width * 0.35, // Adjust width as needed
-          child: CheckboxListTile(
-            title: Text(
-              key,
-              style: const TextStyle(fontSize: 14),
-            ),
-            value: checkboxOptions[key],
-            onChanged: (bool? value) {
-              visitFormCubit.changeCheckBoxStatus(checkboxOptions, key);
-            },
-            activeColor: mtnDarkYellow,
-            controlAffinity: ListTileControlAffinity.leading,
-            contentPadding: EdgeInsets.zero,
-          ),
+    return BlocBuilder<VisitFormCubit, VisitFormState>(
+      builder: (context, state) {
+        return Wrap(
+          spacing: 16, // Horizontal spacing between checkboxes
+          runSpacing: 8, // Vertical spacing between rows
+          children: checkboxOptions.keys.map((String key) {
+            return SizedBox(
+              width: MediaQuery.of(context).size.width * 0.35, // Adjust width as needed
+              child: CheckboxListTile(
+                title: Text(
+                  key,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                value: checkboxOptions[key],
+                onChanged: (bool? value) {
+                  visitFormCubit.changeCheckBoxStatus(checkboxOptions, key);
+                },
+                activeColor: mtnDarkYellow,
+                controlAffinity: ListTileControlAffinity.leading,
+                contentPadding: EdgeInsets.zero,
+              ),
+            );
+          }).toList(),
         );
-      }).toList(),
+      },
     );
   }
 
@@ -549,71 +910,125 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     return _buildCard(
       title: 'Environment Information',
       children: [
-        const BuildTextField('Power Control/Serial Number', icon: Icons.settings),
-        const BuildTextField('Amper Consumption', icon: Icons.flash_on, isNumber: true),
+        BuildTextField(
+          'Power Control/Serial Number',
+          controller: visitFormCubit.powerControlSerialNumberController,
+          icon: Icons.settings,
+        ),
+        BuildTextField(
+          'Amper Consumption',
+          controller: visitFormCubit.amperConsumptionController,
+          icon: Icons.flash_on,
+          isNumber: true,
+        ),
         Align(
           alignment: Alignment.center,
           child: _buildCheckboxList(visitFormCubit.phaseOptions, visitFormCubit),
         ),
         const SizedBox(height: 16),
-        const BuildTextField('Power Control Ownership', icon: Icons.business),
-        const BuildTextField('Fan Quantity', icon: Icons.ac_unit, isNumber: true),
-        const BuildTextField('Faulty Fan Quantity', icon: Icons.warning, isNumber: true),
-        SwitchListTile(
-          title: const Text('Earthing System'),
-          value: visitFormCubit.earthingSystem,
-          onChanged: (bool value) {
-            visitFormCubit.changeSwitchStatus(() {
-              visitFormCubit.earthingSystem = value;
-            });
+        BuildTextField(
+          'Power Control Ownership',
+          controller: visitFormCubit.powerControlOwnershipController,
+          icon: Icons.business,
+        ),
+        BuildTextField(
+          'Fan Quantity',
+          controller: visitFormCubit.fanQuantityController,
+          icon: Icons.ac_unit,
+          isNumber: true,
+        ),
+        BuildTextField(
+          'Faulty Fan Quantity',
+          controller: visitFormCubit.faultyFanQuantityController,
+          icon: Icons.warning,
+          isNumber: true,
+        ),
+        BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return SwitchListTile(
+              title: const Text('Earthing System'),
+              value: visitFormCubit.earthingSystem,
+              onChanged: (bool value) {
+                visitFormCubit.changeSwitchStatus(() {
+                  visitFormCubit.earthingSystem = value;
+                });
+              },
+              activeColor: mtnDarkYellow,
+            );
           },
-          activeColor: mtnDarkYellow,
         ),
-        const SizedBox(
-          height: 16,
+        const SizedBox(height: 16),
+        BuildTextField(
+          'Air Conditioner 1 Type',
+          controller: visitFormCubit.airConditioner1TypeController,
+          icon: Icons.ac_unit,
         ),
-        const BuildTextField('Air Conditioner 1 Type', icon: Icons.ac_unit),
-        const BuildTextField('Air Conditioner 2 Type', icon: Icons.ac_unit),
-        const BuildTextField('Stabilizer Quantity', icon: Icons.battery_charging_full, isNumber: true),
-        const BuildTextField('Stabilizer Type', icon: Icons.battery_unknown),
-        const BuildTextField('Fire System', icon: Icons.local_fire_department),
+        BuildTextField(
+          'Air Conditioner 2 Type',
+          controller: visitFormCubit.airConditioner2TypeController,
+          icon: Icons.ac_unit,
+        ),
+        BuildTextField(
+          'Stabilizer Quantity',
+          controller: visitFormCubit.stabilizerQuantityController,
+          icon: Icons.battery_charging_full,
+          isNumber: true,
+        ),
+        BuildTextField(
+          'Stabilizer Type',
+          controller: visitFormCubit.stabilizerTypeController,
+          icon: Icons.battery_unknown,
+        ),
+        BuildTextField(
+          'Fire System',
+          controller: visitFormCubit.fireSystemController,
+          icon: Icons.local_fire_department,
+        ),
         Row(
           children: [
             Expanded(
-              child: SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Exiting'),
-                value: visitFormCubit.fireExiting,
-                onChanged: (bool value) {
-                  visitFormCubit.changeSwitchStatus(() {
-                    visitFormCubit.fireExiting = value;
-                  });
+              child: BlocBuilder<VisitFormCubit, VisitFormState>(
+                builder: (context, state) {
+                  return SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Exiting'),
+                    value: visitFormCubit.fireExiting,
+                    onChanged: (bool value) {
+                      visitFormCubit.changeSwitchStatus(() {
+                        visitFormCubit.fireExiting = value;
+                      });
+                    },
+                    activeColor: mtnDarkYellow,
+                  );
                 },
-                activeColor: mtnDarkYellow,
               ),
             ),
-            const SizedBox(
-              width: 16,
-            ),
+            const SizedBox(width: 16),
             Expanded(
-              child: SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Working'),
-                value: visitFormCubit.fireWorking,
-                onChanged: (bool value) {
-                  visitFormCubit.changeSwitchStatus(() {
-                    visitFormCubit.fireWorking = value;
-                  });
+              child: BlocBuilder<VisitFormCubit, VisitFormState>(
+                builder: (context, state) {
+                  return SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Working'),
+                    value: visitFormCubit.fireWorking,
+                    onChanged: (bool value) {
+                      visitFormCubit.changeSwitchStatus(() {
+                        visitFormCubit.fireWorking = value;
+                      });
+                    },
+                    activeColor: mtnDarkYellow,
+                  );
                 },
-                activeColor: mtnDarkYellow,
               ),
             ),
           ],
         ),
-        const SizedBox(
-          height: 16,
+        const SizedBox(height: 16),
+        BuildTextField(
+          'Environment Remarks',
+          controller: visitFormCubit.environmentRemarksController,
+          icon: Icons.notes,
         ),
-        const BuildTextField('Environment Remarks', icon: Icons.notes),
       ],
     );
   }
@@ -623,7 +1038,11 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     return _buildCard(
       title: 'Site Type',
       children: [
-        _buildDropdown(siteTypes, visitFormCubit),
+        BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return _buildDropdown(siteTypes, visitFormCubit);
+          },
+        ),
       ],
     );
   }
@@ -638,13 +1057,25 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  _buildSiteAdditionalInfo() {
+  Widget _buildSiteAdditionalInfo(VisitFormCubit visitFormCubit) {
     return _buildCard(
       title: 'Additional Information',
       children: [
-        const BuildTextField('Number of Cabinets', icon: Icons.work_outline),
-        const BuildTextField('Electricity Meter', icon: Icons.speed),
-        const BuildTextField('Electricity Meter Reading', icon: Icons.power),
+        BuildTextField(
+          'Number of Cabinets',
+          controller: visitFormCubit.numberOfCabinetsController,
+          icon: Icons.work_outline,
+        ),
+        BuildTextField(
+          'Electricity Meter',
+          controller: visitFormCubit.electricityMeterController,
+          icon: Icons.speed,
+        ),
+        BuildTextField(
+          'Electricity Meter Reading',
+          controller: visitFormCubit.electricityMeterReadingController,
+          icon: Icons.power,
+        ),
       ],
     );
   }
@@ -677,14 +1108,18 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             ),
           ),
         ),
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            ...List.generate(images.length, (index) {
-              return imageBuilder(images, index);
-            }),
-            addNewPhoto(images, visitFormCubit)
-          ],
+        child: BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                ...List.generate(images.length, (index) {
+                  return imageBuilder(images, index);
+                }),
+                addNewPhoto(images, visitFormCubit)
+              ],
+            );
+          },
         ),
       ),
     );
@@ -759,18 +1194,37 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  _buildFuelTank(String title, {required bool fuelCage, required Function(bool) onFuelCageChanged}) {
+  Widget _buildFuelTank(
+    String title, {
+    required bool fuelCage,
+    required Function(bool) onFuelCageChanged,
+    required VisitFormCubit visitFormCubit,
+  }) {
     return _buildCard(
       title: title,
       children: [
-        const BuildTextField('Capacity', icon: Icons.storage, isNumber: true),
-        const BuildTextField('Existing Fuel', icon: Icons.local_gas_station, isNumber: true),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Cage'),
-          value: fuelCage, // Replace with your state variable
-          onChanged: onFuelCageChanged,
-          activeColor: mtnDarkYellow,
+        BuildTextField(
+          'Capacity',
+          controller: visitFormCubit.fuelCapacityController,
+          icon: Icons.storage,
+          isNumber: true,
+        ),
+        BuildTextField(
+          'Existing Fuel',
+          controller: visitFormCubit.existingFuelController,
+          icon: Icons.local_gas_station,
+          isNumber: true,
+        ),
+        BlocBuilder<VisitFormCubit, VisitFormState>(
+          builder: (context, state) {
+            return SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Cage'),
+              value: fuelCage,
+              onChanged: onFuelCageChanged,
+              activeColor: mtnDarkYellow,
+            );
+          },
         ),
       ],
     );
@@ -820,11 +1274,13 @@ class BuildTextField extends StatefulWidget {
     super.key,
     required this.icon,
     this.isNumber,
+    required this.controller,
   });
 
   final String label;
   final IconData icon;
   final bool? isNumber;
+  final TextEditingController controller;
 
   @override
   State<BuildTextField> createState() => _BuildTextFieldState();
