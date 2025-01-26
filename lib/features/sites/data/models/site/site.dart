@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:sites_management/features/vist_form/data/models/site/sites.dart';
-import 'package:sites_management/features/vist_form/data/models/site/tower_informations.dart';
+import 'package:sites_management/features/sites/data/models/site/sites.dart';
+import 'package:sites_management/features/sites/data/models/site/tower_informations.dart';
 
 import '../../../../../core/databases/api/end_points.dart';
 import '../../../domain/entities/site_entity.dart';

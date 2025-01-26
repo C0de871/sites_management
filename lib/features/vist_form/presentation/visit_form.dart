@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sites_management/features/vist_form/presentation/cubit/visit_form_cubit.dart';
+import 'package:sites_management/features/vist_form/domain/use_cases/post_visited_site_use_case.dart';
+import 'package:sites_management/features/vist_form/presentation/cubit/post_visited_site_cubit.dart';
 
 import '../../../core/helper/app_functions.dart';
+import '../../../core/utils/constants/constant.dart';
 
 // MTN Colors
 const mtnYellow = Color(0xFFFFD700);
@@ -22,7 +24,7 @@ class SiteInformationForm extends StatefulWidget {
 class _SiteInformationFormState extends State<SiteInformationForm> {
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<VisitFormCubit>();
+    final visitFormCubit = context.read<PostVisitedSiteCubit>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mtnYellow,
@@ -39,68 +41,120 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         ),
         elevation: 0,
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.yellow[50]!,
-              Colors.white,
-              Colors.yellow[50]!,
-            ],
+      body: BlocListener<PostVisitedSiteCubit, PostVisitedSiteState>(
+        listener: (context, state) {
+          if (state is PostVisitedSiteSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Row(
+                  children: [
+                    Icon(Icons.check_circle, color: Colors.green),
+                    SizedBox(width: 8),
+                    Text(
+                      'Site visit posted successfully!',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                backgroundColor: Colors.white,
+                behavior: SnackBarBehavior.floating,
+                elevation: 6.0,
+                margin: EdgeInsets.all(16),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          } else if (state is PostVisitedSiteFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Row(
+                  children: [
+                    Icon(Icons.error, color: Colors.red),
+                    SizedBox(width: 8),
+                    Text(
+                      'Failed to post site visit. Please try again.',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                backgroundColor: Colors.white,
+                behavior: SnackBarBehavior.floating,
+                elevation: 6.0,
+                margin: EdgeInsets.all(16),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.yellow[50]!,
+                Colors.white,
+                Colors.yellow[50]!,
+              ],
+            ),
           ),
-        ),
-        child: Form(
-          key: visitFormCubit.formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              _buildSiteGeneralInfo(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildSiteType(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildSiteConfiguration(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildSiteAdditionalInfo(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildAmpereSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildTCUSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildFiberSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildGSMSection("GSM 900", visitFormCubit),
-              const SizedBox(height: 16),
-              _buildGSMSection("GSM 1800", visitFormCubit),
-              const SizedBox(height: 16),
-              _build3GSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildLTESection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildRectifierSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildEnvironmentSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildTowerSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildSolarWindSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildGeneratorSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildLVDPSection(visitFormCubit),
-              const SizedBox(height: 16),
-              _buildPhotoSection("Other photos:", visitFormCubit),
-              const SizedBox(height: 24),
-              SubmitButton(formKey: visitFormCubit.formKey, mtnDarkYellow: mtnDarkYellow),
-            ],
+          child: Form(
+            key: visitFormCubit.formKey,
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                _buildSiteGeneralInfo(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildSiteType(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildSiteConfiguration(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildSiteAdditionalInfo(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildAmpereSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildTCUSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildFiberSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildGSMSection(MapKeys.gsm900, visitFormCubit),
+                const SizedBox(height: 16),
+                _buildGSMSection(MapKeys.gsm1800, visitFormCubit),
+                const SizedBox(height: 16),
+                _build3GSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildLTESection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildRectifierSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildEnvironmentSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildTowerSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildSolarWindSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildGeneratorSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildLVDPSection(visitFormCubit),
+                const SizedBox(height: 16),
+                _buildPhotoSection("Other photos:", visitFormCubit),
+                const SizedBox(height: 24),
+                BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+                  builder: (context, state) {
+                    if (state is PostVisitedSiteLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return SubmitButton(formKey: visitFormCubit.formKey, mtnDarkYellow: mtnDarkYellow);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildTowerSection(VisitFormCubit visitFormCubit) {
+  Widget _buildTowerSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Tower, Masts, and Monopole Information',
       children: [
@@ -192,7 +246,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildGeneratorSection(VisitFormCubit visitFormCubit) {
+  Widget _buildGeneratorSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Generator Information',
       children: [
@@ -202,7 +256,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             BuildTextField(
               'Gen 1 Type and Capacity',
               icon: Icons.electrical_services,
-              controller: visitFormCubit.gen1TypeController,
+              controller: visitFormCubit.gen1TypeAndCapacityController,
             ),
             BuildTextField(
               'Gen 1 Hour Meter (h)',
@@ -216,7 +270,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
               isNumber: true,
               controller: visitFormCubit.gen1FuelConsumptionController,
             ),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return _buildFuelTank(
                   "Internal Fuel Tank 1",
@@ -227,13 +281,17 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
                     });
                   },
                   visitFormCubit: visitFormCubit,
+                  fuelCapacityController: visitFormCubit.internalFuelCapacity1Controller,
+                  existingFuelController: visitFormCubit.internalExistingFuel1Controller,
                 );
               },
             ),
             const SizedBox(height: 16),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return _buildFuelTank(
+                  fuelCapacityController: visitFormCubit.externalFuelCapacity1Controller,
+                  existingFuelController: visitFormCubit.externalExistingFuel1Controller,
                   "External Fuel Tank 1",
                   fuelCage: visitFormCubit.externalFuelTankCage1,
                   onFuelCageChanged: (value) {
@@ -251,7 +309,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
               icon: Icons.sensors,
               controller: visitFormCubit.gen1FuelSensorTypeController,
             ),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return SwitchListTile(
                   contentPadding: EdgeInsets.zero,
@@ -266,7 +324,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
                 );
               },
             ),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return SwitchListTile(
                   contentPadding: EdgeInsets.zero,
@@ -302,7 +360,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             BuildTextField(
               'Gen 2 Type and Capacity',
               icon: Icons.electrical_services,
-              controller: visitFormCubit.gen2TypeController,
+              controller: visitFormCubit.gen2TypeAndCapacityController,
             ),
             BuildTextField(
               'Gen 2 Hour Meter (h)',
@@ -316,9 +374,11 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
               isNumber: true,
               controller: visitFormCubit.gen2FuelConsumptionController,
             ),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return _buildFuelTank(
+                  fuelCapacityController: visitFormCubit.internalFuelCapacity2Controller,
+                  existingFuelController: visitFormCubit.internalExistingFuel2Controller,
                   "Internal Fuel Tank 2",
                   fuelCage: visitFormCubit.internalFuelTankCage2,
                   onFuelCageChanged: (value) {
@@ -331,10 +391,12 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
               },
             ),
             const SizedBox(height: 16),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return _buildFuelTank(
                   "External Fuel Tank 2",
+                  fuelCapacityController: visitFormCubit.externalFuelCapacity2Controller,
+                  existingFuelController: visitFormCubit.externalExistingFuel2Controller,
                   fuelCage: visitFormCubit.externalFuelTankCage2,
                   onFuelCageChanged: (value) {
                     visitFormCubit.changeSwitchStatus(() {
@@ -351,7 +413,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
               icon: Icons.sensors,
               controller: visitFormCubit.gen2FuelSensorTypeController,
             ),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return SwitchListTile(
                   contentPadding: EdgeInsets.zero,
@@ -366,7 +428,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
                 );
               },
             ),
-            BlocBuilder<VisitFormCubit, VisitFormState>(
+            BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
               builder: (context, state) {
                 return SwitchListTile(
                   contentPadding: EdgeInsets.zero,
@@ -395,13 +457,19 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             ),
           ],
         ),
+        BuildTextField(
+          'generator remarks',
+          icon: Icons.power_settings_new,
+          isNumber: true,
+          controller: visitFormCubit.generatorRemarksController,
+        ),
         const SizedBox(height: 16),
         _buildPhotosPicker(visitFormCubit.generatorImages, "Generator images:", visitFormCubit),
       ],
     );
   }
 
-  Widget _buildSiteGeneralInfo(VisitFormCubit visitFormCubit) {
+  Widget _buildSiteGeneralInfo(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'General Information',
       children: [
@@ -440,11 +508,11 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildLVDPSection(VisitFormCubit visitFormCubit) {
+  Widget _buildLVDPSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'LVDP Information',
       children: [
-        BlocBuilder<VisitFormCubit, VisitFormState>(
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -459,7 +527,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             );
           },
         ),
-        BlocBuilder<VisitFormCubit, VisitFormState>(
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -489,7 +557,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildSolarWindSection(VisitFormCubit visitFormCubit) {
+  Widget _buildSolarWindSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Solar and Wind System Information',
       children: [
@@ -556,7 +624,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildAmpereSection(VisitFormCubit visitFormCubit) {
+  Widget _buildAmpereSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Ampere Information',
       children: [
@@ -616,7 +684,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildDropdown(List<String> dropDownList, VisitFormCubit visitFormCubit) {
+  Widget _buildDropdown(List<String> dropDownList, PostVisitedSiteCubit visitFormCubit) {
     return DropdownButtonFormField<String>(
       value: visitFormCubit.selectedSiteType,
       decoration: InputDecoration(
@@ -652,10 +720,10 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildConfigurationCheckboxes(VisitFormCubit visitFormCubit) {
+  Widget _buildConfigurationCheckboxes(PostVisitedSiteCubit visitFormCubit) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return BlocBuilder<VisitFormCubit, VisitFormState>(
+        return BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return _buildCheckboxList(visitFormCubit.configurations, visitFormCubit);
           },
@@ -664,7 +732,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildTCUSection(VisitFormCubit visitFormCubit) {
+  Widget _buildTCUSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'TCU Information',
       children: [
@@ -682,7 +750,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildFiberSection(VisitFormCubit visitFormCubit) {
+  Widget _buildFiberSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Fiber Information',
       children: [
@@ -700,40 +768,50 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildGSMSection(String band, VisitFormCubit visitFormCubit) {
+  Widget _buildGSMSection(String band, PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: '$band Band Information',
       children: [
         BuildTextField(
           'RBS 1 Type',
           icon: Icons.device_hub,
-          controller: visitFormCubit.getGSMController(band, 'RBS1Type'),
-        ),
-        BuildTextField(
-          'RBS 2 Type',
-          icon: Icons.device_hub,
-          controller: visitFormCubit.getGSMController(band, 'RBS2Type'),
+          controller: visitFormCubit.getGSMController(band, MapKeys.rbs1Type),
         ),
         BuildTextField(
           'DU 1 Type',
           icon: Icons.device_hub,
-          controller: visitFormCubit.getGSMController(band, 'DU1Type'),
+          controller: visitFormCubit.getGSMController(band, MapKeys.du1Type),
         ),
         BuildTextField(
-          'RU Type',
+          'RU 1 Type',
           icon: Icons.device_hub,
-          controller: visitFormCubit.getGSMController(band, 'RUType'),
+          controller: visitFormCubit.getGSMController(band, MapKeys.ru1Type),
+        ),
+        BuildTextField(
+          'RBS 2 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, MapKeys.rbs2Type),
+        ),
+        BuildTextField(
+          'DU 2 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, MapKeys.du2Type),
+        ),
+        BuildTextField(
+          'RU 2 Type',
+          icon: Icons.device_hub,
+          controller: visitFormCubit.getGSMController(band, MapKeys.ru2Type),
         ),
         BuildTextField(
           '$band Remarks',
           icon: Icons.notes,
-          controller: visitFormCubit.getGSMController(band, 'Remarks'),
+          controller: visitFormCubit.getGSMController(band, MapKeys.remarks),
         ),
       ],
     );
   }
 
-  Widget _build3GSection(VisitFormCubit visitFormCubit) {
+  Widget _build3GSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: '3G Band Information',
       children: [
@@ -750,7 +828,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         BuildTextField(
           'RU Type',
           icon: Icons.device_hub,
-          controller: visitFormCubit.ruType3GController,
+          controller: visitFormCubit.ru1Type3GController,
         ),
         BuildTextField(
           '3G Remarks',
@@ -761,7 +839,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildLTESection(VisitFormCubit visitFormCubit) {
+  Widget _buildLTESection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'LTE Band Information',
       children: [
@@ -778,7 +856,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         BuildTextField(
           'RU Type',
           icon: Icons.device_hub,
-          controller: visitFormCubit.ruTypeLTEController,
+          controller: visitFormCubit.ru1TypeLTEController,
         ),
         BuildTextField(
           'LTE Remarks',
@@ -789,7 +867,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildRectifierSection(VisitFormCubit visitFormCubit) {
+  Widget _buildRectifierSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Rectifier Information',
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -845,7 +923,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
           controller: visitFormCubit.batteriesCabinetTypeController,
         ),
         _buildPhotosPicker(visitFormCubit.rectifierImages, "Rectifier images:", visitFormCubit),
-        BlocBuilder<VisitFormCubit, VisitFormState>(
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -877,8 +955,8 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildCheckboxList(Map<String, bool> checkboxOptions, VisitFormCubit visitFormCubit) {
-    return BlocBuilder<VisitFormCubit, VisitFormState>(
+  Widget _buildCheckboxList(Map<String, bool> checkboxOptions, PostVisitedSiteCubit visitFormCubit) {
+    return BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
       builder: (context, state) {
         return Wrap(
           spacing: 16, // Horizontal spacing between checkboxes
@@ -906,7 +984,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildEnvironmentSection(VisitFormCubit visitFormCubit) {
+  Widget _buildEnvironmentSection(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Environment Information',
       children: [
@@ -943,7 +1021,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
           icon: Icons.warning,
           isNumber: true,
         ),
-        BlocBuilder<VisitFormCubit, VisitFormState>(
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               title: const Text('Earthing System'),
@@ -987,7 +1065,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
         Row(
           children: [
             Expanded(
-              child: BlocBuilder<VisitFormCubit, VisitFormState>(
+              child: BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
                 builder: (context, state) {
                   return SwitchListTile(
                     contentPadding: EdgeInsets.zero,
@@ -1005,7 +1083,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: BlocBuilder<VisitFormCubit, VisitFormState>(
+              child: BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
                 builder: (context, state) {
                   return SwitchListTile(
                     contentPadding: EdgeInsets.zero,
@@ -1033,12 +1111,12 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  _buildSiteType(VisitFormCubit visitFormCubit) {
+  _buildSiteType(PostVisitedSiteCubit visitFormCubit) {
     final siteTypes = ['Outdoor', 'Indoor', 'Micro', 'PTS Shelter', 'Old Shelter'];
     return _buildCard(
       title: 'Site Type',
       children: [
-        BlocBuilder<VisitFormCubit, VisitFormState>(
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return _buildDropdown(siteTypes, visitFormCubit);
           },
@@ -1047,7 +1125,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  _buildSiteConfiguration(VisitFormCubit visitFormCubit) {
+  _buildSiteConfiguration(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Site Configuration',
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -1057,7 +1135,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  Widget _buildSiteAdditionalInfo(VisitFormCubit visitFormCubit) {
+  Widget _buildSiteAdditionalInfo(PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: 'Additional Information',
       children: [
@@ -1080,7 +1158,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  _buildPhotosPicker(List<XFile> images, String title, VisitFormCubit visitFormCubit) {
+  _buildPhotosPicker(List<XFile> images, String title, PostVisitedSiteCubit visitFormCubit) {
     return SizedBox(
       height: 100,
       // padding: const EdgeInsets.all(8),
@@ -1108,7 +1186,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
             ),
           ),
         ),
-        child: BlocBuilder<VisitFormCubit, VisitFormState>(
+        child: BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return ListView(
               scrollDirection: Axis.horizontal,
@@ -1125,7 +1203,7 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  InkWell addNewPhoto(List<XFile> images, VisitFormCubit visitFormCubit) {
+  InkWell addNewPhoto(List<XFile> images, PostVisitedSiteCubit visitFormCubit) {
     return InkWell(
       onTap: () {
         pickImage().then((value) {
@@ -1183,13 +1261,18 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     );
   }
 
-  _buildPhotoSection(String title, VisitFormCubit visitFormCubit) {
+  _buildPhotoSection(String title, PostVisitedSiteCubit visitFormCubit) {
     return _buildCard(
       title: title,
       children: [
         _buildPhotosPicker(visitFormCubit.transmissionPhotos, "Transmission photos:", visitFormCubit),
+        const SizedBox(height: 16),
         _buildPhotosPicker(visitFormCubit.rBSImages, "RBS photos:", visitFormCubit),
+        const SizedBox(height: 16),
         _buildPhotosPicker(visitFormCubit.additionalPhotos, "Additional photos:", visitFormCubit),
+        const SizedBox(height: 16),
+        _buildPhotosPicker(visitFormCubit.fuelCageImages, "fuel cage photos:", visitFormCubit),
+        const SizedBox(height: 32),
       ],
     );
   }
@@ -1198,24 +1281,26 @@ class _SiteInformationFormState extends State<SiteInformationForm> {
     String title, {
     required bool fuelCage,
     required Function(bool) onFuelCageChanged,
-    required VisitFormCubit visitFormCubit,
+    required PostVisitedSiteCubit visitFormCubit,
+    required TextEditingController fuelCapacityController,
+    required TextEditingController existingFuelController,
   }) {
     return _buildCard(
       title: title,
       children: [
         BuildTextField(
           'Capacity',
-          controller: visitFormCubit.fuelCapacityController,
+          controller: fuelCapacityController,
           icon: Icons.storage,
           isNumber: true,
         ),
         BuildTextField(
           'Existing Fuel',
-          controller: visitFormCubit.existingFuelController,
+          controller: existingFuelController,
           icon: Icons.local_gas_station,
           isNumber: true,
         ),
-        BlocBuilder<VisitFormCubit, VisitFormState>(
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -1246,7 +1331,7 @@ class SubmitButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          // Handle form submission
+          context.read<PostVisitedSiteCubit>().postVisitedSiteTrigger();
         }
       },
       style: ElevatedButton.styleFrom(

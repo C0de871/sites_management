@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:sites_management/features/vist_form/data/data%20sources/post_visited_site_remote_data_source.dart';
+import 'package:sites_management/features/vist_form/domain/repository/post_visited_site_repository.dart';
+import 'package:sites_management/features/vist_form/domain/use_cases/post_visited_site_use_case.dart';
 
-
-
+import '../../../features/vist_form/data/repository/post_visited_site_repository_imple.dart';
 import '../../databases/api/api_consumer.dart';
 import '../../databases/api/dio_consumer.dart';
 import '../../databases/cache/secure_storage_helper.dart';
@@ -25,12 +27,20 @@ void setupServicesLocator() {
 
   //! Data Sources
   // getIt.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSource(sharedPrefsHelper: getIt()));
+  getIt.registerLazySingleton<PostVisitedSiteRemoteDataSource>(() => PostVisitedSiteRemoteDataSource(
+        api: getIt(),
+        cacheHelper: getIt(),
+      ));
 
   //! Repository
   // getIt.registerLazySingleton<LanguageRepository>(() => LanguageRepositoryImpl(
   //       localDataSource: getIt(),
   //     ));
-
+  getIt.registerLazySingleton<PostVisitedSiteRepository>(() => PostVisitedSiteRepositoryImple(
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+      ));
 
   //! Use Cases
+  getIt.registerLazySingleton<PostVisitedSite>(() => PostVisitedSite(repository: getIt()));
 }
