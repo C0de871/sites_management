@@ -159,8 +159,15 @@ class RequestKeys {
   static const String mastStatus = "mast_status";
   static const String monopoleNumber = "monopole_number";
   static const String monopoleStatus = "monopole_status";
+  static const String towerNumber = "tower_number";
+  static const String towerStatus = "tower_status";
+  static const String beaconStatus = "beacon_status";
   static const String mast1Height = "mast_1_height";
+  static const String mast2Height = "mast_2_height";
+  static const String mast3Height = "mast_3_height";
   static const String monopoleHeight = "monopole_height";
+  static const String tower1Height = "tower_1_height";
+  static const String tower2Height = "tower_2_height";
   static const String remarks = "remarks";
   static const String bandInformations = "band_informations";
   static const String bandType = "band_type";
@@ -231,4 +238,5 @@ class RequestKeys {
   static const generatorImages = "generator_images";
   static const transmissionImages = "transmission_images";
   static const fuelCageImages = "fuel_cage_images";
+
 }

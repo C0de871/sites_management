@@ -96,8 +96,8 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
   final TextEditingController beaconStatusController = TextEditingController();
   final TextEditingController monopoleNumberController = TextEditingController();
   final TextEditingController monopoleStatusController = TextEditingController();
-  final TextEditingController mastHeightController = TextEditingController();
-  final TextEditingController towerHeightController = TextEditingController();
+  final TextEditingController mast1HeightController = TextEditingController();
+  final TextEditingController tower1HeightController = TextEditingController();
   final TextEditingController mast2HeightController = TextEditingController();
   final TextEditingController tower2HeightController = TextEditingController();
   final TextEditingController mast3HeightController = TextEditingController();
@@ -254,7 +254,14 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
         RequestKeys.mastStatus: mastStatusController.text,
         RequestKeys.monopoleNumber: monopoleNumberController.text,
         RequestKeys.monopoleStatus: monopoleStatusController.text,
-        RequestKeys.mast1Height: mastHeightController.text,
+        RequestKeys.towerNumber: towerNumberController.text,
+        RequestKeys.towerStatus: towerStatusController.text,
+        RequestKeys.beaconStatus: beaconStatusController.text,
+        RequestKeys.mast1Height: mast1HeightController.text,
+        RequestKeys.mast2Height: mast2HeightController.text,
+        RequestKeys.mast3Height: mast3HeightController.text,
+        RequestKeys.tower1Height: tower1HeightController.text,
+        RequestKeys.tower2Height: tower2HeightController.text,
         RequestKeys.monopoleHeight: monopoleHeightController.text,
         RequestKeys.remarks: remarksController.text,
       },
@@ -377,31 +384,35 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
         RequestKeys.destination: fiberDestinationController.text,
         RequestKeys.remark: fiberRemarksController.text,
       },
-      RequestKeys.generalSiteImages: await uploadImageToApi(generalSitePhotos),
-      RequestKeys.rectifierImages: await uploadImageToApi(rectifierImages),
-      RequestKeys.additionalImages: await uploadImageToApi(additionalPhotos),
-      RequestKeys.rectifierBatteriesImages: await uploadImageToApi(rectifierBatteriesImages),
-      RequestKeys.rbsImages: await uploadImageToApi(rBSImages),
-      RequestKeys.solarAndWindBatteriesImages: await uploadImageToApi(solarAndWindBatteriesImages),
-      RequestKeys.generatorImages: await uploadImageToApi(generatorImages),
-      RequestKeys.transmissionImages: await uploadImageToApi(transmissionPhotos),
-      RequestKeys.fuelCageImages: await uploadImageToApi(fuelCageImages),
     };
   }
 
-  Future<List<MultipartFile>> uploadImageToApi(List<XFile>? images) async {
-    if (images == null) return [];
+  Future<Map<String, MultipartFile>> uploadImagesToApi(String key, List<XFile>? images) async {
+    if (images == null) return {};
 
-    return Future.wait(images.map((image) async {
-      return await MultipartFile.fromFile(image.path, filename: image.path.split('/').last);
-    }).toList());
+    final Map<String, MultipartFile> mappedImages = {};
+    for (var i = 0; i < images.length; i++) {
+      final image = images[i];
+      final multipartFile = await MultipartFile.fromFile(image.path, filename: image.path.split('/').last);
+      mappedImages['$key[$i]'] = multipartFile;
+    }
+    return mappedImages;
   }
 
   void postVisitedSiteTrigger() async {
     emit(PostVisitedSiteLoading());
 
-    final response = await postVisitedSiteUseCase.call(body: await createRequestBody());
-
+    final body = await createRequestBody();
+    body.addAll(await uploadImagesToApi(RequestKeys.generalSiteImages, generalSitePhotos));
+    body.addAll(await uploadImagesToApi(RequestKeys.rectifierImages, rectifierImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.additionalImages, additionalPhotos));
+    body.addAll(await uploadImagesToApi(RequestKeys.rectifierBatteriesImages, rectifierBatteriesImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.rbsImages, rBSImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.solarAndWindBatteriesImages, solarAndWindBatteriesImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.generatorImages, generatorImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.transmissionImages, transmissionPhotos));
+    body.addAll(await uploadImagesToApi(RequestKeys.fuelCageImages, fuelCageImages));
+    final response = await postVisitedSiteUseCase.call(body: body);
     response.fold(
       (failure) => emit(PostVisitedSiteFailed(msg: failure.errMessage)),
       (data) => emit(
