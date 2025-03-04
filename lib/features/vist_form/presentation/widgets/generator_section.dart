@@ -4,7 +4,7 @@ import 'package:sites_management/features/vist_form/presentation/widgets/custom_
 import 'package:sites_management/features/vist_form/presentation/widgets/custom_switch_tile.dart';
 
 import '../cubit/post_visited_site_cubit.dart';
-import '../visit_form.dart';
+import '../screens/add_visited_site.dart';
 import 'custom_card.dart';
 import 'custom_text_field.dart';
 

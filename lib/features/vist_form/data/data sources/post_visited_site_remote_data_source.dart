@@ -13,8 +13,9 @@ class PostVisitedSiteRemoteDataSource {
   });
   Future<PostVisitedSiteModel> postVisitedSite({required Map<String,dynamic> body}) async {
     final response = await api.post(
-      "${EndPoints.postVisitedSite}",
-      data: body
+      EndPoints.postVisitedSite,
+      data: body,
+      isFormData: true,
     );
     return PostVisitedSiteModel.fromMap(response);
   }

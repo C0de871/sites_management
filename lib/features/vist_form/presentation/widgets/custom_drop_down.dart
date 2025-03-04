@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../cubit/post_visited_site_cubit.dart';
-import '../visit_form.dart';
+import '../screens/add_visited_site.dart';
 
 class CustomDropDown extends StatelessWidget {
-  const CustomDropDown({super.key, required this.dropDownList});
+  const CustomDropDown({
+    super.key,
+    required this.dropDownList,
+    required this.selectedValue,
+    required this.onChanged,
+    this.validator,
+  });
   final List<String> dropDownList;
+  final String? selectedValue;
+  final String? Function(String? value)? validator;
+  final void Function(String? value) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<PostVisitedSiteCubit>();
     return DropdownButtonFormField<String>(
-      value: visitFormCubit.selectedSiteType,
+      value: selectedValue,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -33,16 +38,9 @@ class CustomDropDown extends StatelessWidget {
         );
       }).toList(),
       onChanged: (value) {
-        visitFormCubit.changeSwitchStatus(() {
-          visitFormCubit.selectedSiteType = value;
-        });
+        onChanged(value);
       },
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please select a site type';
-        }
-        return null;
-      },
+      validator: validator,
     );
   }
 }

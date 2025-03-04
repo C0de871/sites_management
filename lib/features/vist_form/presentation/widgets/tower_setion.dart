@@ -17,7 +17,10 @@ class TowerSetion extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.center,
-          child: CustomCheckBoxList(checkboxOptions: visitFormCubit.structureOptions),
+          child: CustomCheckBoxList(
+            checkboxOptions: visitFormCubit.structureOptions,
+            isdisablable: false,
+          ),
         ),
         const SizedBox(height: 16),
         CustomTextField(

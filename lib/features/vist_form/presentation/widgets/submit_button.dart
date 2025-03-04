@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/vist_form/presentation/cubit/post_visited_site_cubit.dart';
+import 'package:sites_management/features/vist_form/presentation/screens/add_visited_site.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({
@@ -18,6 +19,10 @@ class SubmitButton extends StatelessWidget {
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           context.read<PostVisitedSiteCubit>().postVisitedSiteTrigger();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            FailedSnackBar(message: "Please fill in all required fields."),
+          );
         }
       },
       style: ElevatedButton.styleFrom(

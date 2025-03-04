@@ -31,11 +31,13 @@ class EnvironmentSection extends StatelessWidget {
           'Amper Consumption',
           controller: visitFormCubit.amperConsumptionController,
           icon: Icons.flash_on,
-          isNumber: true,
         ),
         Align(
           alignment: Alignment.center,
-          child: CustomCheckBoxList(checkboxOptions: visitFormCubit.phaseOptions),
+          child: CustomCheckBoxList(
+            checkboxOptions: visitFormCubit.phaseOptions,
+            isdisablable: false,
+          ),
         ),
         const SizedBox(height: 16),
         CustomTextField(

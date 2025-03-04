@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 
 import 'error_model.dart';
@@ -102,21 +101,18 @@ handleDioException(DioException e) {
           throw CofficientException(ErrorModel.fromJson(e.response!.data));
 
         case 422: //Unprocessable Content
-          throw UnprocessableContentException(
-              ErrorModel.fromJson(e.response!.data));
+          throw UnprocessableContentException(ErrorModel.fromJson(e.response!.data));
 
         case 504: // Bad request
-
-          throw BadResponseException(
-              ErrorModel(status: 504, errorMessage: e.response!.data));
+          throw BadResponseException(ErrorModel(status: 504, errorMessage: e.response!.data));
+        default:
+          throw ServerException(ErrorModel(status: e.response?.statusCode ?? 500, errorMessage: "unknown 5xx error"));
       }
 
     case DioExceptionType.cancel:
-      throw CancelException(
-          ErrorModel(errorMessage: e.toString(), status: 500));
+      throw CancelException(ErrorModel(errorMessage: e.toString(), status: 500));
 
     case DioExceptionType.unknown:
-      throw UnknownException(
-          ErrorModel(errorMessage: e.toString(), status: 500));
+      throw UnknownException(ErrorModel(errorMessage: e.toString(), status: 500));
   }
 }

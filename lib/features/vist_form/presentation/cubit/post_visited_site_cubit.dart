@@ -22,6 +22,8 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
 
   final formKey = GlobalKey<FormState>();
   String? selectedSiteType;
+  String? selectedSolarAndWindBatteriesStatus;
+  String? selectedRectifierBatteriesStatus;
 
   List<XFile> generalSitePhotos = [];
   List<XFile> generatorImages = [];
@@ -60,7 +62,13 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
     'LTE': false,
   };
 
-  Map<String, bool> batteriesStatus = {
+  Map<String, bool> solarAndWindBatteriesStatus = {
+    'Bad': false,
+    'Good': false,
+    'Very Good': false,
+  };
+
+  Map<String, bool> rectifierBatteriesStatus = {
     'Bad': false,
     'Good': false,
     'Very Good': false,
@@ -70,6 +78,9 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
     'Mini Phase': false,
     'Three Phase': false,
   };
+
+  String? selectedCode;
+  String? selectedName;
 
   bool internalFuelTankCage1 = false;
   bool internalFuelTankCage2 = false;
@@ -222,34 +233,49 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
 
   TextEditingController externalExistingFuel2Controller = TextEditingController();
 
+  Map<String, dynamic> bandsConverter(List<Map<String, dynamic>> a) {
+    Map<String, dynamic> newMap = {};
+    for (int i = 0; i < a.length; i++) {
+      Map<String, dynamic> element = a[i];
+      element.forEach((key, value) {
+        newMap["${RequestKeys.bandInformations}[$i][$key]"] = value;
+      });
+    }
+    return newMap;
+  }
+
   Future<Map<String, dynamic>> createRequestBody() async {
+    log("site code is: ${siteCodeController.text}");
+    log("site name is: ${siteNameController.text}");
+    log("configurations are: $configurations");
+    log("tcu types: $tcuConfigurations");
     return {
       RequestKeys.sites: {
-        RequestKeys.name: siteNameController.text,
-        RequestKeys.code: siteCodeController.text,
+        RequestKeys.name: selectedName,
+        RequestKeys.code: selectedCode,
         RequestKeys.governorate: governorateController.text,
         RequestKeys.street: streetController.text,
         RequestKeys.area: areaController.text,
         RequestKeys.city: cityController.text,
         RequestKeys.type: selectedSiteType,
-        RequestKeys.gsm1900: configurations['GSM 1900'] ?? false,
-        RequestKeys.gsm1800: configurations['GSM 1800'] ?? false,
-        RequestKeys.threeG: configurations['3G'] ?? false,
-        RequestKeys.lte: configurations['LTE'] ?? false,
-        RequestKeys.generator: configurations['Generator'] ?? false,
-        RequestKeys.solar: configurations['Solar'] ?? false,
-        RequestKeys.wind: configurations['Wind'] ?? false,
-        RequestKeys.grid: configurations['Grid'] ?? false,
-        RequestKeys.fence: configurations['Fence'] ?? false,
+        RequestKeys.gsm1900: (configurations['GSM 1900'] ?? 0) == true ? 1 : 0,
+        RequestKeys.gsm1800: (configurations['GSM 1800'] ?? 0) == true ? 1 : 0,
+        RequestKeys.threeG: (configurations['3G'] ?? 0) == true ? 1 : 0,
+        RequestKeys.lte: (configurations['LTE'] ?? 0) == true ? 1 : 0,
+        RequestKeys.generator: (configurations['Generator'] ?? 0) == true ? 1 : 0,
+        RequestKeys.solar: (configurations['Solar'] ?? 0) == true ? 1 : 0,
+        RequestKeys.wind: (configurations['Wind'] ?? 0) == true ? 1 : 0,
+        RequestKeys.grid: (configurations['Grid'] ?? 0) == true ? 1 : 0,
+        RequestKeys.fence: (configurations['Fence'] ?? 0) == true ? 1 : 0,
         RequestKeys.cabinetNumber: numberOfCabinetsController.text,
         RequestKeys.electricityMeter: electricityMeterController.text,
         RequestKeys.electricityMeterReading: electricityMeterReadingController.text,
         RequestKeys.generatorRemark: generatorRemarksController.text,
       },
       RequestKeys.towerInformations: {
-        RequestKeys.mast: structureOptions['Mast'] ?? false,
-        RequestKeys.tower: structureOptions['Tower'] ?? false,
-        RequestKeys.monopole: structureOptions['Monopole'] ?? false,
+        RequestKeys.mast: (structureOptions['Mast'] == true ? 1 : 0),
+        RequestKeys.tower: (structureOptions['Tower'] == true ? 1 : 0),
+        RequestKeys.monopole: (structureOptions['Monopole'] == true ? 1 : 0),
         RequestKeys.mastNumber: mastNumberController.text,
         RequestKeys.mastStatus: mastStatusController.text,
         RequestKeys.monopoleNumber: monopoleNumberController.text,
@@ -265,63 +291,73 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
         RequestKeys.monopoleHeight: monopoleHeightController.text,
         RequestKeys.remarks: remarksController.text,
       },
-      RequestKeys.bandInformations: [
-        {
-          RequestKeys.bandType: "gsm 900",
-          RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm900]![MapKeys.rbs1Type]!.text,
-          RequestKeys.du1Type: gsmControllers[MapKeys.gsm900]![MapKeys.du1Type]!.text,
-          RequestKeys.ru1Type: gsmControllers[MapKeys.gsm900]![MapKeys.ru1Type]!.text,
-          RequestKeys.rbs2Type: gsmControllers[MapKeys.gsm900]![MapKeys.rbs2Type]!.text,
-          RequestKeys.du2Type: gsmControllers[MapKeys.gsm900]![MapKeys.du2Type]!.text,
-          RequestKeys.ru2Type: gsmControllers[MapKeys.gsm900]![MapKeys.ru2Type]!.text,
-          RequestKeys.remarks: gsmControllers[MapKeys.gsm900]![MapKeys.remarks]!.text,
-        },
-        {
-          RequestKeys.bandType: "gsm 1800",
-          RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm1800]![MapKeys.rbs1Type]!.text,
-          RequestKeys.du1Type: gsmControllers[MapKeys.gsm1800]![MapKeys.du1Type]!.text,
-          RequestKeys.ru1Type: gsmControllers[MapKeys.gsm1800]![MapKeys.ru1Type]!.text,
-          RequestKeys.rbs2Type: gsmControllers[MapKeys.gsm1800]![MapKeys.rbs2Type]!.text,
-          RequestKeys.du2Type: gsmControllers[MapKeys.gsm1800]![MapKeys.du2Type]!.text,
-          RequestKeys.ru2Type: gsmControllers[MapKeys.gsm1800]![MapKeys.ru2Type]!.text,
-          RequestKeys.remarks: gsmControllers[MapKeys.gsm1800]![MapKeys.remarks]!.text,
-        },
-        {
-          RequestKeys.bandType: "LTE",
-          RequestKeys.rbs1Type: rbs1TypeLTEController.text,
-          RequestKeys.du1Type: du1TypeLTEController.text,
-          RequestKeys.ru1Type: ru1TypeLTEController.text,
-          RequestKeys.remarks: remarksLTEController.text,
-        },
-        {
-          RequestKeys.bandType: "3G",
-          RequestKeys.rbs1Type: rbs1Type3GController.text,
-          RequestKeys.du1Type: du1Type3GController.text,
-          RequestKeys.ru1Type: ru1Type3GController.text,
-          RequestKeys.remarks: remarks3GController.text,
-        },
-      ],
+      ...bandsConverter(
+        [
+          {
+            RequestKeys.bandType: "gsm 900",
+            RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.rbs1Type]?.text,
+            RequestKeys.du1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.du1Type]?.text,
+            RequestKeys.ru1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.ru1Type]?.text,
+            RequestKeys.rbs2Type: gsmControllers[MapKeys.gsm900]?[MapKeys.rbs2Type]?.text,
+            RequestKeys.du2Type: gsmControllers[MapKeys.gsm900]?[MapKeys.du2Type]?.text,
+            RequestKeys.ru2Type: gsmControllers[MapKeys.gsm900]?[MapKeys.ru2Type]?.text,
+            RequestKeys.remarks: gsmControllers[MapKeys.gsm900]?[MapKeys.remarks]?.text,
+          },
+          {
+            RequestKeys.bandType: "gsm 1800",
+            RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs1Type]?.text,
+            RequestKeys.du1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.du1Type]?.text,
+            RequestKeys.ru1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.ru1Type]?.text,
+            RequestKeys.rbs2Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs2Type]?.text,
+            RequestKeys.du2Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.du2Type]?.text,
+            RequestKeys.ru2Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.ru2Type]?.text,
+            RequestKeys.remarks: gsmControllers[MapKeys.gsm1800]?[MapKeys.remarks]?.text,
+          },
+          {
+            RequestKeys.bandType: "LTE",
+            RequestKeys.rbs1Type: rbs1TypeLTEController.text,
+            RequestKeys.du1Type: du1TypeLTEController.text,
+            RequestKeys.ru1Type: ru1TypeLTEController.text,
+            RequestKeys.remarks: remarksLTEController.text,
+          },
+          {
+            RequestKeys.bandType: "3G",
+            RequestKeys.rbs1Type: rbs1Type3GController.text,
+            RequestKeys.du1Type: du1Type3GController.text,
+            RequestKeys.ru1Type: ru1Type3GController.text,
+            RequestKeys.remarks: remarks3GController.text,
+          },
+        ],
+      ),
       RequestKeys.generatorInformations: [
         {
-          RequestKeys.genTypeAndCapacity: gen1TypeAndCapacityController,
+          RequestKeys.genTypeAndCapacity: gen1TypeAndCapacityController.text,
           RequestKeys.genHourMeter: gen1HourMeterController.text,
           RequestKeys.genFuelConsumption: gen1FuelConsumptionController.text,
-          RequestKeys.internalCapacity: internalFuelCapacity1Controller,
-          RequestKeys.internalExistingFuel: internalExistingFuel1Controller,
-          RequestKeys.fuelSensorExiting: fuelSensor1Existing,
-          RequestKeys.fuelSensorWorking: fuelSensor1Working,
+          RequestKeys.internalCapacity: internalFuelCapacity1Controller.text,
+          RequestKeys.internalExistingFuel: internalExistingFuel1Controller.text,
+          RequestKeys.internalCage: internalFuelTankCage1 ? 1 : 0,
+          RequestKeys.externalCapacity: externalFuelCapacity1Controller.text,
+          RequestKeys.externalExistingFuel: externalExistingFuel1Controller.text,
+          RequestKeys.externalCage: externalFuelTankCage1 ? 1 : 0,
+          RequestKeys.fuelSensorExiting: fuelSensor1Existing ? 1 : 0,
+          RequestKeys.fuelSensorWorking: fuelSensor1Working ? 1 : 0,
           RequestKeys.fuelSensorType: gen1FuelSensorTypeController.text,
           RequestKeys.ampereToOwner: gen1AmpereToOwnerController.text,
           RequestKeys.circuitBreakersQuantity: gen1CircuitBreakersController.text,
         },
         {
-          RequestKeys.genTypeAndCapacity: gen2TypeAndCapacityController,
+          RequestKeys.genTypeAndCapacity: gen2TypeAndCapacityController.text,
           RequestKeys.genHourMeter: gen2HourMeterController.text,
           RequestKeys.genFuelConsumption: gen2FuelConsumptionController.text,
-          RequestKeys.internalCapacity: internalFuelCapacity2Controller,
-          RequestKeys.internalExistingFuel: internalExistingFuel2Controller,
-          RequestKeys.fuelSensorExiting: fuelSensor2Existing,
-          RequestKeys.fuelSensorWorking: fuelSensor2Working,
+          RequestKeys.internalCapacity: internalFuelCapacity2Controller.text,
+          RequestKeys.internalExistingFuel: internalExistingFuel2Controller.text,
+          RequestKeys.internalCage: internalFuelTankCage2 ? 1 : 0,
+          RequestKeys.externalCapacity: externalFuelCapacity2Controller.text,
+          RequestKeys.externalExistingFuel: externalExistingFuel2Controller.text,
+          RequestKeys.externalCage: externalFuelTankCage2 ? 1 : 0,
+          RequestKeys.fuelSensorExiting: fuelSensor2Existing ? 1 : 0,
+          RequestKeys.fuelSensorWorking: fuelSensor2Working ? 1 : 0,
           RequestKeys.fuelSensorType: gen2FuelSensorTypeController.text,
           RequestKeys.ampereToOwner: gen2AmpereToOwnerController.text,
           RequestKeys.circuitBreakersQuantity: gen2CircuitBreakersController.text,
@@ -335,11 +371,7 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
         RequestKeys.numberOfFaultyModules: numFaultyModulesController.text,
         RequestKeys.numberOfBatteries: solarAndWindBatteriesNumController.text,
         RequestKeys.batteryType: solarAndWindBatteriesbatteriesTypeController.text,
-        RequestKeys.batteryStatus: batteriesStatus['Good']!
-            ? "Good"
-            : batteriesStatus['Bad']!
-                ? "Bad"
-                : batteriesStatus['Very Good'],
+        RequestKeys.batteryStatus: selectedSolarAndWindBatteriesStatus,
         RequestKeys.windRemarks: windRemarksController.text,
         RequestKeys.remarks: solarAndWindRemarksController.text,
       },
@@ -350,22 +382,33 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
         RequestKeys.rectifier2TypeAndVoltage: rectifier2TypeController.text,
         RequestKeys.module2Quantity: rectifier2ModuleQuantityController.text,
         RequestKeys.faultyModule2Quantity: rectifier2FaultyModuleController.text,
+        RequestKeys.numberOfBatteries: rectifierBatteriesNumController.text,
+        RequestKeys.batteryType: rectifierbatteriesTypeController.text,
+        RequestKeys.batteriesCabinetType: batteriesCabinetTypeController.text,
         RequestKeys.remarks: rectifierBatteriesRemarksController.text,
+        RequestKeys.cabinetCage: cabinetCage == true ? 1 : 0,
+        RequestKeys.batteriesStatus: selectedRectifierBatteriesStatus,
       },
       RequestKeys.environmentInformations: {
         RequestKeys.powerControlSerialNumber: powerControlSerialNumberController.text,
         RequestKeys.ampereConsumption: amperConsumptionController.text,
-        RequestKeys.threePhase: phaseOptions['Three Phase'] ?? false,
+        RequestKeys.threePhase: phaseOptions['Three Phase'] == true ? 1 : 0,
+        RequestKeys.miniPhase: phaseOptions['Mini Phase'] == true ? 1 : 0,
         RequestKeys.fanQuantity: fanQuantityController.text,
         RequestKeys.faultyFanQuantity: faultyFanQuantityController.text,
         RequestKeys.airConditioner1Type: airConditioner1TypeController.text,
         RequestKeys.airConditioner2Type: airConditioner2TypeController.text,
-        RequestKeys.fireSystem: fireSystemController.text,
+        RequestKeys.powerControlOwnership: powerControlOwnershipController.text,
+        RequestKeys.stabilizerQuantity: stabilizerQuantityController.text,
+        RequestKeys.stabilizerType: stabilizerTypeController.text,
+        RequestKeys.earthingSystem: earthingSystem ? 1 : 0,
+        RequestKeys.exiting: fireExiting ? 1 : 0,
+        RequestKeys.working: fireWorking ? 1 : 0,
         RequestKeys.remarks: environmentRemarksController.text,
       },
       RequestKeys.lvdpInformations: {
-        RequestKeys.exiting: lVDPExiting,
-        RequestKeys.working: lVDPWorking,
+        RequestKeys.exiting: lVDPExiting ? 1 : 0,
+        RequestKeys.working: lVDPWorking ? 1 : 0,
         RequestKeys.status: lvdPStatusController.text,
         RequestKeys.remarks: lvdPRemarksController.text,
       },
@@ -376,13 +419,15 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
         RequestKeys.details: ampereDetailsController.text,
       },
       RequestKeys.tcuInformations: {
-        RequestKeys.tcu: tcuConfigurations['TCU'],
-        RequestKeys.tcuTypes: tcuConfigurations.entries.where((entry) => entry.value).map((entry) => entry.key).toList(),
+        RequestKeys.tcu: (tcuConfigurations['TCU'] ?? 0) == true ? 1 : 0,
         RequestKeys.remarks: tcuRemarksController.text,
       },
+      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][0]": tcuConfigurations['TCU'] == true ? (tcuConfigurations['3G'] == true ? '3G' : null) : null,
+      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][1]": tcuConfigurations['TCU'] == true ? (tcuConfigurations['LTE'] == true ? 'LTE' : null) : null,
+      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][2]": tcuConfigurations['TCU'] == true ? (tcuConfigurations['2G'] == true ? '2G' : null) : null,
       RequestKeys.fiberInformations: {
         RequestKeys.destination: fiberDestinationController.text,
-        RequestKeys.remark: fiberRemarksController.text,
+        RequestKeys.remarks: fiberRemarksController.text,
       },
     };
   }
@@ -412,6 +457,7 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
     body.addAll(await uploadImagesToApi(RequestKeys.generatorImages, generatorImages));
     body.addAll(await uploadImagesToApi(RequestKeys.transmissionImages, transmissionPhotos));
     body.addAll(await uploadImagesToApi(RequestKeys.fuelCageImages, fuelCageImages));
+    log(body.toString());
     final response = await postVisitedSiteUseCase.call(body: body);
     response.fold(
       (failure) => emit(PostVisitedSiteFailed(msg: failure.errMessage)),
@@ -440,7 +486,7 @@ class PostVisitedSiteCubit extends Cubit<PostVisitedSiteState> {
     emit(PostVisitedSiteInitial());
   }
 
-  addImage(void Function() onPressed) {
+  addRemoveImage(void Function() onPressed) {
     onPressed();
     emit(PostVisitedSiteInitial());
   }

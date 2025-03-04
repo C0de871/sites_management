@@ -5,16 +5,11 @@ import '../../../domain/entities/lvdp_information_entity.dart';
 
 class LvdpInformationsModel extends LvdpInformationsEntity {
   LvdpInformationsModel({
-    bool? exiting,
-    bool? working,
-    String? status,
-    String? remarks,
-  }) : super(
-          exiting: exiting,
-          working: working,
-          status: status,
-          remarks: remarks,
-        );
+    super.exiting,
+    super.working,
+    super.status,
+    super.remarks,
+  });
 
   factory LvdpInformationsModel.fromMap(Map<String, dynamic> data) {
     return LvdpInformationsModel(

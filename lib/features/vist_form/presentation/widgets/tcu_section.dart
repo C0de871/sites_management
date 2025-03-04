@@ -17,7 +17,10 @@ class TcuSection extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.center,
-          child: CustomCheckBoxList(checkboxOptions:  visitFormCubit.tcuConfigurations),
+          child: CustomCheckBoxList(
+            checkboxOptions: visitFormCubit.tcuConfigurations,
+            isdisablable: true,
+          ),
         ),
         const SizedBox(height: 8),
         CustomTextField(

@@ -15,7 +15,10 @@ class SiteConfiguration extends StatelessWidget {
       title: 'Site Configuration',
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CustomCheckBoxList(checkboxOptions: visitFormCubit.configurations),
+        CustomCheckBoxList(
+          checkboxOptions: visitFormCubit.configurations,
+          isdisablable: false,
+        ),
       ],
     );
   }

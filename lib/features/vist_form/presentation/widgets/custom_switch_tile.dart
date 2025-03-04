@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/post_visited_site_cubit.dart';
-import '../visit_form.dart';
+import '../screens/add_visited_site.dart';
 
 class CustomSwitchTile extends StatelessWidget {
   const CustomSwitchTile({super.key, required this.getValue, required this.onChanged, required this.title});

@@ -14,7 +14,9 @@ import '../../databases/connection/network_info.dart';
 
 final getIt = GetIt.instance; // Singleton instance of GetIt
 
+
 void setupServicesLocator() {
+  
   //!service:
 
   //! Core

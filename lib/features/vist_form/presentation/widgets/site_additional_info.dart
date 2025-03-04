@@ -16,6 +16,7 @@ class SiteAdditionalInfo extends StatelessWidget {
       children: [
         CustomTextField(
           'Number of Cabinets',
+          isNumber: true,
           controller: visitFormCubit.numberOfCabinetsController,
           icon: Icons.work_outline,
         ),
@@ -25,6 +26,7 @@ class SiteAdditionalInfo extends StatelessWidget {
           icon: Icons.speed,
         ),
         CustomTextField(
+          isNumber: true,
           'Electricity Meter Reading',
           controller: visitFormCubit.electricityMeterReadingController,
           icon: Icons.power,

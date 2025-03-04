@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/vist_form/presentation/widgets/custom_card.dart';
-import 'package:sites_management/features/vist_form/presentation/widgets/custom_check_box_list.dart';
+import 'package:sites_management/features/vist_form/presentation/widgets/custom_drop_down.dart';
 import 'package:sites_management/features/vist_form/presentation/widgets/custom_photo_picker.dart';
 
 import '../cubit/post_visited_site_cubit.dart';
@@ -14,6 +14,8 @@ class RectifierSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final visitFormCubit = context.read<PostVisitedSiteCubit>();
+        List<String> batteriesStatus = ['Bad', 'Good', 'Very Good'];
+
     onChanged(bool value) {
       visitFormCubit.changeSwitchStatus(() {
         visitFormCubit.cabinetCage = value;
@@ -88,7 +90,18 @@ class RectifierSection extends StatelessWidget {
           alignment: Alignment.topLeft,
           child: Text('Batteries Status:'),
         ),
-        CustomCheckBoxList(checkboxOptions: visitFormCubit.batteriesStatus),
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+          builder: (context, state) {
+            return CustomDropDown(
+                dropDownList: batteriesStatus,
+                selectedValue: visitFormCubit.selectedRectifierBatteriesStatus,
+                onChanged: (value) {
+                  visitFormCubit.changeSwitchStatus(() {
+                    visitFormCubit.selectedRectifierBatteriesStatus = value;
+                  });
+                });
+          },
+        ),
         const SizedBox(height: 16),
         CustomTextField(
           'Rectifier and Batteries Remarks',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/vist_form/presentation/widgets/custom_card.dart';
-import 'package:sites_management/features/vist_form/presentation/widgets/custom_check_box_list.dart';
+import 'package:sites_management/features/vist_form/presentation/widgets/custom_drop_down.dart';
 import 'package:sites_management/features/vist_form/presentation/widgets/custom_photo_picker.dart';
 
 import '../cubit/post_visited_site_cubit.dart';
@@ -13,6 +13,7 @@ class SolarAndWindSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final visitFormCubit = context.read<PostVisitedSiteCubit>();
+    List<String> batteriesStatus = ['Bad', 'Good', 'Very Good'];
     return CustomCard(
       title: 'Solar and Wind System Information',
       children: [
@@ -24,7 +25,6 @@ class SolarAndWindSection extends StatelessWidget {
         CustomTextField(
           'Solar Capacity',
           icon: Icons.battery_charging_full,
-          isNumber: true,
           controller: visitFormCubit.solarCapacityController,
         ),
         CustomTextField(
@@ -57,9 +57,17 @@ class SolarAndWindSection extends StatelessWidget {
           controller: visitFormCubit.solarAndWindBatteriesbatteriesTypeController,
         ),
         const Text('Batteries Status:'),
-        Align(
-          alignment: Alignment.center,
-          child: CustomCheckBoxList(checkboxOptions: visitFormCubit.batteriesStatus),
+        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+          builder: (context, state) {
+            return CustomDropDown(
+                dropDownList: batteriesStatus,
+                selectedValue: visitFormCubit.selectedSolarAndWindBatteriesStatus,
+                onChanged: (value) {
+                  visitFormCubit.changeSwitchStatus(() {
+                    visitFormCubit.selectedSolarAndWindBatteriesStatus = value;
+                  });
+                });
+          },
         ),
         const SizedBox(
           height: 16,

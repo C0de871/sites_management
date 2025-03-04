@@ -17,10 +17,10 @@ import 'package:sites_management/features/vist_form/presentation/widgets/tcu_sec
 import 'package:sites_management/features/vist_form/presentation/widgets/three_g_section.dart';
 import 'package:sites_management/features/vist_form/presentation/widgets/tower_setion.dart';
 
-import '../../../core/utils/constants/constant.dart';
-import 'widgets/generator_section.dart';
-import 'widgets/lvdp_section.dart';
-import 'widgets/photo_section.dart';
+import '../../../../core/utils/constants/constant.dart';
+import '../widgets/generator_section.dart';
+import '../widgets/lvdp_section.dart';
+import '../widgets/photo_section.dart';
 
 // MTN Colors
 const mtnYellow = Color(0xFFFFD700);
@@ -63,7 +63,7 @@ class SuccessSnackBar extends SnackBar {
               SizedBox(width: 8),
               Text(
                 'Site visit posted successfully!',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
               ),
             ],
           ),
@@ -76,15 +76,16 @@ class SuccessSnackBar extends SnackBar {
 }
 
 class FailedSnackBar extends SnackBar {
-  const FailedSnackBar({super.key})
+  final String message;
+  FailedSnackBar({super.key, required this.message})
       : super(
-          content: const Row(
+          content: Row(
             children: [
-              Icon(Icons.error, color: Colors.red),
-              SizedBox(width: 8),
+              const Icon(Icons.error, color: Colors.red),
+              const SizedBox(width: 8),
               Text(
-                'Failed to post site visit. Please try again.',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                message,
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
               ),
             ],
           ),
@@ -127,46 +128,48 @@ class FormSections extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: const [
-        SiteGeneralInfo(),
-        SizedBox(height: 16),
-        SiteType(),
-        SizedBox(height: 16),
-        SiteConfiguration(),
-        SizedBox(height: 16),
-        SiteAdditionalInfo(),
-        SizedBox(height: 16),
-        AmpereSection(),
-        SizedBox(height: 16),
-        TcuSection(),
-        SizedBox(height: 16),
-        FiberSection(),
-        SizedBox(height: 16),
-        GsmSection(band: MapKeys.gsm900),
-        SizedBox(height: 16),
-        GsmSection(band: MapKeys.gsm1800),
-        SizedBox(height: 16),
-        ThreeGSection(),
-        SizedBox(height: 16),
-        LteSection(),
-        SizedBox(height: 16),
-        RectifierSection(),
-        SizedBox(height: 16),
-        EnvironmentSection(),
-        SizedBox(height: 16),
-        TowerSetion(),
-        SizedBox(height: 16),
-        SolarAndWindSection(),
-        SizedBox(height: 16),
-        GeneratorSection(),
-        SizedBox(height: 16),
-        LvdpSection(),
-        SizedBox(height: 16),
-        PhotoSection(),
-        SizedBox(height: 24),
-      ],
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: [
+          SiteGeneralInfo(),
+          SizedBox(height: 16),
+          SiteType(),
+          SizedBox(height: 16),
+          SiteConfiguration(),
+          SizedBox(height: 16),
+          SiteAdditionalInfo(),
+          SizedBox(height: 16),
+          AmpereSection(),
+          SizedBox(height: 16),
+          TcuSection(),
+          SizedBox(height: 16),
+          FiberSection(),
+          SizedBox(height: 16),
+          GsmSection(band: MapKeys.gsm900),
+          SizedBox(height: 16),
+          GsmSection(band: MapKeys.gsm1800),
+          SizedBox(height: 16),
+          ThreeGSection(),
+          SizedBox(height: 16),
+          LteSection(),
+          SizedBox(height: 16),
+          RectifierSection(),
+          SizedBox(height: 16),
+          EnvironmentSection(),
+          SizedBox(height: 16),
+          TowerSetion(),
+          SizedBox(height: 16),
+          SolarAndWindSection(),
+          SizedBox(height: 16),
+          GeneratorSection(),
+          SizedBox(height: 16),
+          LvdpSection(),
+          SizedBox(height: 16),
+          PhotoSection(),
+          SizedBox(height: 24),
+        ],
+      ),
     );
   }
 }
@@ -211,7 +214,9 @@ class SiteInformationListener extends StatelessWidget {
         if (state is PostVisitedSiteSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(const SuccessSnackBar());
         } else if (state is PostVisitedSiteFailed) {
-          ScaffoldMessenger.of(context).showSnackBar(const FailedSnackBar());
+          ScaffoldMessenger.of(context).showSnackBar(FailedSnackBar(
+            message: state.msg,
+          ));
         }
       },
       child: child,

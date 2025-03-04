@@ -10,6 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  final AppTheme _appTheme = const AppTheme();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,9 +26,9 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       title: 'E-Commerce',
-      theme: AppTheme().theme(
-        lightScheme(),
-      ),
+      theme: _appTheme.light(),
+      darkTheme: _appTheme.dark(),
+      themeMode: ThemeMode.light,
       home: const LoadingScreen(),
       onGenerateRoute: AppRouter().generateRoute,
     );
