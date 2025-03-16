@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:sites_management/features/vist_form/data/data%20sources/post_visited_site_remote_data_source.dart';
-import 'package:sites_management/features/vist_form/domain/repository/post_visited_site_repository.dart';
-import 'package:sites_management/features/vist_form/domain/use_cases/post_visited_site_use_case.dart';
+import 'package:sites_management/core/Routes/app_router.dart';
+import 'package:sites_management/features/visited_sites/data/data%20sources/visited_site_remote_data_source.dart';
+import 'package:sites_management/features/visited_sites/domain/repository/visited_site_repository.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/add_visited_site_use_case.dart';
 
-import '../../../features/vist_form/data/repository/post_visited_site_repository_imple.dart';
+import '../../../features/visited_sites/data/repository/visited_site_repository_imple.dart';
 import '../../databases/api/api_consumer.dart';
 import '../../databases/api/dio_consumer.dart';
 import '../../databases/cache/secure_storage_helper.dart';
@@ -14,9 +15,7 @@ import '../../databases/connection/network_info.dart';
 
 final getIt = GetIt.instance; // Singleton instance of GetIt
 
-
 void setupServicesLocator() {
-  
   //!service:
 
   //! Core
@@ -26,10 +25,11 @@ void setupServicesLocator() {
   getIt.registerLazySingleton<ApiConsumer>(() => DioConsumer(dio: getIt()));
   getIt.registerLazySingleton<InternetConnectionChecker>(() => InternetConnectionChecker.instance);
   getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
+  getIt.registerLazySingleton<AppRouter>(() => AppRouter());
 
   //! Data Sources
   // getIt.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSource(sharedPrefsHelper: getIt()));
-  getIt.registerLazySingleton<PostVisitedSiteRemoteDataSource>(() => PostVisitedSiteRemoteDataSource(
+  getIt.registerLazySingleton<VisitedSiteRemoteDataSource>(() => VisitedSiteRemoteDataSource(
         api: getIt(),
         cacheHelper: getIt(),
       ));
@@ -38,11 +38,11 @@ void setupServicesLocator() {
   // getIt.registerLazySingleton<LanguageRepository>(() => LanguageRepositoryImpl(
   //       localDataSource: getIt(),
   //     ));
-  getIt.registerLazySingleton<PostVisitedSiteRepository>(() => PostVisitedSiteRepositoryImple(
+  getIt.registerLazySingleton<VisitedSiteRepository>(() => VisitedSiteRepositoryImple(
         remoteDataSource: getIt(),
         networkInfo: getIt(),
       ));
 
   //! Use Cases
-  getIt.registerLazySingleton<PostVisitedSite>(() => PostVisitedSite(repository: getIt()));
+  getIt.registerLazySingleton<AddVisitedSite>(() => AddVisitedSite(repository: getIt()));
 }

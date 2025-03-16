@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sites_management/core/utils/services/service_locator.dart';
 import '../../features/auth/presentation/loading_screen/loading_screen.dart';
 import '../Routes/app_router.dart';
 import '../helper/app_functions.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       darkTheme: _appTheme.dark(),
       themeMode: ThemeMode.light,
       home: const LoadingScreen(),
-      onGenerateRoute: AppRouter().generateRoute,
+      onGenerateRoute: getIt<AppRouter>().generateRoute,
     );
   }
 }
