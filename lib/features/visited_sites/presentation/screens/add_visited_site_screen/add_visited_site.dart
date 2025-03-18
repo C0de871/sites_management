@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/post_visited_site_cubit.dart';
+import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/ampere_section.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/continue_button.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/environment_section.dart';
@@ -13,7 +13,6 @@ import 'package:sites_management/features/visited_sites/presentation/screens/add
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_general_info.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_type.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/solar_and_wind_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/submit_button.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tcu_section.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/three_g_section.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tower_setion.dart';
@@ -27,11 +26,13 @@ import 'widgets/photo_section.dart';
 // MTN Colors
 
 // AppBar Widget
-class SiteInformationAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SiteInformationAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  const SiteInformationAppBar({super.key}) : preferredSize = const Size.fromHeight(kToolbarHeight);
+  const SiteInformationAppBar({super.key})
+      : preferredSize = const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,8 @@ class SuccessSnackBar extends SnackBar {
               SizedBox(width: 8),
               Text(
                 'Site visit posted successfully!',
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.blueGrey),
               ),
             ],
           ),
@@ -86,7 +88,8 @@ class FailedSnackBar extends SnackBar {
               const SizedBox(width: 8),
               Text(
                 message,
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.blueGrey),
               ),
             ],
           ),
@@ -218,7 +221,7 @@ class ContinueSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+    return BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
       builder: (context, state) {
         return ContinueButton(
           routeName: routeName,
@@ -240,11 +243,11 @@ class SiteInformationListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PostVisitedSiteCubit, PostVisitedSiteState>(
+    return BlocListener<AddVisitedSiteCubit, AddVisitedSiteState>(
       listener: (context, state) {
-        if (state is PostVisitedSiteSuccess) {
+        if (state is AddVisitedSiteSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(const SuccessSnackBar());
-        } else if (state is PostVisitedSiteFailed) {
+        } else if (state is AddVisitedSiteFailed) {
           ScaffoldMessenger.of(context).showSnackBar(FailedSnackBar(
             message: state.msg,
           ));

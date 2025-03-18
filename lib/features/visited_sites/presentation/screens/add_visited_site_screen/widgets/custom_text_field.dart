@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CustomTextField extends StatefulWidget {
   const CustomTextField(
     this.label, {
@@ -21,7 +20,8 @@ class CustomTextField extends StatefulWidget {
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> with AutomaticKeepAliveClientMixin {
+class _CustomTextFieldState extends State<CustomTextField>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -29,7 +29,8 @@ class _CustomTextFieldState extends State<CustomTextField> with AutomaticKeepAli
       padding: const EdgeInsets.only(bottom: 16),
       child: TextFormField(
         controller: widget.controller,
-        keyboardType: widget.isNumber ? TextInputType.number : TextInputType.text,
+        keyboardType:
+            widget.isNumber ? TextInputType.number : TextInputType.text,
         validator: widget.validator,
         decoration: InputDecoration(
           labelText: widget.label,

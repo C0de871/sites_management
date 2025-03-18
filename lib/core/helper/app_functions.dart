@@ -7,7 +7,8 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-SystemUiOverlayStyle getSystemUiOverlayStyle(Brightness currentBrightness, BuildContext context) {
+SystemUiOverlayStyle getSystemUiOverlayStyle(
+    Brightness currentBrightness, BuildContext context) {
   return currentBrightness == Brightness.light
       ? SystemUiOverlayStyle.light.copyWith(
           systemNavigationBarColor: Theme.of(context).colorScheme.surface,
@@ -23,13 +24,15 @@ SystemUiOverlayStyle getSystemUiOverlayStyle(Brightness currentBrightness, Build
 
 Future<XFile?> pickImage() async {
   final ImagePicker picker = ImagePicker();
-  final image = await picker.pickImage(source: ImageSource.gallery); // or ImageSource.camera
+  final image = await picker.pickImage(
+      source: ImageSource.gallery); // or ImageSource.camera
   return image;
 }
 
 Future uploadImageToApi(XFile? image) async {
   if (image == null) return null;
-  return MultipartFile.fromFile(image.path, filename: image.path.split('/').last);
+  return MultipartFile.fromFile(image.path,
+      filename: image.path.split('/').last);
 }
 
 class RouteObserverService extends NavigatorObserver {
@@ -68,8 +71,9 @@ bool isRtl(BuildContext context) {
 Future<XFile?> compressImage(XFile? imageFile) async {
   if (imageFile == null) return null;
   final String dir = (await getTemporaryDirectory()).path;
-  final String extension = getFileExtension(imageFile.path);  
-  final String targetPath = '$dir/compressed_${DateTime.now().millisecondsSinceEpoch}.$extension';
+  final String extension = getFileExtension(imageFile.path);
+  final String targetPath =
+      '$dir/compressed_${DateTime.now().millisecondsSinceEpoch}.$extension';
 
   // Determine the correct compression format
   CompressFormat format;
@@ -95,7 +99,8 @@ Future<XFile?> compressImage(XFile? imageFile) async {
     format: format,
   );
   if (compressedFile != null) {
-    final compressedFileSize = await compressedFile.length(); // Get compressed file size in bytes
+    final compressedFileSize =
+        await compressedFile.length(); // Get compressed file size in bytes
     log("Compressed file size: ${compressedFileSize / 1024} KB"); // Convert to KB
   }
   return compressedFile;

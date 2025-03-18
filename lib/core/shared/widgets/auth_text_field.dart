@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'custom_surfix_icon.dart';
@@ -63,7 +62,6 @@ class AnimatedPasswordField extends StatefulWidget {
 }
 
 class _AnimatedPasswordField extends State<AnimatedPasswordField> {
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -82,8 +80,7 @@ class _AnimatedPasswordField extends State<AnimatedPasswordField> {
         labelText: widget.label,
         hintStyle: Theme.of(context).textTheme.labelLarge,
         hintText: widget.hint,
-        suffixIcon: GestureDetector(
-        ),
+        suffixIcon: GestureDetector(),
       ),
     );
   }

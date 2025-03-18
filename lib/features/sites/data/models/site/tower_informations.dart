@@ -70,7 +70,8 @@ class TowerInformationsModel extends TowerInformationsEntity {
   ///
   /// Parses the string and returns the resulting Json object as [TowerInformationsModel].
   factory TowerInformationsModel.fromJson(String data) {
-    return TowerInformationsModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return TowerInformationsModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`

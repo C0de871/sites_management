@@ -1,5 +1,3 @@
-
-
 class ToggleFavParams {
   final String productID;
   final String storeID;
@@ -31,8 +29,6 @@ class GetStoredAndProductIdParams {
     required this.storeID,
   });
 }
-
-
 
 class StoreParams {
   int page = 1;

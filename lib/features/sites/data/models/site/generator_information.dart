@@ -61,7 +61,8 @@ class GeneratorInformationModel extends GeneratorInformationEntity {
   ///
   /// Parses the string and returns the resulting Json object as [GeneratorInformationModel].
   factory GeneratorInformationModel.fromJson(String data) {
-    return GeneratorInformationModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return GeneratorInformationModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
@@ -99,7 +100,8 @@ class GeneratorInformationModel extends GeneratorInformationEntity {
       fuelSensorWorking: fuelSensorWorking ?? this.fuelSensorWorking,
       fuelSensorType: fuelSensorType ?? this.fuelSensorType,
       ampereToOwner: ampereToOwner ?? this.ampereToOwner,
-      circuitBreakersQuantity: circuitBreakersQuantity ?? this.circuitBreakersQuantity,
+      circuitBreakersQuantity:
+          circuitBreakersQuantity ?? this.circuitBreakersQuantity,
     );
   }
 }

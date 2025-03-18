@@ -6,7 +6,7 @@ import 'package:sites_management/features/visited_sites/presentation/screens/add
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
-import '../cubit/post_visited_site_cubit.dart';
+import '../cubit/add_visited_site_cubit.dart';
 import '../add_visited_site.dart';
 import 'custom_text_field.dart';
 
@@ -15,7 +15,7 @@ class SolarAndWindSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<PostVisitedSiteCubit>();
+    final visitFormCubit = context.read<AddVisitedSiteCubit>();
     List<String> batteriesStatus = ['Bad', 'Good', 'Very Good'];
     return SiteInfoForm(
       formType: FormType.solarAndWindSystemInfo,
@@ -61,17 +61,20 @@ class SolarAndWindSection extends StatelessWidget {
           CustomTextField(
             'Batteries Type',
             icon: Icons.battery_unknown,
-            controller: visitFormCubit.solarAndWindBatteriesbatteriesTypeController,
+            controller:
+                visitFormCubit.solarAndWindBatteriesbatteriesTypeController,
           ),
           const Text('Batteries Status:'),
-          BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+          BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
             builder: (context, state) {
               return CustomDropDown(
                   dropDownList: batteriesStatus,
-                  selectedValue: visitFormCubit.selectedSolarAndWindBatteriesStatus,
+                  selectedValue:
+                      visitFormCubit.selectedSolarAndWindBatteriesStatus,
                   onChanged: (value) {
                     visitFormCubit.changeSwitchStatus(() {
-                      visitFormCubit.selectedSolarAndWindBatteriesStatus = value;
+                      visitFormCubit.selectedSolarAndWindBatteriesStatus =
+                          value;
                     });
                   });
             },
@@ -89,7 +92,9 @@ class SolarAndWindSection extends StatelessWidget {
             icon: Icons.notes,
             controller: visitFormCubit.solarAndWindRemarksController,
           ),
-          CustomPhotoPicker(images: visitFormCubit.solarAndWindBatteriesImages, title: "Solar and Wind Batteries images:"),
+          CustomPhotoPicker(
+              images: visitFormCubit.solarAndWindBatteriesImages,
+              title: "Solar and Wind Batteries images:"),
         ],
       ),
     );

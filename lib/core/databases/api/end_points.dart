@@ -2,7 +2,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EndPoints {
   static String baserUrl = dotenv.env['BASEURL']!;
-  static String postVisitedSite = dotenv.env["POSTVISITEDSITE"]!;
+  static String postVisitedSite = dotenv.env["ADDVISITEDSITE"]!;
+  static String getVisitedSites = dotenv.env["GETALLVISITEDSITES"]!;
 }
 
 class ApiKey {

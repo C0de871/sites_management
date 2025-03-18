@@ -74,6 +74,5 @@ class VisitButton extends StatelessWidget {
         ),
       ),
     );
-    
   }
 }

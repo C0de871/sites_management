@@ -15,6 +15,7 @@ extension StringCapitalize on String {
 
 extension StringValidation on String? {
   bool get isEmptyOrWhitespace {
-    return this?.trim().isEmpty ?? true; // Returns true if null or empty/just spaces
+    return this?.trim().isEmpty ??
+        true; // Returns true if null or empty/just spaces
   }
 }

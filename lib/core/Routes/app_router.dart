@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/Routes/app_routes.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/post_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/show_visited_sites_screen/cubit/show_visited_site_cubit.dart';
+import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
+import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/form_hub_screen.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/ampere_section.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/environment_section.dart';
@@ -24,22 +24,22 @@ import 'package:sites_management/features/visited_sites/presentation/screens/add
 import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tower_setion.dart';
 
 import '../../features/home/presentation/home_page.dart';
-import '../../features/visited_sites/presentation/screens/show_visited_sites_screen/show_visited_sites.dart';
+import '../../features/visited_sites/presentation/screens/get_visited_sites_screen/get_visited_sites.dart';
 import '../utils/constants/constant.dart';
 
 class AppRouter {
-  ShowVisitedSiteCubit? _showVisitedSiteCubit;
-  PostVisitedSiteCubit? _postVisitedSiteCubit;
+  GetVisitedSitesCubit? _showVisitedSiteCubit;
+  AddVisitedSiteCubit? _postVisitedSiteCubit;
 
   // PostVisitedSiteCubit get postVisitedSiteCubit => _getCubit(_postVisitedSiteCubit, () => PostVisitedSiteCubit());
-  ShowVisitedSiteCubit get showVisitedSiteCubit => _getCubit(_showVisitedSiteCubit, () => ShowVisitedSiteCubit());
+  GetVisitedSitesCubit get showVisitedSiteCubit => _getCubit(_showVisitedSiteCubit, () => GetVisitedSitesCubit());
 
-  PostVisitedSiteCubit get postVisitedSiteCubit {
+  AddVisitedSiteCubit get postVisitedSiteCubit {
     if (_postVisitedSiteCubit == null || _postVisitedSiteCubit!.isClosed) {
       log("cubit is null: ${_postVisitedSiteCubit == null}");
       log("cubit is closed: ${_postVisitedSiteCubit?.isClosed.toString()}");
       log("newCubit created");
-      _postVisitedSiteCubit = PostVisitedSiteCubit();
+      _postVisitedSiteCubit = AddVisitedSiteCubit();
     }
     _postVisitedSiteCubit!.stream.listen((_) {}, onDone: () {
       _postVisitedSiteCubit = null;

@@ -5,7 +5,7 @@ import 'package:sites_management/features/visited_sites/presentation/screens/add
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
-import '../cubit/post_visited_site_cubit.dart';
+import '../cubit/add_visited_site_cubit.dart';
 import '../add_visited_site.dart';
 import 'custom_card.dart';
 import 'custom_text_field.dart';
@@ -15,7 +15,7 @@ class GeneratorSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<PostVisitedSiteCubit>();
+    final visitFormCubit = context.read<AddVisitedSiteCubit>();
     return SiteInfoForm(
       formType: FormType.generatorInfo,
       formKey: visitFormCubit.siteGeneratorInfoKey,
@@ -34,7 +34,9 @@ class GeneratorSection extends StatelessWidget {
             controller: visitFormCubit.generatorRemarksController,
           ),
           const SizedBox(height: 16),
-          CustomPhotoPicker(images: visitFormCubit.generatorImages, title: "Generator images:"),
+          CustomPhotoPicker(
+              images: visitFormCubit.generatorImages,
+              title: "Generator images:"),
         ],
       ),
     );
@@ -47,7 +49,7 @@ class Gen2 extends StatelessWidget {
     required this.visitFormCubit,
   });
 
-  final PostVisitedSiteCubit visitFormCubit;
+  final AddVisitedSiteCubit visitFormCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -125,16 +127,18 @@ class ExternalFuelTank extends StatelessWidget {
     required this.visitFormCubit,
   });
 
-  final PostVisitedSiteCubit visitFormCubit;
+  final AddVisitedSiteCubit visitFormCubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+    return BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
       builder: (context, state) {
         return _FuelTank(
           title: "External Fuel Tank 2",
-          fuelCapacityController: visitFormCubit.externalFuelCapacity2Controller,
-          existingFuelController: visitFormCubit.externalExistingFuel2Controller,
+          fuelCapacityController:
+              visitFormCubit.externalFuelCapacity2Controller,
+          existingFuelController:
+              visitFormCubit.externalExistingFuel2Controller,
           fuelCage: visitFormCubit.externalFuelTankCage2,
           onFuelCageChanged: (value) {
             visitFormCubit.changeSwitchStatus(() {
@@ -154,15 +158,17 @@ class InternalFuelTank extends StatelessWidget {
     required this.visitFormCubit,
   });
 
-  final PostVisitedSiteCubit visitFormCubit;
+  final AddVisitedSiteCubit visitFormCubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+    return BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
       builder: (context, state) {
         return _FuelTank(
-          fuelCapacityController: visitFormCubit.internalFuelCapacity2Controller,
-          existingFuelController: visitFormCubit.internalExistingFuel2Controller,
+          fuelCapacityController:
+              visitFormCubit.internalFuelCapacity2Controller,
+          existingFuelController:
+              visitFormCubit.internalExistingFuel2Controller,
           title: "Internal Fuel Tank 2",
           fuelCage: visitFormCubit.internalFuelTankCage2,
           onFuelCageChanged: (value) {
@@ -183,7 +189,7 @@ class Gen1 extends StatelessWidget {
     required this.visitFormCubit,
   });
 
-  final PostVisitedSiteCubit visitFormCubit;
+  final AddVisitedSiteCubit visitFormCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +213,7 @@ class Gen1 extends StatelessWidget {
           isNumber: true,
           controller: visitFormCubit.gen1FuelConsumptionController,
         ),
-        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+        BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
           builder: (context, state) {
             return _FuelTank(
               title: "Internal Fuel Tank 1",
@@ -218,17 +224,21 @@ class Gen1 extends StatelessWidget {
                 });
               },
               visitFormCubit: visitFormCubit,
-              fuelCapacityController: visitFormCubit.internalFuelCapacity1Controller,
-              existingFuelController: visitFormCubit.internalExistingFuel1Controller,
+              fuelCapacityController:
+                  visitFormCubit.internalFuelCapacity1Controller,
+              existingFuelController:
+                  visitFormCubit.internalExistingFuel1Controller,
             );
           },
         ),
         const SizedBox(height: 16),
-        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+        BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
           builder: (context, state) {
             return _FuelTank(
-              fuelCapacityController: visitFormCubit.externalFuelCapacity1Controller,
-              existingFuelController: visitFormCubit.externalExistingFuel1Controller,
+              fuelCapacityController:
+                  visitFormCubit.externalFuelCapacity1Controller,
+              existingFuelController:
+                  visitFormCubit.externalExistingFuel1Controller,
               title: "External Fuel Tank 1",
               fuelCage: visitFormCubit.externalFuelTankCage1,
               onFuelCageChanged: (value) {
@@ -246,7 +256,7 @@ class Gen1 extends StatelessWidget {
           icon: Icons.sensors,
           controller: visitFormCubit.gen1FuelSensorTypeController,
         ),
-        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+        BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -261,7 +271,7 @@ class Gen1 extends StatelessWidget {
             );
           },
         ),
-        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+        BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,
@@ -308,7 +318,7 @@ class _FuelTank extends StatelessWidget {
   final TextEditingController existingFuelController;
   final bool fuelCage;
   final Function(bool) onFuelCageChanged;
-  final PostVisitedSiteCubit visitFormCubit;
+  final AddVisitedSiteCubit visitFormCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -327,7 +337,7 @@ class _FuelTank extends StatelessWidget {
           icon: Icons.local_gas_station,
           isNumber: true,
         ),
-        BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+        BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
           builder: (context, state) {
             return SwitchListTile(
               contentPadding: EdgeInsets.zero,

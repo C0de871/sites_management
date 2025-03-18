@@ -104,7 +104,9 @@ class CreditsDialog extends StatelessWidget {
                   const SizedBox(height: 8),
                   GestureDetector(
                     onTap: () {
-                      Clipboard.setData(const ClipboardData(text: "onlynext100@gmail.com")).then((_) {
+                      Clipboard.setData(const ClipboardData(
+                              text: "onlynext100@gmail.com"))
+                          .then((_) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text("Email copied to clipboard"),
@@ -152,7 +154,8 @@ class CreditsDialog extends StatelessWidget {
             InkWell(
               onTap: () => Navigator.of(context).pop(),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Colors.blue.shade400, Colors.purple.shade400],

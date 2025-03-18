@@ -21,8 +21,10 @@ class RectifierInformationsModel extends RectifierInformationsEntity {
 
   factory RectifierInformationsModel.fromMap(Map<String, dynamic> data) {
     return RectifierInformationsModel(
-      rectifier1TypeAndVoltage: data[ApiKey.rectifier1TypeAndVoltage] as String?,
-      rectifier2TypeAndVoltage: data[ApiKey.rectifier2TypeAndVoltage] as String?,
+      rectifier1TypeAndVoltage:
+          data[ApiKey.rectifier1TypeAndVoltage] as String?,
+      rectifier2TypeAndVoltage:
+          data[ApiKey.rectifier2TypeAndVoltage] as String?,
       module1Quantity: data[ApiKey.module1Quantity] as String?,
       module2Quantity: data[ApiKey.module2Quantity] as String?,
       faultyModule1Quantity: data[ApiKey.faultyModule1Quantity] as String?,
@@ -55,7 +57,8 @@ class RectifierInformationsModel extends RectifierInformationsEntity {
   ///
   /// Parses the string and returns the resulting Json object as [RectifierInformationsModel].
   factory RectifierInformationsModel.fromJson(String data) {
-    return RectifierInformationsModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return RectifierInformationsModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
@@ -78,12 +81,16 @@ class RectifierInformationsModel extends RectifierInformationsEntity {
     String? remarks,
   }) {
     return RectifierInformationsModel(
-      rectifier1TypeAndVoltage: rectifier1TypeAndVoltage ?? this.rectifier1TypeAndVoltage,
-      rectifier2TypeAndVoltage: rectifier2TypeAndVoltage ?? this.rectifier2TypeAndVoltage,
+      rectifier1TypeAndVoltage:
+          rectifier1TypeAndVoltage ?? this.rectifier1TypeAndVoltage,
+      rectifier2TypeAndVoltage:
+          rectifier2TypeAndVoltage ?? this.rectifier2TypeAndVoltage,
       module1Quantity: module1Quantity ?? this.module1Quantity,
       module2Quantity: module2Quantity ?? this.module2Quantity,
-      faultyModule1Quantity: faultyModule1Quantity ?? this.faultyModule1Quantity,
-      faultyModule2Quantity: faultyModule2Quantity ?? this.faultyModule2Quantity,
+      faultyModule1Quantity:
+          faultyModule1Quantity ?? this.faultyModule1Quantity,
+      faultyModule2Quantity:
+          faultyModule2Quantity ?? this.faultyModule2Quantity,
       numberOfBatteries: numberOfBatteries ?? this.numberOfBatteries,
       batteryType: batteryType ?? this.batteryType,
       batteriesCabinetType: batteriesCabinetType ?? this.batteriesCabinetType,

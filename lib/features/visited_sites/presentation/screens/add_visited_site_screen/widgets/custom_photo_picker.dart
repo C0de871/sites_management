@@ -7,16 +7,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sites_management/core/utils/constants/app_numbers.dart';
 
 import '../../../../../../core/helper/app_functions.dart';
-import '../cubit/post_visited_site_cubit.dart';
+import '../cubit/add_visited_site_cubit.dart';
 
 class CustomPhotoPicker extends StatelessWidget {
-  const CustomPhotoPicker({super.key, required this.title, required this.images});
+  const CustomPhotoPicker(
+      {super.key, required this.title, required this.images});
   final String title;
   final List<XFile> images;
 
   @override
   Widget build(BuildContext context) {
-    final visitedFormCubit = context.read<PostVisitedSiteCubit>();
+    final visitedFormCubit = context.read<AddVisitedSiteCubit>();
     return SizedBox(
       height: 100,
       child: InputDecorator(
@@ -37,7 +38,7 @@ class CustomPhotoPicker extends StatelessWidget {
             ),
           ),
         ),
-        child: BlocBuilder<PostVisitedSiteCubit, PostVisitedSiteState>(
+        child: BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
           builder: (context, state) {
             return ListView(
               scrollDirection: Axis.horizontal,
@@ -70,7 +71,7 @@ class AddNewPhoto extends StatelessWidget {
   final List<XFile> images;
 
   Future<void> _showImageSourceSheet(BuildContext parentContext) async {
-    final visitFormCubit = parentContext.read<PostVisitedSiteCubit>();
+    final visitFormCubit = parentContext.read<AddVisitedSiteCubit>();
 
     showModalBottomSheet(
       context: parentContext,
@@ -99,7 +100,10 @@ class AddNewPhoto extends StatelessWidget {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -115,7 +119,8 @@ class AddNewPhoto extends StatelessWidget {
                 ),
                 onTap: () async {
                   Navigator.pop(context);
-                  final image = await ImagePicker().pickImage(source: ImageSource.camera);
+                  final image =
+                      await ImagePicker().pickImage(source: ImageSource.camera);
                   if (image != null) {
                     final compressedImage = await compressImage(image);
                     if (parentContext.mounted) {
@@ -132,7 +137,10 @@ class AddNewPhoto extends StatelessWidget {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -148,7 +156,8 @@ class AddNewPhoto extends StatelessWidget {
                 ),
                 onTap: () async {
                   Navigator.pop(context);
-                  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  final image = await ImagePicker()
+                      .pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     final compressedImage = await compressImage(image);
                     if (parentContext.mounted) {
@@ -180,7 +189,8 @@ class AddNewPhoto extends StatelessWidget {
         height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+          color:
+              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -197,7 +207,8 @@ class AddNewPhoto extends StatelessWidget {
   }
 }
 
-Row imageBuilder(List<XFile> images, int index, PostVisitedSiteCubit visitFormCubit, BuildContext context) {
+Row imageBuilder(List<XFile> images, int index,
+    AddVisitedSiteCubit visitFormCubit, BuildContext context) {
   return Row(
     children: [
       Stack(

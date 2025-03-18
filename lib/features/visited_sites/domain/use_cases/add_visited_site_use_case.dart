@@ -10,6 +10,6 @@ class AddVisitedSite {
   AddVisitedSite({required this.repository});
 
   Future<Either<Failure, AddVisitedSiteEntity>> call({required Map<String, dynamic> body}) {
-    return repository.postVisitedSite(body: body);
+    return repository.addVisitedSite(body: body);
   }
 }

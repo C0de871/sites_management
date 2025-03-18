@@ -25,7 +25,8 @@ class EnvironmentInformationsModel extends EnvironmentInformationsEntity {
 
   factory EnvironmentInformationsModel.fromMap(Map<String, dynamic> data) {
     return EnvironmentInformationsModel(
-      powerControlSerialNumber: data[ApiKey.powerControlSerialNumber] as String?,
+      powerControlSerialNumber:
+          data[ApiKey.powerControlSerialNumber] as String?,
       ampereConsumption: data[ApiKey.ampereConsumption] as int?,
       miniPhase: data[ApiKey.miniPhase] as bool?,
       threePhase: data[ApiKey.threePhase] as bool?,
@@ -67,7 +68,8 @@ class EnvironmentInformationsModel extends EnvironmentInformationsEntity {
   ///
   /// Parses the string and returns the resulting Json object as [EnvironmentInformationsModel].
   factory EnvironmentInformationsModel.fromJson(String data) {
-    return EnvironmentInformationsModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return EnvironmentInformationsModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
@@ -94,11 +96,13 @@ class EnvironmentInformationsModel extends EnvironmentInformationsEntity {
     String? remarks,
   }) {
     return EnvironmentInformationsModel(
-      powerControlSerialNumber: powerControlSerialNumber ?? this.powerControlSerialNumber,
+      powerControlSerialNumber:
+          powerControlSerialNumber ?? this.powerControlSerialNumber,
       ampereConsumption: ampereConsumption ?? this.ampereConsumption,
       miniPhase: miniPhase ?? this.miniPhase,
       threePhase: threePhase ?? this.threePhase,
-      powerControlOwnership: powerControlOwnership ?? this.powerControlOwnership,
+      powerControlOwnership:
+          powerControlOwnership ?? this.powerControlOwnership,
       fanQuantity: fanQuantity ?? this.fanQuantity,
       faultyFanQuantity: faultyFanQuantity ?? this.faultyFanQuantity,
       earthingSystem: earthingSystem ?? this.earthingSystem,

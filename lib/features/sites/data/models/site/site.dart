@@ -39,17 +39,50 @@ class SiteModel extends SiteEntity {
 
   factory SiteModel.fromMap(Map<String, dynamic> data) {
     return SiteModel(
-      sites: data[ApiKey.sites] == null ? null : SitesModel.fromMap(data[ApiKey.sites] as Map<String, dynamic>),
-      towerInformations: data[ApiKey.towerInformations] == null ? null : TowerInformationsModel.fromMap(data[ApiKey.towerInformations] as Map<String, dynamic>),
-      bandInformations: data[ApiKey.bandInformations] == null ? null : BandModel.fromMap(data[ApiKey.bandInformations] as Map<String, dynamic>),
-      generatorInformations: (data[ApiKey.generatorInformations] as List<dynamic>?)?.map((e) => GeneratorInformationModel.fromMap(e as Map<String, dynamic>)).toList(),
-      solarWindInformations: data[ApiKey.solarWindInformations] == null ? null : SolarWindInformationsModel.fromMap(data[ApiKey.solarWindInformations] as Map<String, dynamic>),
-      rectifierInformations: data[ApiKey.rectifierInformations] == null ? null : RectifierInformationsModel.fromMap(data[ApiKey.rectifierInformations] as Map<String, dynamic>),
-      environmentInformations: data[ApiKey.environmentInformations] == null ? null : EnvironmentInformationsModel.fromMap(data[ApiKey.environmentInformations] as Map<String, dynamic>),
-      lvdpInformations: data[ApiKey.lvdpInformations] == null ? null : LvdpInformationsModel.fromMap(data[ApiKey.lvdpInformations] as Map<String, dynamic>),
-      amperesInformations: data[ApiKey.amperesInformations] == null ? null : AmperesModel.fromMap(data[ApiKey.amperesInformations] as Map<String, dynamic>),
-      tcuInformations: data[ApiKey.tcuInformations] == null ? null : TcuInformationsModel.fromMap(data[ApiKey.tcuInformations] as Map<String, dynamic>),
-      fiberInformations: data[ApiKey.fiberInformations] == null ? null : FiberInformationsModel.fromMap(data[ApiKey.fiberInformations] as Map<String, dynamic>),
+      sites: data[ApiKey.sites] == null
+          ? null
+          : SitesModel.fromMap(data[ApiKey.sites] as Map<String, dynamic>),
+      towerInformations: data[ApiKey.towerInformations] == null
+          ? null
+          : TowerInformationsModel.fromMap(
+              data[ApiKey.towerInformations] as Map<String, dynamic>),
+      bandInformations: data[ApiKey.bandInformations] == null
+          ? null
+          : BandModel.fromMap(
+              data[ApiKey.bandInformations] as Map<String, dynamic>),
+      generatorInformations:
+          (data[ApiKey.generatorInformations] as List<dynamic>?)
+              ?.map((e) =>
+                  GeneratorInformationModel.fromMap(e as Map<String, dynamic>))
+              .toList(),
+      solarWindInformations: data[ApiKey.solarWindInformations] == null
+          ? null
+          : SolarWindInformationsModel.fromMap(
+              data[ApiKey.solarWindInformations] as Map<String, dynamic>),
+      rectifierInformations: data[ApiKey.rectifierInformations] == null
+          ? null
+          : RectifierInformationsModel.fromMap(
+              data[ApiKey.rectifierInformations] as Map<String, dynamic>),
+      environmentInformations: data[ApiKey.environmentInformations] == null
+          ? null
+          : EnvironmentInformationsModel.fromMap(
+              data[ApiKey.environmentInformations] as Map<String, dynamic>),
+      lvdpInformations: data[ApiKey.lvdpInformations] == null
+          ? null
+          : LvdpInformationsModel.fromMap(
+              data[ApiKey.lvdpInformations] as Map<String, dynamic>),
+      amperesInformations: data[ApiKey.amperesInformations] == null
+          ? null
+          : AmperesModel.fromMap(
+              data[ApiKey.amperesInformations] as Map<String, dynamic>),
+      tcuInformations: data[ApiKey.tcuInformations] == null
+          ? null
+          : TcuInformationsModel.fromMap(
+              data[ApiKey.tcuInformations] as Map<String, dynamic>),
+      fiberInformations: data[ApiKey.fiberInformations] == null
+          ? null
+          : FiberInformationsModel.fromMap(
+              data[ApiKey.fiberInformations] as Map<String, dynamic>),
       siteImages: data[ApiKey.siteImages] as List<dynamic>?,
       siteAdditionalImages: data[ApiKey.siteAdditionalImages] as List<dynamic>?,
       towerImages: data[ApiKey.towerImages] as List<dynamic>?,
@@ -62,16 +95,26 @@ class SiteModel extends SiteEntity {
 
   Map<String, dynamic> toMap() => {
         ApiKey.sites: (sites as SitesModel?)?.toMap(),
-        ApiKey.towerInformations: (towerInformations as TowerInformationsModel?)?.toMap(),
+        ApiKey.towerInformations:
+            (towerInformations as TowerInformationsModel?)?.toMap(),
         ApiKey.bandInformations: (bandInformations as BandModel?)?.toMap(),
-        ApiKey.generatorInformations: generatorInformations?.map((e) => (e as GeneratorInformationModel).toMap()).toList(),
-        ApiKey.solarWindInformations: (solarWindInformations as SolarWindInformationsModel?)?.toMap(),
-        ApiKey.rectifierInformations: (rectifierInformations as RectifierInformationsModel?)?.toMap(),
-        ApiKey.environmentInformations: (environmentInformations as EnvironmentInformationsModel?)?.toMap(),
-        ApiKey.lvdpInformations: (lvdpInformations as LvdpInformationsModel?)?.toMap(),
-        ApiKey.amperesInformations: (amperesInformations as AmperesModel?)?.toMap(),
-        ApiKey.tcuInformations: (tcuInformations as TcuInformationsModel?)?.toMap(),
-        ApiKey.fiberInformations: (fiberInformations as FiberInformationsModel?)?.toMap(),
+        ApiKey.generatorInformations: generatorInformations
+            ?.map((e) => (e as GeneratorInformationModel).toMap())
+            .toList(),
+        ApiKey.solarWindInformations:
+            (solarWindInformations as SolarWindInformationsModel?)?.toMap(),
+        ApiKey.rectifierInformations:
+            (rectifierInformations as RectifierInformationsModel?)?.toMap(),
+        ApiKey.environmentInformations:
+            (environmentInformations as EnvironmentInformationsModel?)?.toMap(),
+        ApiKey.lvdpInformations:
+            (lvdpInformations as LvdpInformationsModel?)?.toMap(),
+        ApiKey.amperesInformations:
+            (amperesInformations as AmperesModel?)?.toMap(),
+        ApiKey.tcuInformations:
+            (tcuInformations as TcuInformationsModel?)?.toMap(),
+        ApiKey.fiberInformations:
+            (fiberInformations as FiberInformationsModel?)?.toMap(),
         ApiKey.siteImages: siteImages,
         ApiKey.siteAdditionalImages: siteAdditionalImages,
         ApiKey.towerImages: towerImages,
@@ -117,10 +160,14 @@ class SiteModel extends SiteEntity {
       sites: sites ?? this.sites,
       towerInformations: towerInformations ?? this.towerInformations,
       bandInformations: bandInformations ?? this.bandInformations,
-      generatorInformations: generatorInformations ?? this.generatorInformations,
-      solarWindInformations: solarWindInformations ?? this.solarWindInformations,
-      rectifierInformations: rectifierInformations ?? this.rectifierInformations,
-      environmentInformations: environmentInformations ?? this.environmentInformations,
+      generatorInformations:
+          generatorInformations ?? this.generatorInformations,
+      solarWindInformations:
+          solarWindInformations ?? this.solarWindInformations,
+      rectifierInformations:
+          rectifierInformations ?? this.rectifierInformations,
+      environmentInformations:
+          environmentInformations ?? this.environmentInformations,
       lvdpInformations: lvdpInformations ?? this.lvdpInformations,
       amperesInformations: amperesInformations ?? this.amperesInformations,
       tcuInformations: tcuInformations ?? this.tcuInformations,

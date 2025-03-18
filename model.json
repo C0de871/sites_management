@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Site Nam",
+        "code": "Site Code",
+        "area": "Area",
+        "street": "Street",
+        "city": "City"
+    },
+    {
+        "name": "Site Nam 1",
+        "code": "Site Code 1",
+        "area": "Area",
+        "street": "Street",
+        "city": "City"
+    }
+]

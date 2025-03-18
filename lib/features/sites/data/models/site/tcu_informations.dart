@@ -28,7 +28,8 @@ class TcuInformationsModel extends TcuInformationsEntity {
   ///
   /// Parses the string and returns the resulting Json object as [TcuInformationsModel].
   factory TcuInformationsModel.fromJson(String data) {
-    return TcuInformationsModel.fromMap(json.decode(data) as Map<String, dynamic>);
+    return TcuInformationsModel.fromMap(
+        json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
