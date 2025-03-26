@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/features/home/presentation/widgets/app_bar_title.dart';
-import 'package:sites_management/features/home/presentation/widgets/m_t_n_logo.dart';
+import 'app_bar_title.dart';
+import 'm_t_n_logo.dart';
 
 import 'credit_button.dart';
 

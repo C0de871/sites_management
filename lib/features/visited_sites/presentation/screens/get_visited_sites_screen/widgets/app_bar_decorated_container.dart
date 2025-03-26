@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/circle_decoration.dart';
+import 'circle_decoration.dart';
 
 class AppBarDecoratedContainer extends StatelessWidget {
   const AppBarDecoratedContainer({

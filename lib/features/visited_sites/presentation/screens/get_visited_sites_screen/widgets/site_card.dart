@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/core/helper/mock_data.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/see_more_details_icon.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/site_card_body.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/site_check_box.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/site_first_char.dart';
 
 import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import 'see_more_details_icon.dart';
+import 'site_card_body.dart';
+import 'site_check_box.dart';
+import 'site_first_char.dart';
 
 class SiteCard extends StatelessWidget {
   final bool isSelected;

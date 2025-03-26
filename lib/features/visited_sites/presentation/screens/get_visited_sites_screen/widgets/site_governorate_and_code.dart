@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/site_code.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/site_governorate.dart';
+import 'site_code.dart';
+import 'site_governorate.dart';
 
 import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
 

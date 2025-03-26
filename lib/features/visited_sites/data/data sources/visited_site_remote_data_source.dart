@@ -19,8 +19,9 @@ class VisitedSiteRemoteDataSource {
     return AddVisitedSiteModel.fromMap(response);
   }
 
+
   Future<List<GetVisitedSitesModel>> getVisitedSites() async {
-    List<Map<String, dynamic>> response = await api.post(
+    final List response = await api.get(
       EndPoints.getVisitedSites,
     );
     return response.map((site) => GetVisitedSitesModel.fromMap(site)).toList();

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/custom_photo_picker.dart';
+import 'custom_photo_picker.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';

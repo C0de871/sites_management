@@ -4,6 +4,7 @@ class EndPoints {
   static String baserUrl = dotenv.env['BASEURL']!;
   static String postVisitedSite = dotenv.env["ADDVISITEDSITE"]!;
   static String getVisitedSites = dotenv.env["GETALLVISITEDSITES"]!;
+  static String loginUser = dotenv.env["LOGINUSER"]!;
 }
 
 class ApiKey {
@@ -130,7 +131,10 @@ class ApiKey {
   static const String batteryImages = 'batteryImages';
 }
 
-class CacheKey {}
+class CacheKey {
+  static const String accessToken = "accessToken";
+  static const String user = "user";
+}
 
 class RequestKeys {
   static const String sites = "sites";

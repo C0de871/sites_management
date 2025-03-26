@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/filter_and_stats_info.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/sites_list_or_not_available.dart';
+import 'filter_and_stats_info.dart';
+import 'sites_list_or_not_available.dart';
 
 class SiteListAndFilterInfoBody extends StatelessWidget {
   const SiteListAndFilterInfoBody({

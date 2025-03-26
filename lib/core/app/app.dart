@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sites_management/core/utils/services/service_locator.dart';
-import '../../features/auth/presentation/loading_screen/loading_screen.dart';
+
+// import '../../features/auth/presentation/loading_screen/loading_screen.dart';
 import '../Routes/app_router.dart';
+import '../Routes/app_routes.dart';
 import '../helper/app_functions.dart';
 import '../theme/app_theme.dart';
 import '../translations/l10n.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../utils/services/service_locator.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: _appTheme.light(),
       darkTheme: _appTheme.dark(),
       themeMode: ThemeMode.light,
-      home: const LoadingScreen(),
+      initialRoute: AppRoutes.loading,
       onGenerateRoute: getIt<AppRouter>().generateRoute,
     );
   }

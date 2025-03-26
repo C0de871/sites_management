@@ -3,13 +3,12 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:sites_management/core/helper/mock_data.dart';
-import 'package:sites_management/features/visited_sites/domain/use_cases/get_visited_sites_use_case.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_state.dart';
 
 import '../../../../../../core/utils/services/service_locator.dart';
 import '../../../../data/services/visited_site_event_bus.dart';
 import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/use_cases/get_visited_sites_use_case.dart';
+import 'get_visited_site_state.dart';
 
 class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
   GetVisitedSitesUseCase getVisitedSitesUseCase;

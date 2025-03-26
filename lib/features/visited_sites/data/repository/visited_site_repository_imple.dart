@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:sites_management/core/databases/api/end_points.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../core/databases/api/end_points.dart';
+import '../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
 
 import '../../../../core/databases/connection/network_info.dart';
 import '../../../../core/databases/errors/expentions.dart';

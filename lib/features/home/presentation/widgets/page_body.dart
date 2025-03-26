@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/core/Routes/app_routes.dart';
-import 'package:sites_management/features/home/presentation/widgets/visit_button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/features/home/presentation/cubits/home_cubit.dart';
+
+import '../../../../core/Routes/app_routes.dart';
+import '../../../auth/presentation/login_screen/cubits/login_cubit.dart';
+import 'visit_button.dart';
 
 class PageBody extends StatelessWidget {
   const PageBody({
@@ -46,6 +50,21 @@ class PageBody extends StatelessWidget {
               icon: Icons.cell_tower_outlined,
               color: Colors.purple,
               press: () {},
+            ),
+            BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                switch (state) {
+                  case HomeSuccess() when state.role == UserRole.MANAGER:
+                    return VisitButton(
+                      text: "المستخدمين",
+                      icon: Icons.person_2_outlined,
+                      color: Colors.blueGrey,
+                      press: () {},
+                    );
+                  case _:
+                    return const SizedBox.shrink();
+                }
+              },
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/core/shared/widgets/credit_dialoge.dart';
+import '../../../../core/shared/widgets/credit_dialoge.dart';
 
 class CreditButton extends StatelessWidget {
   const CreditButton({

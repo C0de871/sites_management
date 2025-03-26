@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/core/helper/extensions.dart';
-import 'package:sites_management/core/shared/widgets/form_container.dart';
-import 'package:sites_management/core/utils/constants/app_numbers.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/custom_photo_picker.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/custom_text_field.dart';
+import '../../../../../../core/helper/extensions.dart';
+import '../../../../../../core/shared/widgets/form_container.dart';
+import '../../../../../../core/utils/constants/app_numbers.dart';
+import 'custom_photo_picker.dart';
+import 'custom_text_field.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';

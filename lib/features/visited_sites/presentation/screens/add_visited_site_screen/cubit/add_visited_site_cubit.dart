@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sites_management/core/utils/constants/constant.dart';
+import '../../../../../../core/utils/constants/constant.dart';
 
 import '../../../../../../core/databases/api/end_points.dart';
 import '../../../../../../core/utils/services/service_locator.dart';

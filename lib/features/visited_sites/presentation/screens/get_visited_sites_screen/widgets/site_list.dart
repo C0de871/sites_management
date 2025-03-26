@@ -2,11 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_state.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/add_visited_site.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_site_details.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/site_card.dart';
+import '../cubit/get_visited_site_cubit.dart';
+import '../cubit/get_visited_site_state.dart';
+import 'site_card.dart';
 
 import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
 
@@ -16,18 +14,18 @@ class SiteList extends StatelessWidget {
   });
 
   void _navigateToSiteDetails(GetVisitedSitesEntity site, BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SiteDetailsPage(site: site),
-      ),
-    ).then((needsRefresh) {
-      if (needsRefresh == true) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SuccessSnackBar());
-        }
-      }
-    });
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => SiteDetailsPage(site: site),
+    //   ),
+    // ).then((needsRefresh) {
+    //   if (needsRefresh == true) {
+    //     if (context.mounted) {
+    //       // ScaffoldMessenger.of(context).showSnackBar( SuccessSnackBar(message: ,));
+    //     }
+    //   }
+    // });
   }
 
   @override

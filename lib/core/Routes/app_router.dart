@@ -2,62 +2,61 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/core/Routes/app_routes.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/form_hub_screen.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/ampere_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/environment_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/fiber_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/generator_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/gsm_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/lte_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/lvdp_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/photo_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/rectifier_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_additional_info.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_configuration.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_general_info.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/solar_and_wind_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tcu_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/three_g_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tower_setion.dart';
+import 'package:sites_management/features/home/presentation/cubits/home_cubit.dart';
 
+import '../../features/auth/presentation/login_screen/cubits/login_cubit.dart';
+import '../../features/auth/presentation/login_screen/login_screen.dart';
 import '../../features/home/presentation/home_page.dart';
+import '../../features/splash/presentation/spalsh_screen.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/form_hub_screen.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/ampere_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/environment_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/fiber_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/generator_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/gsm_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/lte_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/lvdp_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/photo_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/rectifier_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_additional_info.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_configuration.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_general_info.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/solar_and_wind_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tcu_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/three_g_section.dart';
+import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tower_setion.dart';
+import '../../features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
 import '../../features/visited_sites/presentation/screens/get_visited_sites_screen/get_visited_sites.dart';
+import '../helper/cubit_helper.dart';
 import '../utils/constants/constant.dart';
+import 'app_routes.dart';
 
-class AppRouter {
-  GetVisitedSitesCubit? _showVisitedSiteCubit;
-  AddVisitedSiteCubit? _postVisitedSiteCubit;
+class AppRouter with CubitProviderMixin {
+  GetVisitedSitesCubit? _getVisitedSiteCubit;
+  AddVisitedSiteCubit? _addVisitedSiteCubit;
 
   // PostVisitedSiteCubit get postVisitedSiteCubit => _getCubit(_postVisitedSiteCubit, () => PostVisitedSiteCubit());
-  GetVisitedSitesCubit get showVisitedSiteCubit => _getCubit(_showVisitedSiteCubit, () => GetVisitedSitesCubit());
+  GetVisitedSitesCubit get getVisitedSiteCubit => _getCubit(_getVisitedSiteCubit, () => GetVisitedSitesCubit());
 
-  AddVisitedSiteCubit get postVisitedSiteCubit {
-    if (_postVisitedSiteCubit == null || _postVisitedSiteCubit!.isClosed) {
-      log("cubit is null: ${_postVisitedSiteCubit == null}");
-      log("cubit is closed: ${_postVisitedSiteCubit?.isClosed.toString()}");
-      log("newCubit created");
-      _postVisitedSiteCubit = AddVisitedSiteCubit();
+  AddVisitedSiteCubit get addVisitedSiteCubit {
+    if (_addVisitedSiteCubit == null || _addVisitedSiteCubit!.isClosed) {
+      _addVisitedSiteCubit = AddVisitedSiteCubit();
     }
-    _postVisitedSiteCubit!.stream.listen((_) {}, onDone: () {
-      _postVisitedSiteCubit = null;
+    _addVisitedSiteCubit!.stream.listen((_) {}, onDone: () {
+      _addVisitedSiteCubit = null;
     });
-    return _postVisitedSiteCubit!;
+    return _addVisitedSiteCubit!;
   }
 
   T _getCubit<T extends Cubit<Object>>(T? cubit, T Function() createCubit) {
     if (cubit == null || cubit.isClosed) {
-      log("cubit is null: ${cubit == null}");
-      log("cubit is closed: ${cubit?.isClosed.toString()}");
       cubit = createCubit();
-      log("newCubit created");
     }
-    // cubit.stream.listen((_) {}, onDone: () {
-    //   cubit = null; // Nullify the reference when closed
-    // });
-    return cubit;
+    cubit.stream.listen((_) {}, onDone: () {
+      cubit = null; // Nullify the reference when closed
+    });
+    return cubit!;
   }
 
   //? <======= cubits declration =======>
@@ -68,7 +67,10 @@ class AppRouter {
       case AppRoutes.homePage:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => const HomePage(),
+          builder: (_) => BlocProvider(
+            create: (context) => getCubit(() => HomeCubit()..retrieveUser()),
+            child: const HomePage(),
+          ),
         );
 
       //!site information route:
@@ -79,11 +81,11 @@ class AppRouter {
             providers: [
               BlocProvider(
                 lazy: false,
-                create: (context) => postVisitedSiteCubit,
+                create: (context) => addVisitedSiteCubit,
               ),
               BlocProvider(
                 lazy: false,
-                create: (context) => showVisitedSiteCubit,
+                create: (context) => getVisitedSiteCubit,
               ),
             ],
             child: const SitesListPage(),
@@ -93,9 +95,9 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) {
-            log("cubit is null ====================================== : ${_postVisitedSiteCubit == null}");
+            log("cubit is null ====================================== : ${_addVisitedSiteCubit == null}");
             return BlocProvider.value(
-              value: postVisitedSiteCubit,
+              value: addVisitedSiteCubit,
               child: const SiteGeneralInfo(),
             );
           },
@@ -104,7 +106,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const FormHubScreen(),
           ),
         );
@@ -112,7 +114,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const SiteConfiguration(),
           ),
         );
@@ -120,7 +122,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const SiteAdditionalInfo(),
           ),
         );
@@ -128,7 +130,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const AmpereSection(),
           ),
         );
@@ -136,7 +138,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const TcuSection(),
           ),
         );
@@ -144,7 +146,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const FiberSection(),
           ),
         );
@@ -152,7 +154,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const GsmSection(band: MapKeys.gsm900),
           ),
         );
@@ -160,7 +162,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const GsmSection(band: MapKeys.gsm1800),
           ),
         );
@@ -168,7 +170,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const ThreeGSection(),
           ),
         );
@@ -176,7 +178,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const LteSection(),
           ),
         );
@@ -184,7 +186,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const RectifierSection(),
           ),
         );
@@ -192,7 +194,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const EnvironmentSection(),
           ),
         );
@@ -200,7 +202,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const TowerSection(),
           ),
         );
@@ -208,7 +210,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const SolarAndWindSection(),
           ),
         );
@@ -216,7 +218,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const GeneratorSection(),
           ),
         );
@@ -224,7 +226,7 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const LvdpSection(),
           ),
         );
@@ -232,8 +234,28 @@ class AppRouter {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: postVisitedSiteCubit,
+            value: addVisitedSiteCubit,
             child: const PhotoSection(),
+          ),
+        );
+
+      case AppRoutes.loading:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => BlocProvider(
+            create: (context) => getCubit(() => LoginCubit()..retrieveUser()),
+            child: const SpalshScreen(),
+          ),
+        );
+
+      case AppRoutes.login:
+        closeCubit<LoginCubit>();
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => BlocProvider(
+            lazy: false,
+            create: (context) => getCubit(() => LoginCubit()),
+            child: const LoginScreen(),
           ),
         );
 

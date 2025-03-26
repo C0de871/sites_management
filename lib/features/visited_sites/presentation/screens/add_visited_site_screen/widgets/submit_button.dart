@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/add_visited_site.dart';
+import '../cubit/add_visited_site_cubit.dart';
+import '../add_visited_site.dart';
 
 class SubmitButton extends StatelessWidget {
   const SubmitButton({

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/core/helper/extensions.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/custom_drop_down.dart';
 
+import '../../../../../../core/helper/extensions.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
 import '../cubit/add_visited_site_cubit.dart';
-import 'custom_card.dart';
+import 'custom_drop_down.dart';
 
 class SiteType extends StatelessWidget {
   const SiteType({super.key});

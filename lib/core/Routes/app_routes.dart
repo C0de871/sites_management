@@ -15,11 +15,12 @@ class AppRoutes {
   static const String siteLTEInfo = "site-lte-info";
   static const String siteRectifierInfo = "site-rectifier-info";
   static const String siteEnvironmentInfo = "site-environment-info";
-  static const String siteTowerMastMonopoleInfo =
-      "site-tower-mast-monopole-info";
-  static const String siteSolarAndWindSystemInfo =
-      "site-solar-and-wind-system-info";
+  static const String siteTowerMastMonopoleInfo = "site-tower-mast-monopole-info";
+  static const String siteSolarAndWindSystemInfo = "site-solar-and-wind-system-info";
   static const String siteGeneratorInfo = "site-generator-info";
   static const String siteLvdpInfo = "site-lvdp-info";
   static const String siteAdditionalPhotoInfo = "site-additional-photo-info";
+  static const String login = "login";
+  static const String usersList = "users-list";
+  static const String loading = "loading";
 }

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/ampere_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/continue_button.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/environment_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/fiber_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/gsm_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/lte_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/rectifier_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_additional_info.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_configuration.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_general_info.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/site_type.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/solar_and_wind_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tcu_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/three_g_section.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/tower_setion.dart';
+import 'cubit/add_visited_site_cubit.dart';
+import 'widgets/ampere_section.dart';
+import 'widgets/continue_button.dart';
+import 'widgets/environment_section.dart';
+import 'widgets/fiber_section.dart';
+import 'widgets/gsm_section.dart';
+import 'widgets/lte_section.dart';
+import 'widgets/rectifier_section.dart';
+import 'widgets/site_additional_info.dart';
+import 'widgets/site_configuration.dart';
+import 'widgets/site_general_info.dart';
+import 'widgets/site_type.dart';
+import 'widgets/solar_and_wind_section.dart';
+import 'widgets/tcu_section.dart';
+import 'widgets/three_g_section.dart';
+import 'widgets/tower_setion.dart';
 
 import '../../../../../core/utils/constants/app_numbers.dart';
 import '../../../../../core/utils/constants/constant.dart';
@@ -26,13 +26,11 @@ import 'widgets/photo_section.dart';
 // MTN Colors
 
 // AppBar Widget
-class SiteInformationAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class SiteInformationAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  const SiteInformationAppBar({super.key})
-      : preferredSize = const Size.fromHeight(kToolbarHeight);
+  const SiteInformationAppBar({super.key}) : preferredSize = const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +55,18 @@ class SiteInformationAppBar extends StatelessWidget
 
 // SnackBar Widgets
 class SuccessSnackBar extends SnackBar {
-  const SuccessSnackBar({super.key})
-      : super(
-          content: const Row(
+  final String message;
+  SuccessSnackBar({
+    super.key,
+    required this.message,
+  }) : super(
+          content: Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.green),
-              SizedBox(width: 8),
+              const Icon(Icons.check_circle, color: Colors.green),
+              const SizedBox(width: 8),
               Text(
-                'Site visit posted successfully!',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                message,
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
               ),
             ],
           ),
@@ -88,8 +88,7 @@ class FailedSnackBar extends SnackBar {
               const SizedBox(width: 8),
               Text(
                 message,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
               ),
             ],
           ),
@@ -246,7 +245,9 @@ class SiteInformationListener extends StatelessWidget {
     return BlocListener<AddVisitedSiteCubit, AddVisitedSiteState>(
       listener: (context, state) {
         if (state is AddVisitedSiteSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(const SuccessSnackBar());
+          ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(
+            message: 'site added successfully',
+          ));
         } else if (state is AddVisitedSiteFailed) {
           ScaffoldMessenger.of(context).showSnackBar(FailedSnackBar(
             message: state.msg,

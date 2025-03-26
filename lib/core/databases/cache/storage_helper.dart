@@ -1,4 +1,4 @@
-abstract class StorageHelper {
+abstract class CacheHelper {
   Future<void> init();
   Future<bool> saveData({required String key, required dynamic value});
   dynamic getData({required String key});

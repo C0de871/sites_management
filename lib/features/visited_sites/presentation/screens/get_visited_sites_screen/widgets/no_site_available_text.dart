@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_state.dart';
+import '../cubit/get_visited_site_cubit.dart';
+import '../cubit/get_visited_site_state.dart';
 
 class NoSiteAvailableText extends StatelessWidget {
   const NoSiteAvailableText({

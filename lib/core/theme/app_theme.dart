@@ -18,46 +18,42 @@ class AppTheme {
 
     InputDecorationTheme inputDecorationTheme() {
       var outlineEnableInputBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
           color: colorScheme.outline,
         ),
-        gapPadding: 10,
       );
       var outlineFocusInputBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
           color: colorScheme.primary,
           width: 2,
         ),
-        gapPadding: 10,
       );
       var outlineErrorInputBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
           color: colorScheme.error,
         ),
-        gapPadding: 10,
       );
       var outlineFocusErrorInputBorder = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
           color: colorScheme.error,
           width: 2,
         ),
-        gapPadding: 10,
       );
       return InputDecorationTheme(
-          errorMaxLines: 5,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 42,
-            vertical: 10,
-          ),
-          enabledBorder: outlineEnableInputBorder,
-          focusedBorder: outlineFocusInputBorder,
-          errorBorder: outlineErrorInputBorder,
-          focusedErrorBorder: outlineFocusErrorInputBorder);
+        errorMaxLines: 5,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+        enabledBorder: outlineEnableInputBorder,
+        focusedBorder: outlineFocusInputBorder,
+        errorBorder: outlineErrorInputBorder,
+        focusedErrorBorder: outlineFocusErrorInputBorder,
+      );
     }
 
     TextTheme appTextTheme = TextTheme(
@@ -110,17 +106,21 @@ class AppTheme {
 
     return ThemeData(
       colorScheme: colorScheme,
-      scaffoldBackgroundColor: colorScheme.brightness == Brightness.dark
-          ? darkScheme().surface
-          : Colors.white,
-      // scaffoldBackgroundColor: darkScheme().su,
+      scaffoldBackgroundColor: colorScheme.brightness == Brightness.dark ? darkScheme().surface : Colors.white,
       textTheme: appTextTheme,
       textButtonTheme: textButtonStyle,
       extensions: const [
         ExtentionColors(),
       ],
-      // textButtonTheme: TextButtonThemeData(style: ),
       inputDecorationTheme: inputDecorationTheme(),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
     );
   }
 

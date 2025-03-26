@@ -1,14 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:sites_management/core/Routes/app_router.dart';
-import 'package:sites_management/features/visited_sites/data/data%20sources/visited_site_remote_data_source.dart';
-import 'package:sites_management/features/visited_sites/data/services/visited_site_event_bus.dart';
-import 'package:sites_management/features/visited_sites/domain/repository/visited_site_repository.dart';
-import 'package:sites_management/features/visited_sites/domain/use_cases/add_visited_site_use_case.dart';
-import 'package:sites_management/features/visited_sites/domain/use_cases/get_visited_sites_use_case.dart';
+import 'package:sites_management/features/auth/data/data_sources/user_local_data_source.dart';
+import 'package:sites_management/features/auth/data/data_sources/user_remote_data_source.dart';
+import 'package:sites_management/features/auth/domain/repository/repository.dart';
+import 'package:sites_management/features/auth/domain/usecases/login_user_use_case.dart';
+import 'package:sites_management/features/auth/domain/usecases/retreive_access_token_use_case.dart';
+import 'package:sites_management/features/auth/domain/usecases/retreive_user_use_case.dart';
 
+import '../../../features/auth/data/repository/repository_impl.dart';
+import '../../../features/visited_sites/data/data%20sources/visited_site_remote_data_source.dart';
 import '../../../features/visited_sites/data/repository/visited_site_repository_imple.dart';
+import '../../../features/visited_sites/data/services/visited_site_event_bus.dart';
+import '../../../features/visited_sites/domain/repository/visited_site_repository.dart';
+import '../../../features/visited_sites/domain/use_cases/add_visited_site_use_case.dart';
+import '../../../features/visited_sites/domain/use_cases/get_visited_sites_use_case.dart';
+import '../../Routes/app_router.dart';
 import '../../databases/api/api_consumer.dart';
 import '../../databases/api/dio_consumer.dart';
 import '../../databases/cache/secure_storage_helper.dart';
@@ -37,18 +44,26 @@ void setupServicesLocator() {
   getIt.registerLazySingleton<VisitedSiteRemoteDataSource>(() => VisitedSiteRemoteDataSource(
         api: getIt(),
       ));
+  getIt.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSource(getIt()));
+  getIt.registerLazySingleton<UserLocalDataSource>(() => UserLocalDataSource(getIt<SecureStorageHelper>()));
 
   //! Repository
-  // getIt.registerLazySingleton<LanguageRepository>(() => LanguageRepositoryImpl(
-  //       localDataSource: getIt(),
-  //     ));
   getIt.registerLazySingleton<VisitedSiteRepository>(() => VisitedSiteRepositoryImple(
         remoteDataSource: getIt(),
         networkInfo: getIt(),
         visitedSitesEventBus: getIt(),
       ));
 
+  getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
+        remoteDataSource: getIt(),
+        networkInfo: getIt(),
+        localDataSource: getIt(),
+      ));
+
   //! Use Cases
   getIt.registerLazySingleton<AddVisitedSite>(() => AddVisitedSite(repository: getIt()));
   getIt.registerLazySingleton<GetVisitedSitesUseCase>(() => GetVisitedSitesUseCase(repository: getIt()));
+  getIt.registerLazySingleton<LoginUserUseCase>(() => LoginUserUseCase(repository: getIt()));
+  getIt.registerLazySingleton<RetreiveUserUseCase>(() => RetreiveUserUseCase(repository: getIt()));
+  getIt.registerLazySingleton<RetreiveAccessTokenUseCase>(() => RetreiveAccessTokenUseCase(repository: getIt()));
 }

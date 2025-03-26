@@ -2,7 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'storage_helper.dart';
 
-class SecureStorageHelper extends StorageHelper {
+class SecureStorageHelper extends CacheHelper {
   static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   @override

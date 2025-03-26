@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/widgets/custom_check_box_list.dart';
+import 'custom_check_box_list.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';

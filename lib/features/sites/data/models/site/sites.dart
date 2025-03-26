@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:sites_management/features/sites/domain/entities/genral_site_info_entity.dart';
+import '../../../domain/entities/genral_site_info_entity.dart';
 
 import '../../../../../core/databases/api/end_points.dart';
 

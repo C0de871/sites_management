@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_state.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/clear_filter_button.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/no_site_available_icon.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/no_site_available_text.dart';
+import '../cubit/get_visited_site_cubit.dart';
+import '../cubit/get_visited_site_state.dart';
+import 'clear_filter_button.dart';
+import 'no_site_available_icon.dart';
+import 'no_site_available_text.dart';
 
 class NoSiteAvailable extends StatelessWidget {
   const NoSiteAvailable({

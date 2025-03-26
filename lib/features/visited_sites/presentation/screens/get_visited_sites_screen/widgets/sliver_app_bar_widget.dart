@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/custom_bottom_bar_decoration.dart';
+import 'custom_bottom_bar_decoration.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/get_visited_sites_screen/widgets/flexible_space_bar_widget.dart';
 
 class SliverAppBarWidget extends StatelessWidget {
