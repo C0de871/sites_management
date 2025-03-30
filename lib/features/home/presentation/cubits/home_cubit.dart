@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sites_management/features/auth/domain/usecases/retreive_user_use_case.dart';
 
+import '../../../../core/shared/enums/user_role.dart';
 import '../../../../core/utils/services/service_locator.dart';
 
 part "home_state.dart";

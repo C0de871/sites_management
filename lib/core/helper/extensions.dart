@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 
+import '../shared/enums/user_role.dart';
 
 extension StringExtension on String? {
   bool isNullOrEmpty() => this == null || this == "";
@@ -21,3 +23,38 @@ extension StringValidation on String? {
   }
 }
 
+extension UserRoleExtension on UserRole {
+  String get userRoleName {
+    switch (this) {
+      case UserRole.WORKER:
+        return 'Worker';
+      case UserRole.MTN:
+        return 'MTN';
+      case UserRole.SITE_ADMIN:
+        return 'Sites Admin';
+      case UserRole.MANAGER:
+        return 'Manager';
+      case UserRole.GUEST:
+        return 'Guest';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case UserRole.WORKER:
+        return Colors.blue;
+      case UserRole.MTN:
+        return Colors.amber;
+      case UserRole.SITE_ADMIN:
+        return Colors.green;
+      case UserRole.MANAGER:
+        return Colors.purple;
+      case UserRole.GUEST:
+        return Colors.blueGrey;
+    }
+  }
+
+ 
+}
+
+// reposit

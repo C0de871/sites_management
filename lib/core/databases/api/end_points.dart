@@ -1,10 +1,25 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EndPoints {
+  //! BASE URL:
   static String baserUrl = dotenv.env['BASEURL']!;
+
+  //! visited sites apis:
   static String postVisitedSite = dotenv.env["ADDVISITEDSITE"]!;
   static String getVisitedSites = dotenv.env["GETALLVISITEDSITES"]!;
+  static String exportSites = dotenv.env["EXPORTSITES"]!;
+  static String showSiteDetails = dotenv.env["SHOWSITEDETAILS"]!;
+  static String deleteSites = dotenv.env["DELETESITES"]!;
+  static String editSite = dotenv.env["EDITSITE"]!;
+
+  //! auth apis:
   static String loginUser = dotenv.env["LOGINUSER"]!;
+
+  //! user managmenent apis:
+  static String addUser = dotenv.env["ADDUSER"]!;
+  static String editUser = dotenv.env["EDITUSER"]!;
+  static String deleteUsers = dotenv.env["DELETEUSERS"]!;
+  static String getUsers = dotenv.env["GETUSERS"]!;
 }
 
 class ApiKey {
@@ -259,4 +274,10 @@ class RequestKeys {
   static const generatorImages = "generator_images";
   static const transmissionImages = "transmission_images";
   static const fuelCageImages = "fuel_cage_images";
+
+  //!user keys:
+  static const String username = "username";
+  static const String password = "password";
+  static const String role = "role";
+  static const String ids = "ids";
 }

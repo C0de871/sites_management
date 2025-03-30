@@ -8,6 +8,7 @@ import '../../features/auth/presentation/login_screen/cubits/login_cubit.dart';
 import '../../features/auth/presentation/login_screen/login_screen.dart';
 import '../../features/home/presentation/home_page.dart';
 import '../../features/splash/presentation/spalsh_screen.dart';
+import '../../features/users/presentation/cubits/get_users/get_users_cubit.dart';
 import '../../features/visited_sites/presentation/screens/add_visited_site_screen/cubit/add_visited_site_cubit.dart';
 import '../../features/visited_sites/presentation/screens/add_visited_site_screen/form_hub_screen.dart';
 import '../../features/visited_sites/presentation/screens/add_visited_site_screen/widgets/ampere_section.dart';
@@ -29,6 +30,7 @@ import '../../features/visited_sites/presentation/screens/add_visited_site_scree
 import '../../features/visited_sites/presentation/screens/get_visited_sites_screen/cubit/get_visited_site_cubit.dart';
 import '../../features/visited_sites/presentation/screens/get_visited_sites_screen/get_visited_sites.dart';
 import '../helper/cubit_helper.dart';
+import '../shared/widgets/my_place_holder.dart';
 import '../utils/constants/constant.dart';
 import 'app_routes.dart';
 
@@ -259,6 +261,17 @@ class AppRouter with CubitProviderMixin {
           ),
         );
 
+      case AppRoutes.usersList:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => BlocProvider(
+            lazy: false,
+            create: (context) => getCubit(
+              () => GetUsersCubit(),
+            ),
+            child: const MyPlaceHolder(),
+          ),
+        );
       //!default route:
       default:
         return MaterialPageRoute(

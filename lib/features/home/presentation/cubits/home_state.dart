@@ -19,11 +19,3 @@ sealed class HomeState with _$HomeState {
     required String errorMessage,
   }) = HomeFailure;
 }
-
-enum UserRole {
-  MANAGER,
-  GUEST,
-  WORKER,
-  SITE_ADMIN,
-  MTN,
-}

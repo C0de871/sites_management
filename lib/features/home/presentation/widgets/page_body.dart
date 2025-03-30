@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/home/presentation/cubits/home_cubit.dart';
 
 import '../../../../core/Routes/app_routes.dart';
-import '../../../auth/presentation/login_screen/cubits/login_cubit.dart';
+import '../../../../core/shared/enums/user_role.dart';
 import 'visit_button.dart';
 
 class PageBody extends StatelessWidget {
