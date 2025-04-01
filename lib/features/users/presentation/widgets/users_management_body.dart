@@ -12,7 +12,7 @@ class UsersManagementBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        SizedBox(height: 16),
+        // SizedBox(height: 16),
         // SearchUserBar(),
         SizedBox(height: 16),
         EmptyOrLoadingOrUsersListView(),

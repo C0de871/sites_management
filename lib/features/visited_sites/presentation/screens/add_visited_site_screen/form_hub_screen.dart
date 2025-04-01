@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:sites_management/core/shared/enums/form_type.dart';
 
 import 'cubit/add_visited_site_cubit.dart';
 

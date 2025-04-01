@@ -6,8 +6,8 @@ import 'package:sites_management/features/users/presentation/widgets/app_bar_use
 import 'package:sites_management/features/users/presentation/widgets/users_management_body.dart';
 
 
-class UserManagementScreen extends StatelessWidget {
-  const UserManagementScreen({super.key});
+class UsersManagementScreen extends StatelessWidget {
+  const UsersManagementScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

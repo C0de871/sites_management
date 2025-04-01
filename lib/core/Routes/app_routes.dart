@@ -21,6 +21,6 @@ class AppRoutes {
   static const String siteLvdpInfo = "site-lvdp-info";
   static const String siteAdditionalPhotoInfo = "site-additional-photo-info";
   static const String login = "login";
-  static const String usersList = "users-list";
+  static const String usersManagement = "users-list";
   static const String loading = "loading";
 }

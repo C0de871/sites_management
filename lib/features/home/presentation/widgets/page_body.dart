@@ -59,7 +59,11 @@ class PageBody extends StatelessWidget {
                       text: "المستخدمين",
                       icon: Icons.person_2_outlined,
                       color: Colors.blueGrey,
-                      press: () {},
+                      press: () {
+                        Navigator.of(context).pushNamed(
+                          AppRoutes.usersManagement,
+                        );
+                      },
                     );
                   case _:
                     return const SizedBox.shrink();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/core/shared/enums/form_type.dart';
 import 'cubit/add_visited_site_cubit.dart';
 import 'widgets/ampere_section.dart';
 import 'widgets/continue_button.dart';

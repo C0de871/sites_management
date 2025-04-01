@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/users/domain/entities/get_users_entities/get_users_entity.dart';
 import 'package:sites_management/features/users/presentation/cubits/update_add_users/update_add_users_cubit.dart';
-import 'package:sites_management/features/users/presentation/users_screen.dart';
 import 'package:sites_management/features/users/presentation/widgets/edit_user_bottom_sheet.dart';
 import 'package:sites_management/features/users/presentation/widgets/user_card_body.dart';
 import 'package:sites_management/features/users/presentation/widgets/user_card_leading.dart';

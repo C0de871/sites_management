@@ -11,6 +11,8 @@ class EndPoints {
   static String showSiteDetails = dotenv.env["SHOWSITEDETAILS"]!;
   static String deleteSites = dotenv.env["DELETESITES"]!;
   static String editSite = dotenv.env["EDITSITE"]!;
+  static String getAdditionalSiteImages = dotenv.env["GETADDITIONALSITEIMAGES"]!;
+  static String getSectionImages = dotenv.env["GETSECTIONIMAGES"]!;
 
   //! auth apis:
   static String loginUser = dotenv.env["LOGINUSER"]!;

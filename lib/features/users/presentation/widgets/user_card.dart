@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/users/domain/entities/get_users_entities/get_users_entity.dart';
 import 'package:sites_management/features/users/presentation/cubits/delete_users/delete_users_cubit.dart';
-import 'package:sites_management/features/users/presentation/users_screen.dart';
 import 'package:sites_management/features/users/presentation/widgets/dismiss_background.dart';
 import 'package:sites_management/features/users/presentation/widgets/user_card_content.dart';
 

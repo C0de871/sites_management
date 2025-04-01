@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sites_management/core/shared/enums/form_type.dart';
 import '../../../../../../core/utils/constants/constant.dart';
 
 import '../../../../../../core/databases/api/end_points.dart';
@@ -56,10 +57,28 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
   bool isGeneratorInfoValid = false;
   bool isLvdpInfoValid = false;
   bool isAdditionalPhotoInfoValid = false;
+  bool internalFuelTankCage1 = false;
+  bool internalFuelTankCage2 = false;
+  bool externalFuelTankCage1 = false;
+  bool externalFuelTankCage2 = false;
+  bool cabinetCage = false;
+  bool miniPhase = false;
+  bool threePhase = false;
+  bool earthingSystem = false;
+  bool fireExiting = false;
+  bool fireWorking = false;
+  bool lVDPExiting = false;
+  bool lVDPWorking = false;
+  bool fuelSensor1Existing = false;
+  bool fuelSensor1Working = false;
+  bool fuelSensor2Existing = false;
+  bool fuelSensor2Working = false;
 
   String? selectedSiteType;
   String? selectedSolarAndWindBatteriesStatus;
   String? selectedRectifierBatteriesStatus;
+  String? selectedCode;
+  String? selectedName;
 
   List<XFile> generalSitePhotos = [];
   List<XFile> generatorImages = [];
@@ -115,69 +134,35 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     'Three Phase': false,
   };
 
-  String? selectedCode;
-  String? selectedName;
-
-  bool internalFuelTankCage1 = false;
-  bool internalFuelTankCage2 = false;
-  bool externalFuelTankCage1 = false;
-  bool externalFuelTankCage2 = false;
-  bool cabinetCage = false;
-  bool miniPhase = false;
-  bool threePhase = false;
-  bool earthingSystem = false;
-  bool fireExiting = false;
-  bool fireWorking = false;
-  bool lVDPExiting = false;
-  bool lVDPWorking = false;
-
-  bool fuelSensor1Existing = false;
-  bool fuelSensor1Working = false;
-  bool fuelSensor2Existing = false;
-  bool fuelSensor2Working = false;
-
   final TextEditingController mastNumberController = TextEditingController();
   final TextEditingController mastStatusController = TextEditingController();
   final TextEditingController towerNumberController = TextEditingController();
   final TextEditingController towerStatusController = TextEditingController();
   final TextEditingController beaconStatusController = TextEditingController();
-  final TextEditingController monopoleNumberController =
-      TextEditingController();
-  final TextEditingController monopoleStatusController =
-      TextEditingController();
+  final TextEditingController monopoleNumberController = TextEditingController();
+  final TextEditingController monopoleStatusController = TextEditingController();
   final TextEditingController mast1HeightController = TextEditingController();
   final TextEditingController tower1HeightController = TextEditingController();
   final TextEditingController mast2HeightController = TextEditingController();
   final TextEditingController tower2HeightController = TextEditingController();
   final TextEditingController mast3HeightController = TextEditingController();
   final TextEditingController tower3HeightController = TextEditingController();
-  final TextEditingController monopoleHeightController =
-      TextEditingController();
+  final TextEditingController monopoleHeightController = TextEditingController();
   final TextEditingController remarksController = TextEditingController();
 
-  final TextEditingController gen1TypeAndCapacityController =
-      TextEditingController();
+  final TextEditingController gen1TypeAndCapacityController = TextEditingController();
   final TextEditingController gen1HourMeterController = TextEditingController();
-  final TextEditingController gen1FuelConsumptionController =
-      TextEditingController();
-  final TextEditingController gen1FuelSensorTypeController =
-      TextEditingController();
-  final TextEditingController gen1AmpereToOwnerController =
-      TextEditingController();
-  final TextEditingController gen1CircuitBreakersController =
-      TextEditingController();
+  final TextEditingController gen1FuelConsumptionController = TextEditingController();
+  final TextEditingController gen1FuelSensorTypeController = TextEditingController();
+  final TextEditingController gen1AmpereToOwnerController = TextEditingController();
+  final TextEditingController gen1CircuitBreakersController = TextEditingController();
 
-  final TextEditingController gen2TypeAndCapacityController =
-      TextEditingController();
+  final TextEditingController gen2TypeAndCapacityController = TextEditingController();
   final TextEditingController gen2HourMeterController = TextEditingController();
-  final TextEditingController gen2FuelConsumptionController =
-      TextEditingController();
-  final TextEditingController gen2FuelSensorTypeController =
-      TextEditingController();
-  final TextEditingController gen2AmpereToOwnerController =
-      TextEditingController();
-  final TextEditingController gen2CircuitBreakersController =
-      TextEditingController();
+  final TextEditingController gen2FuelConsumptionController = TextEditingController();
+  final TextEditingController gen2FuelSensorTypeController = TextEditingController();
+  final TextEditingController gen2AmpereToOwnerController = TextEditingController();
+  final TextEditingController gen2CircuitBreakersController = TextEditingController();
 
   final TextEditingController siteNameController = TextEditingController();
   final TextEditingController siteCodeController = TextEditingController();
@@ -195,22 +180,16 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
   final TextEditingController solarCapacityController = TextEditingController();
   final TextEditingController numPanelsController = TextEditingController();
   final TextEditingController numModulesController = TextEditingController();
-  final TextEditingController numFaultyModulesController =
-      TextEditingController();
-  final TextEditingController solarAndWindBatteriesNumController =
-      TextEditingController();
-  final TextEditingController solarAndWindBatteriesbatteriesTypeController =
-      TextEditingController();
+  final TextEditingController numFaultyModulesController = TextEditingController();
+  final TextEditingController solarAndWindBatteriesNumController = TextEditingController();
+  final TextEditingController solarAndWindBatteriesbatteriesTypeController = TextEditingController();
   final TextEditingController windRemarksController = TextEditingController();
-  final TextEditingController solarAndWindRemarksController =
-      TextEditingController();
+  final TextEditingController solarAndWindRemarksController = TextEditingController();
 
   // Ampere Section Controllers
-  final TextEditingController ampereCapacityController =
-      TextEditingController();
+  final TextEditingController ampereCapacityController = TextEditingController();
   final TextEditingController ampereTimeController = TextEditingController();
-  final TextEditingController ampereCableLengthController =
-      TextEditingController();
+  final TextEditingController ampereCableLengthController = TextEditingController();
   final TextEditingController ampereDetailsController = TextEditingController();
 
 // TCU Section
@@ -253,11 +232,9 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
   final batteriesCabinetTypeController = TextEditingController();
   final rectifierBatteriesRemarksController = TextEditingController();
 
-  TextEditingController powerControlSerialNumberController =
-      TextEditingController();
+  TextEditingController powerControlSerialNumberController = TextEditingController();
   TextEditingController amperConsumptionController = TextEditingController();
-  TextEditingController powerControlOwnershipController =
-      TextEditingController();
+  TextEditingController powerControlOwnershipController = TextEditingController();
   TextEditingController fanQuantityController = TextEditingController();
   TextEditingController faultyFanQuantityController = TextEditingController();
   TextEditingController airConditioner1TypeController = TextEditingController();
@@ -268,36 +245,27 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
   TextEditingController environmentRemarksController = TextEditingController();
   TextEditingController numberOfCabinetsController = TextEditingController();
   TextEditingController electricityMeterController = TextEditingController();
-  TextEditingController electricityMeterReadingController =
-      TextEditingController();
+  TextEditingController electricityMeterReadingController = TextEditingController();
   TextEditingController fuelCapacityController = TextEditingController();
   TextEditingController existingFuelController = TextEditingController();
 
   TextEditingController generatorRemarksController = TextEditingController();
 
-  TextEditingController internalFuelCapacity1Controller =
-      TextEditingController();
+  TextEditingController internalFuelCapacity1Controller = TextEditingController();
 
-  TextEditingController internalExistingFuel1Controller =
-      TextEditingController();
+  TextEditingController internalExistingFuel1Controller = TextEditingController();
 
-  TextEditingController externalFuelCapacity1Controller =
-      TextEditingController();
+  TextEditingController externalFuelCapacity1Controller = TextEditingController();
 
-  TextEditingController externalExistingFuel1Controller =
-      TextEditingController();
+  TextEditingController externalExistingFuel1Controller = TextEditingController();
 
-  TextEditingController internalFuelCapacity2Controller =
-      TextEditingController();
+  TextEditingController internalFuelCapacity2Controller = TextEditingController();
 
-  TextEditingController internalExistingFuel2Controller =
-      TextEditingController();
+  TextEditingController internalExistingFuel2Controller = TextEditingController();
 
-  TextEditingController externalFuelCapacity2Controller =
-      TextEditingController();
+  TextEditingController externalFuelCapacity2Controller = TextEditingController();
 
-  TextEditingController externalExistingFuel2Controller =
-      TextEditingController();
+  TextEditingController externalExistingFuel2Controller = TextEditingController();
 
   Map<String, dynamic> bandsConverter(List<Map<String, dynamic>> a) {
     Map<String, dynamic> newMap = {};
@@ -324,16 +292,14 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
         RequestKeys.gsm1800: (configurations['GSM 1800'] ?? 0) == true ? 1 : 0,
         RequestKeys.threeG: (configurations['3G'] ?? 0) == true ? 1 : 0,
         RequestKeys.lte: (configurations['LTE'] ?? 0) == true ? 1 : 0,
-        RequestKeys.generator:
-            (configurations['Generator'] ?? 0) == true ? 1 : 0,
+        RequestKeys.generator: (configurations['Generator'] ?? 0) == true ? 1 : 0,
         RequestKeys.solar: (configurations['Solar'] ?? 0) == true ? 1 : 0,
         RequestKeys.wind: (configurations['Wind'] ?? 0) == true ? 1 : 0,
         RequestKeys.grid: (configurations['Grid'] ?? 0) == true ? 1 : 0,
         RequestKeys.fence: (configurations['Fence'] ?? 0) == true ? 1 : 0,
         RequestKeys.cabinetNumber: numberOfCabinetsController.text,
         RequestKeys.electricityMeter: electricityMeterController.text,
-        RequestKeys.electricityMeterReading:
-            electricityMeterReadingController.text,
+        RequestKeys.electricityMeterReading: electricityMeterReadingController.text,
         RequestKeys.generatorRemark: generatorRemarksController.text,
       },
       RequestKeys.towerInformations: {
@@ -359,37 +325,23 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
         [
           {
             RequestKeys.bandType: "gsm 900",
-            RequestKeys.rbs1Type:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.rbs1Type]?.text,
-            RequestKeys.du1Type:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.du1Type]?.text,
-            RequestKeys.ru1Type:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.ru1Type]?.text,
-            RequestKeys.rbs2Type:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.rbs2Type]?.text,
-            RequestKeys.du2Type:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.du2Type]?.text,
-            RequestKeys.ru2Type:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.ru2Type]?.text,
-            RequestKeys.remarks:
-                gsmControllers[MapKeys.gsm900]?[MapKeys.remarks]?.text,
+            RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.rbs1Type]?.text,
+            RequestKeys.du1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.du1Type]?.text,
+            RequestKeys.ru1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.ru1Type]?.text,
+            RequestKeys.rbs2Type: gsmControllers[MapKeys.gsm900]?[MapKeys.rbs2Type]?.text,
+            RequestKeys.du2Type: gsmControllers[MapKeys.gsm900]?[MapKeys.du2Type]?.text,
+            RequestKeys.ru2Type: gsmControllers[MapKeys.gsm900]?[MapKeys.ru2Type]?.text,
+            RequestKeys.remarks: gsmControllers[MapKeys.gsm900]?[MapKeys.remarks]?.text,
           },
           {
             RequestKeys.bandType: "gsm 1800",
-            RequestKeys.rbs1Type:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs1Type]?.text,
-            RequestKeys.du1Type:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.du1Type]?.text,
-            RequestKeys.ru1Type:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.ru1Type]?.text,
-            RequestKeys.rbs2Type:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs2Type]?.text,
-            RequestKeys.du2Type:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.du2Type]?.text,
-            RequestKeys.ru2Type:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.ru2Type]?.text,
-            RequestKeys.remarks:
-                gsmControllers[MapKeys.gsm1800]?[MapKeys.remarks]?.text,
+            RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs1Type]?.text,
+            RequestKeys.du1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.du1Type]?.text,
+            RequestKeys.ru1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.ru1Type]?.text,
+            RequestKeys.rbs2Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs2Type]?.text,
+            RequestKeys.du2Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.du2Type]?.text,
+            RequestKeys.ru2Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.ru2Type]?.text,
+            RequestKeys.remarks: gsmControllers[MapKeys.gsm1800]?[MapKeys.remarks]?.text,
           },
           {
             RequestKeys.bandType: "LTE",
@@ -413,38 +365,32 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
           RequestKeys.genHourMeter: gen1HourMeterController.text,
           RequestKeys.genFuelConsumption: gen1FuelConsumptionController.text,
           RequestKeys.internalCapacity: internalFuelCapacity1Controller.text,
-          RequestKeys.internalExistingFuel:
-              internalExistingFuel1Controller.text,
+          RequestKeys.internalExistingFuel: internalExistingFuel1Controller.text,
           RequestKeys.internalCage: internalFuelTankCage1 ? 1 : 0,
           RequestKeys.externalCapacity: externalFuelCapacity1Controller.text,
-          RequestKeys.externalExistingFuel:
-              externalExistingFuel1Controller.text,
+          RequestKeys.externalExistingFuel: externalExistingFuel1Controller.text,
           RequestKeys.externalCage: externalFuelTankCage1 ? 1 : 0,
           RequestKeys.fuelSensorExiting: fuelSensor1Existing ? 1 : 0,
           RequestKeys.fuelSensorWorking: fuelSensor1Working ? 1 : 0,
           RequestKeys.fuelSensorType: gen1FuelSensorTypeController.text,
           RequestKeys.ampereToOwner: gen1AmpereToOwnerController.text,
-          RequestKeys.circuitBreakersQuantity:
-              gen1CircuitBreakersController.text,
+          RequestKeys.circuitBreakersQuantity: gen1CircuitBreakersController.text,
         },
         {
           RequestKeys.genTypeAndCapacity: gen2TypeAndCapacityController.text,
           RequestKeys.genHourMeter: gen2HourMeterController.text,
           RequestKeys.genFuelConsumption: gen2FuelConsumptionController.text,
           RequestKeys.internalCapacity: internalFuelCapacity2Controller.text,
-          RequestKeys.internalExistingFuel:
-              internalExistingFuel2Controller.text,
+          RequestKeys.internalExistingFuel: internalExistingFuel2Controller.text,
           RequestKeys.internalCage: internalFuelTankCage2 ? 1 : 0,
           RequestKeys.externalCapacity: externalFuelCapacity2Controller.text,
-          RequestKeys.externalExistingFuel:
-              externalExistingFuel2Controller.text,
+          RequestKeys.externalExistingFuel: externalExistingFuel2Controller.text,
           RequestKeys.externalCage: externalFuelTankCage2 ? 1 : 0,
           RequestKeys.fuelSensorExiting: fuelSensor2Existing ? 1 : 0,
           RequestKeys.fuelSensorWorking: fuelSensor2Working ? 1 : 0,
           RequestKeys.fuelSensorType: gen2FuelSensorTypeController.text,
           RequestKeys.ampereToOwner: gen2AmpereToOwnerController.text,
-          RequestKeys.circuitBreakersQuantity:
-              gen2CircuitBreakersController.text,
+          RequestKeys.circuitBreakersQuantity: gen2CircuitBreakersController.text,
         },
       ],
       RequestKeys.solarWindInformations: {
@@ -454,8 +400,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
         RequestKeys.numberOfModules: numModulesController.text,
         RequestKeys.numberOfFaultyModules: numFaultyModulesController.text,
         RequestKeys.numberOfBatteries: solarAndWindBatteriesNumController.text,
-        RequestKeys.batteryType:
-            solarAndWindBatteriesbatteriesTypeController.text,
+        RequestKeys.batteryType: solarAndWindBatteriesbatteriesTypeController.text,
         RequestKeys.batteryStatus: selectedSolarAndWindBatteriesStatus,
         RequestKeys.windRemarks: windRemarksController.text,
         RequestKeys.remarks: solarAndWindRemarksController.text,
@@ -463,12 +408,10 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
       RequestKeys.rectifierInformations: {
         RequestKeys.rectifier1TypeAndVoltage: rectifier1TypeController.text,
         RequestKeys.module1Quantity: rectifier1ModuleQuantityController.text,
-        RequestKeys.faultyModule1Quantity:
-            rectifier1FaultyModuleController.text,
+        RequestKeys.faultyModule1Quantity: rectifier1FaultyModuleController.text,
         RequestKeys.rectifier2TypeAndVoltage: rectifier2TypeController.text,
         RequestKeys.module2Quantity: rectifier2ModuleQuantityController.text,
-        RequestKeys.faultyModule2Quantity:
-            rectifier2FaultyModuleController.text,
+        RequestKeys.faultyModule2Quantity: rectifier2FaultyModuleController.text,
         RequestKeys.numberOfBatteries: rectifierBatteriesNumController.text,
         RequestKeys.batteryType: rectifierbatteriesTypeController.text,
         RequestKeys.batteriesCabinetType: batteriesCabinetTypeController.text,
@@ -477,8 +420,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
         RequestKeys.batteriesStatus: selectedRectifierBatteriesStatus,
       },
       RequestKeys.environmentInformations: {
-        RequestKeys.powerControlSerialNumber:
-            powerControlSerialNumberController.text,
+        RequestKeys.powerControlSerialNumber: powerControlSerialNumberController.text,
         RequestKeys.ampereConsumption: amperConsumptionController.text,
         RequestKeys.threePhase: phaseOptions['Three Phase'] == true ? 1 : 0,
         RequestKeys.miniPhase: phaseOptions['Mini Phase'] == true ? 1 : 0,
@@ -510,18 +452,9 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
         RequestKeys.tcu: (tcuConfigurations['TCU'] ?? 0) == true ? 1 : 0,
         RequestKeys.remarks: tcuRemarksController.text,
       },
-      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][0]":
-          tcuConfigurations['TCU'] == true
-              ? (tcuConfigurations['3G'] == true ? '3G' : null)
-              : null,
-      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][1]":
-          tcuConfigurations['TCU'] == true
-              ? (tcuConfigurations['LTE'] == true ? 'LTE' : null)
-              : null,
-      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][2]":
-          tcuConfigurations['TCU'] == true
-              ? (tcuConfigurations['2G'] == true ? '2G' : null)
-              : null,
+      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][0]": tcuConfigurations['TCU'] == true ? (tcuConfigurations['3G'] == true ? '3G' : null) : null,
+      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][1]": tcuConfigurations['TCU'] == true ? (tcuConfigurations['LTE'] == true ? 'LTE' : null) : null,
+      "${RequestKeys.tcuInformations}[${RequestKeys.tcuTypes}][2]": tcuConfigurations['TCU'] == true ? (tcuConfigurations['2G'] == true ? '2G' : null) : null,
       RequestKeys.fiberInformations: {
         RequestKeys.destination: fiberDestinationController.text,
         RequestKeys.remarks: fiberRemarksController.text,
@@ -529,15 +462,13 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     };
   }
 
-  Future<Map<String, MultipartFile>> uploadImagesToApi(
-      String key, List<XFile>? images) async {
+  Future<Map<String, MultipartFile>> uploadImagesToApi(String key, List<XFile>? images) async {
     if (images == null) return {};
 
     final Map<String, MultipartFile> mappedImages = {};
     for (var i = 0; i < images.length; i++) {
       final image = images[i];
-      final multipartFile = await MultipartFile.fromFile(image.path,
-          filename: image.path.split('/').last);
+      final multipartFile = await MultipartFile.fromFile(image.path, filename: image.path.split('/').last);
       mappedImages['$key[$i]'] = multipartFile;
     }
     return mappedImages;
@@ -547,23 +478,15 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     emit(AddVisitedSiteLoading());
 
     final body = await createRequestBody();
-    body.addAll(await uploadImagesToApi(
-        RequestKeys.generalSiteImages, generalSitePhotos));
-    body.addAll(
-        await uploadImagesToApi(RequestKeys.rectifierImages, rectifierImages));
-    body.addAll(await uploadImagesToApi(
-        RequestKeys.additionalImages, additionalPhotos));
-    body.addAll(await uploadImagesToApi(
-        RequestKeys.rectifierBatteriesImages, rectifierBatteriesImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.generalSiteImages, generalSitePhotos));
+    body.addAll(await uploadImagesToApi(RequestKeys.rectifierImages, rectifierImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.additionalImages, additionalPhotos));
+    body.addAll(await uploadImagesToApi(RequestKeys.rectifierBatteriesImages, rectifierBatteriesImages));
     body.addAll(await uploadImagesToApi(RequestKeys.rbsImages, rBSImages));
-    body.addAll(await uploadImagesToApi(
-        RequestKeys.solarAndWindBatteriesImages, solarAndWindBatteriesImages));
-    body.addAll(
-        await uploadImagesToApi(RequestKeys.generatorImages, generatorImages));
-    body.addAll(await uploadImagesToApi(
-        RequestKeys.transmissionImages, transmissionPhotos));
-    body.addAll(
-        await uploadImagesToApi(RequestKeys.fuelCageImages, fuelCageImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.solarAndWindBatteriesImages, solarAndWindBatteriesImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.generatorImages, generatorImages));
+    body.addAll(await uploadImagesToApi(RequestKeys.transmissionImages, transmissionPhotos));
+    body.addAll(await uploadImagesToApi(RequestKeys.fuelCageImages, fuelCageImages));
     final response = await postVisitedSiteUseCase.call(body: body);
     response.fold(
       (failure) => emit(AddVisitedSiteFailed(msg: failure.errMessage)),
@@ -594,18 +517,6 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     emit(AddVisitedSiteInitial());
   }
 
-  @override
-  void onChange(Change<AddVisitedSiteState> change) {
-    super.onChange(change);
-  }
-
-  @override
-  Future<void> close() {
-    log("MyCubit is being closed!"); // Debug message
-    return super.close();
-  }
-
-  // Add this function to your PostVisitedSiteCubit class
   void validateForm(GlobalKey<FormState> formKey, FormType formType) {
     // Get the current form state
     bool isValid = true;
@@ -696,24 +607,15 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
 
     return completedForms / totalForms;
   }
-}
 
-enum FormType {
-  generalInfo,
-  typeAndConfig,
-  additionalInfo,
-  ampereInfo,
-  tcuInfo,
-  fiberInfo,
-  gsm900Info,
-  gsm1800Info,
-  threeGInfo,
-  lteInfo,
-  rectifierInfo,
-  environmentInfo,
-  towerMastMonopoleInfo,
-  solarAndWindSystemInfo,
-  generatorInfo,
-  lvdpInfo,
-  additionalPhotoInfo,
+  @override
+  void onChange(Change<AddVisitedSiteState> change) {
+    super.onChange(change);
+  }
+
+  @override
+  Future<void> close() {
+    log("MyCubit is being closed!"); // Debug message
+    return super.close();
+  }
 }

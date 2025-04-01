@@ -1,7 +1,7 @@
 // models/user.dart
 
 import 'package:flutter/material.dart';
-import 'package:sites_management/features/users/presentation/users_screen.dart';
+// import 'package:sites_management/features/users/presentation/users_screen.dart';
 
 class LoadingUsersView extends StatelessWidget {
   const LoadingUsersView({
@@ -10,8 +10,11 @@ class LoadingUsersView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
-      child: ShimmerLoading(),
+    // return const Expanded(
+    //   child: ShimmerLoading(),
+    // );
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

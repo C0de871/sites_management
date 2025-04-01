@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/users/presentation/cubits/get_users/get_users_cubit.dart';
-import 'package:sites_management/features/users/presentation/users_screen.dart';
 import 'package:sites_management/features/users/presentation/widgets/empty_or_users_list_view.dart';
 import 'package:sites_management/features/users/presentation/widgets/failed_view.dart';
 import 'package:sites_management/features/users/presentation/widgets/loading_users_view.dart';

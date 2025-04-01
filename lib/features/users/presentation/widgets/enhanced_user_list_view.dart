@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:sites_management/features/users/domain/entities/get_users_entities/get_users_entity.dart';
-import 'package:sites_management/features/users/presentation/users_screen.dart';
 import 'package:sites_management/features/users/presentation/widgets/list_item_animation.dart';
 import 'package:sites_management/features/users/presentation/widgets/user_card.dart';
 
