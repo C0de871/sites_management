@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/Routes/app_routes.dart';
-import '../../../visited_sites/presentation/screens/add_visited_site_screen/add_visited_site.dart';
+import '../../../visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';
 import 'cubits/login_cubit.dart';
 import 'widgets/login_form.dart';
 import 'widgets/login_header.dart';

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/shared/enums/form_type.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_visited_site_screen/add_visited_site.dart';
+import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';
 
 import '../cubit/add_visited_site_cubit.dart';
 
@@ -33,7 +33,6 @@ class ContinueButton extends StatelessWidget {
             context
                 .read<AddVisitedSiteCubit>()
                 .validateForm(_formKey, formType);
-            log(context.read<AddVisitedSiteCubit>().hashCode.toString());
             Navigator.pushNamed(context, routeName);
             saveInfo ?? ();
           } else {

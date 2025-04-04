@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/lvdp_informations_entity.dart';
 
 class LvdpInformationsModel extends LvdpInformationsEntity {
