@@ -1,49 +1,41 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/solar_wind_informations_entity.dart';
 
-class SolarWindInformations extends Equatable {
+class SolarWindInformations extends SolarWindInformationsEntity with EquatableMixin {
   const SolarWindInformations({
-    required this.solarType,
-    required this.solarCapacity,
-    required this.numberOfPanels,
-    required this.numberOfModules,
-    required this.numberOfFaultyModules,
-    required this.numberOfBatteries,
-    required this.batteryType,
-    required this.batteryStatus,
-    required this.windRemarks,
-    required this.remarks,
+    required super.solarType,
+    required super.solarCapacity,
+    required super.numberOfPanels,
+    required super.numberOfModules,
+    required super.numberOfFaultyModules,
+    required super.numberOfBatteries,
+    required super.batteryType,
+    required super.batteryStatus,
+    required super.windRemarks,
+    required super.remarks,
   });
 
-  final String? solarType;
   static const String solarTypeKey = "solar_type";
 
-  final String? solarCapacity;
   static const String solarCapacityKey = "solar_capacity";
 
-  final String? numberOfPanels;
   static const String numberOfPanelsKey = "number_of_panels";
 
-  final String? numberOfModules;
   static const String numberOfModulesKey = "number_of_modules";
 
-  final String? numberOfFaultyModules;
   static const String numberOfFaultyModulesKey = "number_of_faulty_modules";
 
-  final String? numberOfBatteries;
   static const String numberOfBatteriesKey = "number_of_batteries";
 
-  final String? batteryType;
   static const String batteryTypeKey = "battery_type";
 
-  final String? batteryStatus;
   static const String batteryStatusKey = "battery_status";
 
-  final String? windRemarks;
   static const String windRemarksKey = "wind_remarks";
 
-  final String? remarks;
   static const String remarksKey = "remarks";
 
+  @override
   SolarWindInformations copyWith({
     String? solarType,
     String? solarCapacity,

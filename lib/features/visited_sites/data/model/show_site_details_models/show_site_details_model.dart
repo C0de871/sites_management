@@ -5,86 +5,49 @@ import 'package:sites_management/features/visited_sites/data/model/show_site_det
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/fiber_informations_model.dart';
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/generator_informations_model.dart';
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/lvdp_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/rectifier__informations_model.dart';
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/site_general_information_model.dart';
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/solar_wind_information_model.dart';
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/tcu_informations_model.dart';
 import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/tower_informations_model.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/show_site_details_entity.dart';
 
-class ShowSiteDetailsModel extends Equatable {
+class ShowSiteDetailsModel extends ShowSiteDetailsEntity with EquatableMixin {
   const ShowSiteDetailsModel({
-    required this.site,
-    required this.towerInformations,
-    required this.bandInformations,
-    required this.generatorInformations,
-    required this.solarWindInformations,
-    required this.rectifierInformations,
-    required this.environmentInformations,
-    required this.lvdpInformations,
-    required this.fiberInformations,
-    required this.amperesInformations,
-    required this.tcuInformations,
+    required super.site,
+    required super.towerInformations,
+    required super.bandInformations,
+    required super.generatorInformations,
+    required super.solarWindInformations,
+    required super.rectifierInformations,
+    required super.environmentInformations,
+    required super.lvdpInformations,
+    required super.fiberInformations,
+    required super.amperesInformations,
+    required super.tcuInformations,
   });
 
-  final SiteGeneralInformationModel? site;
   static const String siteKey = "site";
 
-  final TowerInformationsModel? towerInformations;
   static const String towerInformationsKey = "tower_informations";
 
-  final BandInformationsModel? bandInformations;
   static const String bandInformationsKey = "band_informations";
 
-  final List<GeneratorInformationModel> generatorInformations;
   static const String generatorInformationsKey = "generator_informations";
 
-  final SolarWindInformations? solarWindInformations;
   static const String solarWindInformationsKey = "solar_wind_informations";
 
-  final Map<String, int> rectifierInformations;
   static const String rectifierInformationsKey = "rectifier_informations";
 
-  final EnvironmentInformationsModel? environmentInformations;
   static const String environmentInformationsKey = "environment_informations";
 
-  final LvdpInformationsModel? lvdpInformations;
   static const String lvdpInformationsKey = "lvdp_informations";
 
-  final FiberInformationsModel? fiberInformations;
   static const String fiberInformationsKey = "fiber_informations";
 
-  final AmperesInformationsModel? amperesInformations;
   static const String amperesInformationsKey = "amperes_informations";
 
-  final TcuInformationsModel? tcuInformations;
   static const String tcuInformationsKey = "tcu_informations";
-
-  ShowSiteDetailsModel copyWith({
-    SiteGeneralInformationModel? site,
-    TowerInformationsModel? towerInformations,
-    BandInformationsModel? bandInformations,
-    List<GeneratorInformationModel>? generatorInformations,
-    SolarWindInformations? solarWindInformations,
-    Map<String, int>? rectifierInformations,
-    EnvironmentInformationsModel? environmentInformations,
-    LvdpInformationsModel? lvdpInformations,
-    FiberInformationsModel? fiberInformations,
-    AmperesInformationsModel? amperesInformations,
-    TcuInformationsModel? tcuInformations,
-  }) {
-    return ShowSiteDetailsModel(
-      site: site ?? this.site,
-      towerInformations: towerInformations ?? this.towerInformations,
-      bandInformations: bandInformations ?? this.bandInformations,
-      generatorInformations: generatorInformations ?? this.generatorInformations,
-      solarWindInformations: solarWindInformations ?? this.solarWindInformations,
-      rectifierInformations: rectifierInformations ?? this.rectifierInformations,
-      environmentInformations: environmentInformations ?? this.environmentInformations,
-      lvdpInformations: lvdpInformations ?? this.lvdpInformations,
-      fiberInformations: fiberInformations ?? this.fiberInformations,
-      amperesInformations: amperesInformations ?? this.amperesInformations,
-      tcuInformations: tcuInformations ?? this.tcuInformations,
-    );
-  }
 
   factory ShowSiteDetailsModel.fromJson(Map<String, dynamic> json) {
     return ShowSiteDetailsModel(
@@ -93,7 +56,7 @@ class ShowSiteDetailsModel extends Equatable {
       bandInformations: json[bandInformationsKey] == null ? null : BandInformationsModel.fromJson(json[bandInformationsKey]),
       generatorInformations: json[generatorInformationsKey] == null ? [] : List<GeneratorInformationModel>.from(json[generatorInformationsKey]!.map((x) => GeneratorInformationModel.fromJson(x))),
       solarWindInformations: json[solarWindInformationsKey] == null ? null : SolarWindInformations.fromJson(json[solarWindInformationsKey]),
-      rectifierInformations: Map.from(json[rectifierInformationsKey]).map((k, v) => MapEntry<String, int>(k, v)),
+      rectifierInformations: json[rectifierInformationsKey] == null ? null : RectifierInformationsModel.fromJson(json[rectifierInformationsKey]),
       environmentInformations: json[environmentInformationsKey] == null ? null : EnvironmentInformationsModel.fromJson(json[environmentInformationsKey]),
       lvdpInformations: json[lvdpInformationsKey] == null ? null : LvdpInformationsModel.fromJson(json[lvdpInformationsKey]),
       fiberInformations: json[fiberInformationsKey] == null ? null : FiberInformationsModel.fromJson(json[fiberInformationsKey]),
@@ -103,17 +66,17 @@ class ShowSiteDetailsModel extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        siteKey: site?.toJson(),
-        towerInformationsKey: towerInformations?.toJson(),
-        bandInformationsKey: bandInformations?.toJson(),
-        generatorInformationsKey: generatorInformations.map((x) => x.toJson()).toList(),
-        solarWindInformationsKey: solarWindInformations?.toJson(),
-        rectifierInformationsKey: Map.from(rectifierInformations).map((k, v) => MapEntry<String, dynamic>(k, v)),
-        environmentInformationsKey: environmentInformations?.toJson(),
-        lvdpInformationsKey: lvdpInformations?.toJson(),
-        fiberInformationsKey: fiberInformations?.toJson(),
-        amperesInformationsKey: amperesInformations?.toJson(),
-        tcuInformationsKey: tcuInformations?.toJson(),
+        siteKey: (site as SiteGeneralInformationModel?)?.toJson(),
+        towerInformationsKey: (towerInformations as TowerInformationsModel?)?.toJson(),
+        bandInformationsKey: (bandInformations as BandInformationsModel?)?.toJson(),
+        generatorInformationsKey: generatorInformations.map((x) => (x as GeneratorInformationModel?)?.toJson()).toList(),
+        solarWindInformationsKey: (solarWindInformations as SolarWindInformations?)?.toJson(),
+        rectifierInformationsKey: (rectifierInformations as RectifierInformationsModel?)?.toJson(),
+        environmentInformationsKey: (environmentInformations as EnvironmentInformationsModel?)?.toJson(),
+        lvdpInformationsKey: (lvdpInformations as LvdpInformationsModel?)?.toJson(),
+        fiberInformationsKey: (fiberInformations as FiberInformationsModel?)?.toJson(),
+        amperesInformationsKey: (amperesInformations as AmperesInformationsModel?)?.toJson(),
+        tcuInformationsKey: (tcuInformations as TcuInformationsModel?)?.toJson(),
       };
 
   @override

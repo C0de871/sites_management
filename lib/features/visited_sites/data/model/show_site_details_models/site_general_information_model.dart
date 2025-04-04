@@ -1,89 +1,72 @@
 import 'package:equatable/equatable.dart';
 
-class SiteGeneralInformationModel extends Equatable {
+import '../../../domain/entities/show_site_details_entities/site_informations_general_entity.dart';
+
+class SiteGeneralInformationModel extends SiteInformationsGeneralEntity with EquatableMixin {
   const SiteGeneralInformationModel({
-    required this.name,
-    required this.code,
-    required this.governorate,
-    required this.street,
-    required this.area,
-    required this.city,
-    required this.type,
-    required this.gsm1900,
-    required this.gsm1800,
-    required this.the3G,
-    required this.lte,
-    required this.generator,
-    required this.solar,
-    required this.wind,
-    required this.grid,
-    required this.fence,
-    required this.cabinetNumber,
-    required this.electricityMeter,
-    required this.electricityMeterReading,
-    required this.generatorRemark,
+    required super.name,
+    required super.code,
+    required super.governorate,
+    required super.street,
+    required super.area,
+    required super.city,
+    required super.type,
+    required super.gsm1900,
+    required super.gsm1800,
+    required super.the3G,
+    required super.lte,
+    required super.generator,
+    required super.solar,
+    required super.wind,
+    required super.grid,
+    required super.fence,
+    required super.cabinetNumber,
+    required super.electricityMeter,
+    required super.electricityMeterReading,
+    required super.generatorRemark,
   });
 
-  final String? name;
   static const String nameKey = "name";
 
-  final String? code;
   static const String codeKey = "code";
 
-  final String? governorate;
   static const String governorateKey = "governorate";
 
-  final String? street;
   static const String streetKey = "street";
 
-  final String? area;
   static const String areaKey = "area";
 
-  final String? city;
   static const String cityKey = "city";
 
-  final String? type;
   static const String typeKey = "type";
 
-  final int? gsm1900;
   static const String gsm1900Key = "gsm1900";
 
-  final int? gsm1800;
   static const String gsm1800Key = "gsm1800";
 
-  final int? the3G;
   static const String the3GKey = "3g";
 
-  final int? lte;
   static const String lteKey = "lte";
 
-  final int? generator;
   static const String generatorKey = "generator";
 
-  final int? solar;
   static const String solarKey = "solar";
 
-  final int? wind;
   static const String windKey = "wind";
 
-  final int? grid;
   static const String gridKey = "grid";
 
-  final int? fence;
   static const String fenceKey = "fence";
 
-  final int? cabinetNumber;
   static const String cabinetNumberKey = "cabinet_number";
 
-  final String? electricityMeter;
   static const String electricityMeterKey = "electricity_meter";
 
-  final String? electricityMeterReading;
   static const String electricityMeterReadingKey = "electricity_meter_reading";
 
-  final String? generatorRemark;
   static const String generatorRemarkKey = "generator_remark";
 
+  @override
   SiteGeneralInformationModel copyWith({
     String? name,
     String? code,

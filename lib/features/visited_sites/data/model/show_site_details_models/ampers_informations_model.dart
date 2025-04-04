@@ -1,25 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/amperes_informations_entity.dart';
 
-class AmperesInformationsModel extends Equatable {
+class AmperesInformationsModel extends AmperesInformationsEntity with EquatableMixin {
   const AmperesInformationsModel({
-    required this.capacity,
-    required this.time,
-    required this.cableLength,
-    required this.details,
+    required super.capacity,
+    required super.time,
+    required super.cableLength,
+    required super.details,
   });
 
-  final String? capacity;
   static const String capacityKey = "capacity";
 
-  final String time;
   static const String timeKey = "time";
 
-  final String cableLength;
   static const String cableLengthKey = "cable_length";
 
-  final String details;
   static const String detailsKey = "details";
 
+  @override
   AmperesInformationsModel copyWith({
     String? capacity,
     String? time,
@@ -27,10 +25,10 @@ class AmperesInformationsModel extends Equatable {
     String? details,
   }) {
     return AmperesInformationsModel(
-      capacity: capacity ?? this.capacity,
-      time: time ?? this.time,
-      cableLength: cableLength ?? this.cableLength,
-      details: details ?? this.details,
+      capacity: capacity ?? super.capacity,
+      time: time ?? super.time,
+      cableLength: cableLength ?? super.cableLength,
+      details: details ?? super.details,
     );
   }
 

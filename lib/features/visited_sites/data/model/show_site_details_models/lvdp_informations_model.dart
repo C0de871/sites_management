@@ -1,25 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/lvdp_informations_entity.dart';
 
-class LvdpInformationsModel extends Equatable {
+class LvdpInformationsModel extends LvdpInformationsEntity {
   const LvdpInformationsModel({
-    required this.exiting,
-    required this.working,
-    required this.status,
-    required this.remarks,
+    required super.exiting,
+    required super.working,
+    required super.status,
+    required super.remarks,
   });
 
-  final int? exiting;
   static const String exitingKey = "exiting";
 
-  final int? working;
   static const String workingKey = "working";
 
-  final String? status;
   static const String statusKey = "status";
 
-  final String? remarks;
   static const String remarksKey = "remarks";
 
+  @override
   LvdpInformationsModel copyWith({
     int? exiting,
     int? working,

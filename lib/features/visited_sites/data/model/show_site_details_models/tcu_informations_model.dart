@@ -1,29 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/tcu_informations_entity.dart';
 
-class TcuInformationsModel extends Equatable {
+class TcuInformationsModel extends TcuInformationsEntity with EquatableMixin {
   const TcuInformationsModel({
-    required this.tcu,
-    required this.the3G,
-    required this.the2G,
-    required this.ite,
-    required this.remarks,
+    required super.tcu,
+    required super.the3G,
+    required super.the2G,
+    required super.ite,
+    required super.remarks,
   });
 
-  final int? tcu;
   static const String tcuKey = "tcu";
 
-  final int? the3G;
   static const String the3GKey = "3g";
 
-  final int? the2G;
   static const String the2GKey = "2g";
 
-  final int? ite;
   static const String iteKey = "ite";
 
-  final String? remarks;
   static const String remarksKey = "remarks";
 
+  @override
   TcuInformationsModel copyWith({
     int? tcu,
     int? the3G,

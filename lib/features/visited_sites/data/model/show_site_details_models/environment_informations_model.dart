@@ -1,69 +1,56 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/environment_informations_entity.dart';
 
-class EnvironmentInformationsModel extends Equatable {
+class EnvironmentInformationsModel extends EnvironmentInformationsEntity with EquatableMixin {
   const EnvironmentInformationsModel({
-    required this.powerControlSerialNumber,
-    required this.ampereConsumption,
-    required this.miniPhase,
-    required this.threePhase,
-    required this.powerControlOwnership,
-    required this.fanQuantity,
-    required this.faultyFanQuantity,
-    required this.earthingSystem,
-    required this.airConditioner1Type,
-    required this.airConditioner2Type,
-    required this.stabilizerQuantity,
-    required this.stabilizerType,
-    required this.exiting,
-    required this.working,
-    required this.remarks,
+    required super.powerControlSerialNumber,
+    required super.ampereConsumption,
+    required super.miniPhase,
+    required super.threePhase,
+    required super.powerControlOwnership,
+    required super.fanQuantity,
+    required super.faultyFanQuantity,
+    required super.earthingSystem,
+    required super.airConditioner1Type,
+    required super.airConditioner2Type,
+    required super.stabilizerQuantity,
+    required super.stabilizerType,
+    required super.exiting,
+    required super.working,
+    required super.remarks,
   });
 
-  final String? powerControlSerialNumber;
   static const String powerControlSerialNumberKey = "power_control_serial_number";
 
-  final int? ampereConsumption;
   static const String ampereConsumptionKey = "ampere_consumption";
 
-  final int? miniPhase;
   static const String miniPhaseKey = "mini_phase";
 
-  final int? threePhase;
   static const String threePhaseKey = "three_phase";
 
-  final String? powerControlOwnership;
   static const String powerControlOwnershipKey = "power_control_ownership";
 
-  final int? fanQuantity;
   static const String fanQuantityKey = "fan_quantity";
 
-  final int? faultyFanQuantity;
   static const String faultyFanQuantityKey = "faulty_fan_quantity";
 
-  final int? earthingSystem;
   static const String earthingSystemKey = "earthing_system";
 
-  final String? airConditioner1Type;
   static const String airConditioner1TypeKey = "air_conditioner_1_type";
 
-  final String airConditioner2Type;
   static const String airConditioner2TypeKey = "air_conditioner_2_type";
 
-  final String stabilizerQuantity;
   static const String stabilizerQuantityKey = "stabilizer_quantity";
 
-  final String stabilizerType;
   static const String stabilizerTypeKey = "stabilizer_type";
 
-  final int? exiting;
   static const String exitingKey = "exiting";
 
-  final int? working;
   static const String workingKey = "working";
 
-  final String remarks;
   static const String remarksKey = "remarks";
 
+  @override
   EnvironmentInformationsModel copyWith({
     String? powerControlSerialNumber,
     int? ampereConsumption,
@@ -82,21 +69,21 @@ class EnvironmentInformationsModel extends Equatable {
     String? remarks,
   }) {
     return EnvironmentInformationsModel(
-      powerControlSerialNumber: powerControlSerialNumber ?? this.powerControlSerialNumber,
-      ampereConsumption: ampereConsumption ?? this.ampereConsumption,
-      miniPhase: miniPhase ?? this.miniPhase,
-      threePhase: threePhase ?? this.threePhase,
-      powerControlOwnership: powerControlOwnership ?? this.powerControlOwnership,
-      fanQuantity: fanQuantity ?? this.fanQuantity,
-      faultyFanQuantity: faultyFanQuantity ?? this.faultyFanQuantity,
-      earthingSystem: earthingSystem ?? this.earthingSystem,
-      airConditioner1Type: airConditioner1Type ?? this.airConditioner1Type,
-      airConditioner2Type: airConditioner2Type ?? this.airConditioner2Type,
-      stabilizerQuantity: stabilizerQuantity ?? this.stabilizerQuantity,
-      stabilizerType: stabilizerType ?? this.stabilizerType,
-      exiting: exiting ?? this.exiting,
-      working: working ?? this.working,
-      remarks: remarks ?? this.remarks,
+      powerControlSerialNumber: powerControlSerialNumber ?? super.powerControlSerialNumber,
+      ampereConsumption: ampereConsumption ?? super.ampereConsumption,
+      miniPhase: miniPhase ?? super.miniPhase,
+      threePhase: threePhase ?? super.threePhase,
+      powerControlOwnership: powerControlOwnership ?? super.powerControlOwnership,
+      fanQuantity: fanQuantity ?? super.fanQuantity,
+      faultyFanQuantity: faultyFanQuantity ?? super.faultyFanQuantity,
+      earthingSystem: earthingSystem ?? super.earthingSystem,
+      airConditioner1Type: airConditioner1Type ?? super.airConditioner1Type,
+      airConditioner2Type: airConditioner2Type ?? super.airConditioner2Type,
+      stabilizerQuantity: stabilizerQuantity ?? super.stabilizerQuantity,
+      stabilizerType: stabilizerType ?? super.stabilizerType,
+      exiting: exiting ?? super.exiting,
+      working: working ?? super.working,
+      remarks: remarks ?? super.remarks,
     );
   }
 

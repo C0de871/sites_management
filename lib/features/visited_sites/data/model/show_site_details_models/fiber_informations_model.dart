@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/fiber_informations_entity.dart';
 
-class FiberInformationsModel extends Equatable {
+class FiberInformationsModel extends FiberInformationsEntity with EquatableMixin {
   const FiberInformationsModel({
-    required this.destination,
-    required this.remarks,
+    required super.destination,
+    required super.remarks,
   });
 
-  final String? destination;
   static const String destinationKey = "destination";
 
-  final String? remarks;
   static const String remarksKey = "remarks";
 
+  @override
   FiberInformationsModel copyWith({
     String? destination,
     String? remarks,

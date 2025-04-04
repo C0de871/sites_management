@@ -1,69 +1,56 @@
 import 'package:equatable/equatable.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/generator_information_entity.dart';
 
-class GeneratorInformationModel extends Equatable {
+class GeneratorInformationModel extends GeneratorInformationEntity with EquatableMixin {
   const GeneratorInformationModel({
-    required this.id,
-    required this.genTypeAndCapacity,
-    required this.genHourMeter,
-    required this.genFuelConsumption,
-    required this.internalCapacity,
-    required this.internalExistingFuel,
-    required this.internalCage,
-    required this.externalCapacity,
-    required this.externalExistingFuel,
-    required this.externalCage,
-    required this.fuelSensorExiting,
-    required this.fuelSensorWorking,
-    required this.fuelSensorType,
-    required this.ampereToOwner,
-    required this.circuitBreakersQuantity,
+    required super.id,
+    required super.genTypeAndCapacity,
+    required super.genHourMeter,
+    required super.genFuelConsumption,
+    required super.internalCapacity,
+    required super.internalExistingFuel,
+    required super.internalCage,
+    required super.externalCapacity,
+    required super.externalExistingFuel,
+    required super.externalCage,
+    required super.fuelSensorExiting,
+    required super.fuelSensorWorking,
+    required super.fuelSensorType,
+    required super.ampereToOwner,
+    required super.circuitBreakersQuantity,
   });
 
-  final int? id;
   static const String idKey = "id";
 
-  final String? genTypeAndCapacity;
   static const String genTypeAndCapacityKey = "gen_type_and_capacity";
 
-  final String? genHourMeter;
   static const String genHourMeterKey = "gen_hour_meter";
 
-  final String? genFuelConsumption;
   static const String genFuelConsumptionKey = "gen_fuel_consumption";
 
-  final String? internalCapacity;
   static const String internalCapacityKey = "internal_capacity";
 
-  final String? internalExistingFuel;
   static const String internalExistingFuelKey = "internal_existing_fuel";
 
-  final int? internalCage;
   static const String internalCageKey = "internal_cage";
 
-  final String? externalCapacity;
   static const String externalCapacityKey = "external_capacity";
 
-  final String? externalExistingFuel;
   static const String externalExistingFuelKey = "external_existing_fuel";
 
-  final int? externalCage;
   static const String externalCageKey = "external_cage";
 
-  final int? fuelSensorExiting;
   static const String fuelSensorExitingKey = "fuel_sensor_exiting";
 
-  final int? fuelSensorWorking;
   static const String fuelSensorWorkingKey = "fuel_sensor_working";
 
-  final String? fuelSensorType;
   static const String fuelSensorTypeKey = "fuel_sensor_type";
 
-  final String? ampereToOwner;
   static const String ampereToOwnerKey = "ampere_to_owner";
 
-  final String? circuitBreakersQuantity;
   static const String circuitBreakersQuantityKey = "circuit_breakers_quantity";
 
+  @override
   GeneratorInformationModel copyWith({
     int? id,
     String? genTypeAndCapacity,
@@ -82,21 +69,21 @@ class GeneratorInformationModel extends Equatable {
     String? circuitBreakersQuantity,
   }) {
     return GeneratorInformationModel(
-      id: id ?? this.id,
-      genTypeAndCapacity: genTypeAndCapacity ?? this.genTypeAndCapacity,
-      genHourMeter: genHourMeter ?? this.genHourMeter,
-      genFuelConsumption: genFuelConsumption ?? this.genFuelConsumption,
-      internalCapacity: internalCapacity ?? this.internalCapacity,
-      internalExistingFuel: internalExistingFuel ?? this.internalExistingFuel,
-      internalCage: internalCage ?? this.internalCage,
-      externalCapacity: externalCapacity ?? this.externalCapacity,
-      externalExistingFuel: externalExistingFuel ?? this.externalExistingFuel,
-      externalCage: externalCage ?? this.externalCage,
-      fuelSensorExiting: fuelSensorExiting ?? this.fuelSensorExiting,
-      fuelSensorWorking: fuelSensorWorking ?? this.fuelSensorWorking,
-      fuelSensorType: fuelSensorType ?? this.fuelSensorType,
-      ampereToOwner: ampereToOwner ?? this.ampereToOwner,
-      circuitBreakersQuantity: circuitBreakersQuantity ?? this.circuitBreakersQuantity,
+      id: id ?? super.id,
+      genTypeAndCapacity: genTypeAndCapacity ?? super.genTypeAndCapacity,
+      genHourMeter: genHourMeter ?? super.genHourMeter,
+      genFuelConsumption: genFuelConsumption ?? super.genFuelConsumption,
+      internalCapacity: internalCapacity ?? super.internalCapacity,
+      internalExistingFuel: internalExistingFuel ?? super.internalExistingFuel,
+      internalCage: internalCage ?? super.internalCage,
+      externalCapacity: externalCapacity ?? super.externalCapacity,
+      externalExistingFuel: externalExistingFuel ?? super.externalExistingFuel,
+      externalCage: externalCage ?? super.externalCage,
+      fuelSensorExiting: fuelSensorExiting ?? super.fuelSensorExiting,
+      fuelSensorWorking: fuelSensorWorking ?? super.fuelSensorWorking,
+      fuelSensorType: fuelSensorType ?? super.fuelSensorType,
+      ampereToOwner: ampereToOwner ?? super.ampereToOwner,
+      circuitBreakersQuantity: circuitBreakersQuantity ?? super.circuitBreakersQuantity,
     );
   }
 
