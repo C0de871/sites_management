@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/entities/show_site_details_entities/site_informations_general_entity.dart';
+import '../../../domain/entities/show_site_details/site_informations_general_entity.dart';
 
 class SiteGeneralInformationModel extends SiteInformationsGeneralEntity with EquatableMixin {
   const SiteGeneralInformationModel({

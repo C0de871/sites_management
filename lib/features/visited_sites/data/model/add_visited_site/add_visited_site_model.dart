@@ -1,5 +1,5 @@
 import '../../../../../core/databases/api/end_points.dart';
-import '../../../domain/entities/add_visited_site_entities/add_visited_site_entity.dart';
+import '../../../domain/entities/add_visited_site/add_visited_site_entity.dart';
 
 class AddVisitedSiteModel extends AddVisitedSiteEntity {
   AddVisitedSiteModel({

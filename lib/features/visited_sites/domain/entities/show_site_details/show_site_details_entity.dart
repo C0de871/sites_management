@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/amperes_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/band_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/environment_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/fiber_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/generator_information_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/lvdp_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/rectifier_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/site_informations_general_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/solar_wind_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/tcu_informations_entity.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/tower_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/amperes_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/band_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/environment_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/fiber_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/generator_information_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/lvdp_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/rectifier_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/site_informations_general_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/solar_wind_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/tcu_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/tower_informations_entity.dart';
 
 class ShowSiteDetailsEntity extends Equatable {
   const ShowSiteDetailsEntity({

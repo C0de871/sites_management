@@ -6,7 +6,7 @@ import '../cubit/get_visited_site_cubit.dart';
 import '../cubit/get_visited_site_state.dart';
 import 'site_card.dart';
 
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 
 class SiteList extends StatelessWidget {
   const SiteList({

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 
 class VisitedSitesEventBus {
   final _controller = StreamController<VisitedSiteEvent>.broadcast();

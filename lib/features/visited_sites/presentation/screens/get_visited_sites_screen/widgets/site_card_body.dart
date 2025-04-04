@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 import 'site_city_area_street.dart';
 import 'site_governorate_and_code.dart';
 import 'site_name.dart';

@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/ampers_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/band_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/environment_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/fiber_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/generator_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/lvdp_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/rectifier__informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/site_general_information_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/solar_wind_information_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/tcu_informations_model.dart';
-import 'package:sites_management/features/visited_sites/data/model/show_site_details_models/tower_informations_model.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/show_site_details_entity.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/ampers_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/band_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/environment_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/fiber_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/generator_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/lvdp_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/rectifier__informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/site_general_information_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/solar_wind_information_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/tcu_informations_model.dart';
+import 'package:sites_management/features/visited_sites/data/model/show_site_details/tower_informations_model.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/show_site_details_entity.dart';
 
 class ShowSiteDetailsModel extends ShowSiteDetailsEntity with EquatableMixin {
   const ShowSiteDetailsModel({

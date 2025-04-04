@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/generator_information_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/generator_information_entity.dart';
 
 class GeneratorInformationModel extends GeneratorInformationEntity with EquatableMixin {
   const GeneratorInformationModel({

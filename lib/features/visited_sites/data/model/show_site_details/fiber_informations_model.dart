@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/fiber_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/fiber_informations_entity.dart';
 
 class FiberInformationsModel extends FiberInformationsEntity with EquatableMixin {
   const FiberInformationsModel({

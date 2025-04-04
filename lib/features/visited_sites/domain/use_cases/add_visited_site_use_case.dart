@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/databases/errors/failure.dart';
-import '../entities/add_visited_site_entities/add_visited_site_entity.dart';
+import '../entities/add_visited_site/add_visited_site_entity.dart';
 import '../repository/visited_site_repository.dart';
 
 class AddVisitedSite {

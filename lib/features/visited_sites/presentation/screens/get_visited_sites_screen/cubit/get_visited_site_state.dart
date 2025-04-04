@@ -2,7 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 import 'get_visited_site_cubit.dart';
 
 @immutable

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 
 class SiteCheckBox extends StatelessWidget {
   final bool isSelected;

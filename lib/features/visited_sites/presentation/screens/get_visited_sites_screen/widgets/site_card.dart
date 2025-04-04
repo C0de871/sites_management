@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 import 'see_more_details_icon.dart';
 import 'site_card_body.dart';
 import 'site_check_box.dart';

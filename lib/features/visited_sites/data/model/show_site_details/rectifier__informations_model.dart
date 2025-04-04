@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/rectifier_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/rectifier_informations_entity.dart';
 
 class RectifierInformationsModel extends RectifierInformationsEntity with EquatableMixin {
   RectifierInformationsModel({

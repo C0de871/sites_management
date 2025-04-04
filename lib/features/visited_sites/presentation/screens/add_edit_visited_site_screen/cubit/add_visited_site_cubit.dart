@@ -9,7 +9,7 @@ import '../../../../../../core/utils/constants/constant.dart';
 
 import '../../../../../../core/databases/api/end_points.dart';
 import '../../../../../../core/utils/services/service_locator.dart';
-import '../../../../domain/entities/add_visited_site_entities/add_visited_site_entity.dart';
+import '../../../../domain/entities/add_visited_site/add_visited_site_entity.dart';
 import '../../../../domain/use_cases/add_visited_site_use_case.dart';
 
 part 'add_visited_site_state.dart';

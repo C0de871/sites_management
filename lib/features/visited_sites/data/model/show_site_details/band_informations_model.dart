@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:sites_management/features/visited_sites/domain/entities/show_site_details_entities/band_informations_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/band_informations_entity.dart';
 
-import '../../../domain/entities/show_site_details_entities/band_informatoins_sub_entity.dart';
+import '../../../domain/entities/show_site_details/band_informatoins_sub_entity.dart';
 import 'band_informations_sub_model.dart';
 
 class BandInformationsModel extends BandInformationsEntity with EquatableMixin {

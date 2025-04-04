@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'site_code.dart';
 import 'site_governorate.dart';
 
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 
 class SiteGovernorateAndCode extends StatelessWidget {
   const SiteGovernorateAndCode({

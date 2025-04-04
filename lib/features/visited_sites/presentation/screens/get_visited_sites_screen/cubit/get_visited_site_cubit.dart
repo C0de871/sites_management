@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/utils/services/service_locator.dart';
 import '../../../../data/services/visited_site_event_bus.dart';
-import '../../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 import '../../../../domain/use_cases/get_visited_sites_use_case.dart';
 import 'get_visited_site_state.dart';
 

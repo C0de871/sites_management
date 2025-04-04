@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/databases/api/end_points.dart';
-import '../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 
 import '../../../../core/databases/connection/network_info.dart';
 import '../../../../core/databases/errors/expentions.dart';
 import '../../../../core/databases/errors/failure.dart';
-import '../../domain/entities/add_visited_site_entities/add_visited_site_entity.dart';
+import '../../domain/entities/add_visited_site/add_visited_site_entity.dart';
 import '../../domain/repository/visited_site_repository.dart';
 import '../data sources/visited_site_remote_data_source.dart';
 import '../services/visited_site_event_bus.dart';

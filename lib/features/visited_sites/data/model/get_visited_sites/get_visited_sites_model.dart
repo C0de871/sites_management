@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/entities/get_visited_sites_entities/get_visited_sites_entity.dart';
+import '../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
 
 import '../../../../../core/databases/api/end_points.dart';
 
