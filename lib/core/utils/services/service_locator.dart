@@ -1,6 +1,11 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:sites_management/core/databases/storage/external_storage_manager.dart';
+import 'package:sites_management/core/helper/device_info.dart';
 import 'package:sites_management/features/auth/data/data_sources/user_local_data_source.dart';
 import 'package:sites_management/features/auth/data/data_sources/user_remote_data_source.dart';
 import 'package:sites_management/features/auth/domain/repository/repository.dart';
@@ -39,10 +44,13 @@ void setupServicesLocator() {
   getIt.registerLazySingleton<SharedPrefsHelper>(() => SharedPrefsHelper());
   getIt.registerLazySingleton<SecureStorageHelper>(() => SecureStorageHelper());
   getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<DeviceInfoPlugin>(() => DeviceInfoPlugin());
   getIt.registerLazySingleton<ApiConsumer>(() => DioConsumer(dio: getIt()));
   getIt.registerLazySingleton<InternetConnectionChecker>(() => InternetConnectionChecker.instance);
   getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(getIt()));
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());
+  getIt.registerLazySingleton<DeviceInfo>(() => DeviceInfo(deviceInfoPlugin: getIt()));
+  getIt.registerLazySingleton<ExternalStorageManager>(() => ExternalStorageManager(deviceInfo: getIt()));
 
   //! Buses:
   getIt.registerLazySingleton<VisitedSitesEventBus>(() => VisitedSitesEventBus());
@@ -52,6 +60,7 @@ void setupServicesLocator() {
   // getIt.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSource(sharedPrefsHelper: getIt()));
   getIt.registerLazySingleton<VisitedSiteRemoteDataSource>(() => VisitedSiteRemoteDataSource(
         api: getIt(),
+        externalStorageManager: getIt(),
       ));
   getIt.registerLazySingleton<UserRemoteDataSource>(() => UserRemoteDataSource(getIt()));
   getIt.registerLazySingleton<UserLocalDataSource>(() => UserLocalDataSource(getIt<SecureStorageHelper>()));
@@ -85,4 +94,12 @@ void setupServicesLocator() {
   getIt.registerLazySingleton<AddUserUseCase>(() => AddUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<EditUserUseCase>(() => EditUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<DeleteUserUseCase>(() => DeleteUserUseCase(repository: getIt()));
+}
+
+Future<void> initApp() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupServicesLocator();
+  await getIt<SharedPrefsHelper>().init();
+  await dotenv.load(fileName: ".env");
+  await getIt<ExternalStorageManager>().createAppStorageDir("SiteManagement");
 }

@@ -28,12 +28,14 @@ class DioConsumer extends ApiConsumer {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? extra,
     bool isFormData = false,
+    ResponseType responseType = ResponseType.json,
   }) async {
     try {
       var res = await dio.post(
         options: Options(
           headers: headers,
           extra: extra,
+          responseType: responseType,
         ),
         path,
         data: isFormData ? FormData.fromMap(data) : data,
@@ -122,12 +124,7 @@ class DioConsumer extends ApiConsumer {
   }
 
   @override
-  Future put(String path,
-      {data,
-      Map<String, dynamic>? queryParameters,
-      Map<String, dynamic>? headers,
-      bool isFormData = false,
-      Map<String, dynamic>? extra}) async {
+  Future put(String path, {data, Map<String, dynamic>? queryParameters, Map<String, dynamic>? headers, bool isFormData = false, Map<String, dynamic>? extra}) async {
     try {
       var res = await dio.put(
         options: Options(

@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 
+import '../../shared/enums/storage_exception_type.dart';
 import 'error_model.dart';
 
 //!ServerException
 class ServerException implements Exception {
-  final ErrorModel errorModel;
+  final NetworkErrorModel errorModel;
   ServerException(this.errorModel);
 }
 
@@ -12,6 +13,13 @@ class ServerException implements Exception {
 class CacheExeption implements Exception {
   final String errorMessage;
   CacheExeption({required this.errorMessage});
+}
+
+class StorageException implements Exception {
+  final StorageErrorModel errorModel;
+  StorageException(
+    this.errorModel,
+  );
 }
 
 class BadCertificateException extends ServerException {
@@ -66,59 +74,54 @@ class UnknownException extends ServerException {
   UnknownException(super.errorModel);
 }
 
+
 handleDioException(DioException e) {
   switch (e.type) {
     case DioExceptionType.connectionError:
-      throw ConnectionErrorException(ErrorModel.fromJson(e.response!.data));
+      throw ConnectionErrorException(NetworkErrorModel.fromJson(e.response!.data));
     case DioExceptionType.badCertificate:
-      throw BadCertificateException(ErrorModel.fromJson(e.response!.data));
+      throw BadCertificateException(NetworkErrorModel.fromJson(e.response!.data));
     case DioExceptionType.connectionTimeout:
-      throw ConnectionTimeoutException(ErrorModel.fromJson(e.response!.data));
+      throw ConnectionTimeoutException(NetworkErrorModel.fromJson(e.response!.data));
 
     case DioExceptionType.receiveTimeout:
-      throw ReceiveTimeoutException(ErrorModel.fromJson(e.response!.data));
+      throw ReceiveTimeoutException(NetworkErrorModel.fromJson(e.response!.data));
 
     case DioExceptionType.sendTimeout:
-      throw SendTimeoutException(ErrorModel.fromJson(e.response!.data));
+      throw SendTimeoutException(NetworkErrorModel.fromJson(e.response!.data));
 
     case DioExceptionType.badResponse:
       switch (e.response?.statusCode) {
         case 400: // Bad request
 
-          throw BadResponseException(ErrorModel.fromJson(e.response!.data));
+          throw BadResponseException(NetworkErrorModel.fromJson(e.response!.data));
 
         case 401: //unauthorized
-          throw UnauthorizedException(ErrorModel.fromJson(e.response!.data));
+          throw UnauthorizedException(NetworkErrorModel.fromJson(e.response!.data));
 
         case 403: //forbidden
-          throw ForbiddenException(ErrorModel.fromJson(e.response!.data));
+          throw ForbiddenException(NetworkErrorModel.fromJson(e.response!.data));
 
         case 404: //not found
-          throw NotFoundException(ErrorModel.fromJson(e.response!.data));
+          throw NotFoundException(NetworkErrorModel.fromJson(e.response!.data));
 
         case 409: //cofficient
 
-          throw CofficientException(ErrorModel.fromJson(e.response!.data));
+          throw CofficientException(NetworkErrorModel.fromJson(e.response!.data));
 
         case 422: //Unprocessable Content
-          throw UnprocessableContentException(
-              ErrorModel.fromJson(e.response!.data));
+          throw UnprocessableContentException(NetworkErrorModel.fromJson(e.response!.data));
 
         case 504: // Bad request
-          throw BadResponseException(
-              ErrorModel(status: 504, errorMessage: e.response!.data));
+          throw BadResponseException(NetworkErrorModel(status: 504, errorMessage: e.response!.data));
         default:
-          throw ServerException(ErrorModel(
-              status: e.response?.statusCode ?? 500,
-              errorMessage: "unknown 5xx error"));
+          throw ServerException(NetworkErrorModel(status: e.response?.statusCode ?? 500, errorMessage: "unknown 5xx error"));
       }
 
     case DioExceptionType.cancel:
-      throw CancelException(
-          ErrorModel(errorMessage: e.toString(), status: 500));
+      throw CancelException(NetworkErrorModel(errorMessage: e.toString(), status: 500));
 
     case DioExceptionType.unknown:
-      throw UnknownException(
-          ErrorModel(errorMessage: e.toString(), status: 500));
+      throw UnknownException(NetworkErrorModel(errorMessage: e.toString(), status: 500));
   }
 }

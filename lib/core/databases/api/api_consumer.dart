@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 abstract class ApiConsumer {
   Future<dynamic> get(
     String path, {
@@ -13,6 +15,7 @@ abstract class ApiConsumer {
     Map<String, dynamic>? headers,
     bool isFormData = false,
     Map<String, dynamic>? extra,
+    ResponseType responseType = ResponseType.json,
   });
   Future<dynamic> patch(
     String path, {

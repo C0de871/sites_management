@@ -3,6 +3,11 @@ bool? isFristTime = true;
 
 class Constant {
   static const String deviceLang = "device_lang";
+  static Map<String, dynamic> massageMap(String message) {
+    return {
+      "message": message,
+    };
+  }
 }
 
 class MapKeys {
