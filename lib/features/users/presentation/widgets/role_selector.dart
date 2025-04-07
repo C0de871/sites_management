@@ -12,7 +12,7 @@ class RoleSelector extends StatelessWidget {
     required this.onTap,
   });
   final UserRole selectedRole;
-  final VoidCallback onTap;
+  final Function(UserRole role) onTap;
 
   @override
   Widget build(BuildContext context) {

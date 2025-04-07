@@ -19,6 +19,11 @@ import 'package:sites_management/features/users/domain/usecases/add_user_use_cas
 import 'package:sites_management/features/users/domain/usecases/delete_user_use_case.dart';
 import 'package:sites_management/features/users/domain/usecases/edit_user_use_case.dart';
 import 'package:sites_management/features/users/domain/usecases/fetch_users_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/edit_visited_site_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/export_visited_site_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/get_additional_visited_site_images_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/get_section_visited_site_images_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/show_visited_site_details_use_case.dart';
 
 import '../../../features/auth/data/repository/repository_impl.dart';
 import '../../../features/users/data/repository/users_repository_impl.dart';
@@ -27,9 +32,11 @@ import '../../../features/visited_sites/data/repository/visited_site_repository_
 import '../../../features/visited_sites/data/services/visited_site_event_bus.dart';
 import '../../../features/visited_sites/domain/repository/visited_site_repository.dart';
 import '../../../features/visited_sites/domain/use_cases/add_visited_site_use_case.dart';
+import '../../../features/visited_sites/domain/use_cases/delete_visited_sites_use_case.dart';
 import '../../../features/visited_sites/domain/use_cases/get_visited_sites_use_case.dart';
 import '../../Routes/app_router.dart';
 import '../../databases/api/api_consumer.dart';
+import '../../databases/api/auth_interceptor.dart';
 import '../../databases/api/dio_consumer.dart';
 import '../../databases/cache/secure_storage_helper.dart';
 import '../../databases/cache/shared_prefs_helper.dart';
@@ -87,13 +94,24 @@ void setupServicesLocator() {
   //! Use Cases
   getIt.registerLazySingleton<AddVisitedSite>(() => AddVisitedSite(repository: getIt()));
   getIt.registerLazySingleton<GetVisitedSitesUseCase>(() => GetVisitedSitesUseCase(repository: getIt()));
+  getIt.registerLazySingleton<ShowVisitedSiteDetailsUseCase>(() => ShowVisitedSiteDetailsUseCase(repository: getIt()));
+  getIt.registerLazySingleton<DeleteVisitedSitesUseCase>(() => DeleteVisitedSitesUseCase(repository: getIt()));
+  getIt.registerLazySingleton<ExportVisitedSiteUseCase>(() => ExportVisitedSiteUseCase(repository: getIt()));
+  getIt.registerLazySingleton<EditVisitedSiteUseCase>(() => EditVisitedSiteUseCase(repository: getIt()));
+  getIt.registerLazySingleton<GetAdditionalVisitedSiteImagesUseCase>(() => GetAdditionalVisitedSiteImagesUseCase(repository: getIt()));
+  getIt.registerLazySingleton<GetSectionVisitedSiteImagesUseCase>(() => GetSectionVisitedSiteImagesUseCase(repository: getIt()));
+
   getIt.registerLazySingleton<LoginUserUseCase>(() => LoginUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<RetreiveUserUseCase>(() => RetreiveUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<RetreiveAccessTokenUseCase>(() => RetreiveAccessTokenUseCase(repository: getIt()));
+
   getIt.registerLazySingleton<GetUsersUseCase>(() => GetUsersUseCase(repository: getIt()));
   getIt.registerLazySingleton<AddUserUseCase>(() => AddUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<EditUserUseCase>(() => EditUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<DeleteUserUseCase>(() => DeleteUserUseCase(repository: getIt()));
+
+  //! Interceptors
+  getIt.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(retrieveAccessTokenUseCase: getIt()));
 }
 
 Future<void> initApp() async {
@@ -102,4 +120,5 @@ Future<void> initApp() async {
   await getIt<SharedPrefsHelper>().init();
   await dotenv.load(fileName: ".env");
   await getIt<ExternalStorageManager>().createAppStorageDir("SiteManagement");
+  await (getIt<ApiConsumer>() as DioConsumer).addInterceptors(getIt<AuthInterceptor>());
 }

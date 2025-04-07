@@ -13,6 +13,7 @@ class UserModel extends UserEntity with EquatableMixin {
   static const String usernameKey = "username";
   static const String roleKey = "role";
 
+  @override
   UserModel copyWith({
     int? id,
     String? username,

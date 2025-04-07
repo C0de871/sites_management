@@ -42,7 +42,7 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, String>> retrieveAccessToken() async {
     try {
-      final accessToken = localDataSource.retrieveAccessToken();
+      final accessToken = await localDataSource.retrieveAccessToken();
       if (accessToken == null) {
         return Left(Failure(errMessage: "user token not found"));
       }

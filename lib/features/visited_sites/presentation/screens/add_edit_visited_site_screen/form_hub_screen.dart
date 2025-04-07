@@ -52,10 +52,7 @@ class FormHubScreen extends StatelessWidget {
                         ),
                       ),
                       progressColor: Theme.of(context).colorScheme.secondary,
-                      backgroundColor: Theme.of(context)
-                          .colorScheme
-                          .primaryContainer
-                          .withOpacity(0.3),
+                      backgroundColor: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.3),
                       circularStrokeCap: CircularStrokeCap.round,
                       animation: true,
                       animationDuration: 800,
@@ -88,136 +85,119 @@ class FormHubScreen extends StatelessWidget {
                         title: 'General Info',
                         icon: Icons.info_outline,
                         isValid: cubit.isGeneralInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.generalInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.generalInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Type & Config',
                         icon: Icons.settings,
                         isValid: cubit.isTypeAndConfigValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.typeAndConfig),
+                        onTap: () => _navigateToFormScreen(context, FormType.typeAndConfig),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Additional Info',
                         icon: Icons.assignment,
                         isValid: cubit.isAdditionalInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.additionalInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.additionalInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Ampere Info',
                         icon: Icons.bolt,
                         isValid: cubit.isAmpereInfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.ampereInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.ampereInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'TCU Info',
                         icon: Icons.device_thermostat,
                         isValid: cubit.isTcuInfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.tcuInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.tcuInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Fiber Info',
                         icon: Icons.fiber_smart_record,
                         isValid: cubit.isFiberInfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.fiberInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.fiberInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'GSM 900',
                         icon: Icons.network_cell,
                         isValid: cubit.isGsm900InfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.gsm900Info),
+                        onTap: () => _navigateToFormScreen(context, FormType.gsm900Info),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'GSM 1800',
                         icon: Icons.network_cell,
                         isValid: cubit.isGsm1800InfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.gsm1800Info),
+                        onTap: () => _navigateToFormScreen(context, FormType.gsm1800Info),
                       ),
                       _buildFormCard(
                         context: context,
                         title: '3G Info',
                         icon: Icons.signal_cellular_alt,
                         isValid: cubit.is3GInfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.threeGInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.threeGInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'LTE Info',
                         icon: Icons.network_wifi,
                         isValid: cubit.isLTEInfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.lteInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.lteInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Rectifier',
                         icon: Icons.battery_charging_full,
                         isValid: cubit.isRectifierInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.rectifierInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.rectifierInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Environment',
                         icon: Icons.eco,
                         isValid: cubit.isEnvironmentInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.environmentInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.environmentInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Tower/Mast',
                         icon: Icons.cell_tower,
                         isValid: cubit.isTowerMastMonopoleInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.towerMastMonopoleInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.towerMastMonopoleInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Solar & Wind',
                         icon: Icons.wb_sunny,
                         isValid: cubit.isSolarAndWindSystemInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.solarAndWindSystemInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.solarAndWindSystemInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Generator',
                         icon: Icons.power,
                         isValid: cubit.isGeneratorInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.generatorInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.generatorInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'LVDP Info',
                         icon: Icons.electrical_services,
                         isValid: cubit.isLvdpInfoValid,
-                        onTap: () =>
-                            _navigateToFormScreen(context, FormType.lvdpInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.lvdpInfo),
                       ),
                       _buildFormCard(
                         context: context,
                         title: 'Additional Photos',
                         icon: Icons.photo_library,
                         isValid: cubit.isAdditionalPhotoInfoValid,
-                        onTap: () => _navigateToFormScreen(
-                            context, FormType.additionalPhotoInfo),
+                        onTap: () => _navigateToFormScreen(context, FormType.additionalPhotoInfo),
                       ),
                     ],
                   ),
@@ -248,7 +228,7 @@ class FormHubScreen extends StatelessWidget {
   }) {
     return Card(
       elevation: 4,
-      shadowColor: Theme.of(context).shadowColor.withOpacity(0.3),
+      shadowColor: Theme.of(context).shadowColor.withValues(alpha: 0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -264,11 +244,11 @@ class FormHubScreen extends StatelessWidget {
               colors: isValid
                   ? [
                       Theme.of(context).colorScheme.primaryContainer,
-                      Theme.of(context).colorScheme.primary.withOpacity(0.7),
+                      Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
                     ]
                   : [
                       Theme.of(context).colorScheme.surface,
-                      Theme.of(context).colorScheme.surfaceVariant,
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
                     ],
             ),
           ),
@@ -281,24 +261,11 @@ class FormHubScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isValid
-                        ? Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.9)
-                        : Theme.of(context)
-                            .colorScheme
-                            .surface
-                            .withOpacity(0.8),
+                    color: isValid ? Theme.of(context).colorScheme.secondary.withValues(alpha: 0.9) : Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: isValid
-                            ? Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.3)
-                            : Colors.grey.withOpacity(0.2),
+                        color: isValid ? Theme.of(context).colorScheme.secondary.withValues(alpha: 0.3) : Colors.grey.withValues(alpha: 0.2),
                         blurRadius: 8,
                         spreadRadius: 2,
                       ),
@@ -306,9 +273,7 @@ class FormHubScreen extends StatelessWidget {
                   ),
                   child: Icon(
                     isValid ? Icons.check_circle : icon,
-                    color: isValid
-                        ? Theme.of(context).colorScheme.onSecondary
-                        : Theme.of(context).colorScheme.onSurface,
+                    color: isValid ? Theme.of(context).colorScheme.onSecondary : Theme.of(context).colorScheme.onSurface,
                     size: 32,
                   ),
                 ),
@@ -318,9 +283,7 @@ class FormHubScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: isValid
-                        ? Theme.of(context).colorScheme.onPrimary
-                        : Theme.of(context).colorScheme.onSurface,
+                    color: isValid ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -329,15 +292,7 @@ class FormHubScreen extends StatelessWidget {
                   isValid ? 'Completed' : 'Pending',
                   style: TextStyle(
                     fontSize: 12,
-                    color: isValid
-                        ? Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.7)
-                        : Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withOpacity(0.7),
+                    color: isValid ? Theme.of(context).colorScheme.onPrimary.withValues(alpha: 0.7) : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                   ),
                 ),
               ],

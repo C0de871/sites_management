@@ -2,22 +2,40 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../../../core/databases/errors/failure.dart';
+import '../../../../../../core/shared/models/message_model.dart';
+import '../../../../../../core/utils/commands/command.dart';
 import '../../../../../../core/utils/services/service_locator.dart';
 import '../../../../data/services/visited_site_event_bus.dart';
 import '../../../../domain/entities/get_visited_sites/get_visited_sites_entity.dart';
+import '../../../../domain/use_cases/delete_visited_sites_use_case.dart';
+import '../../../../domain/use_cases/export_visited_site_use_case.dart';
 import '../../../../domain/use_cases/get_visited_sites_use_case.dart';
 import 'get_visited_site_state.dart';
 
 class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
-  GetVisitedSitesUseCase getVisitedSitesUseCase;
-  final VisitedSitesEventBus eventBus;
+  final GetVisitedSitesUseCase _getVisitedSitesUseCase;
+  final ExportVisitedSiteUseCase _exportVisitedSitesUseCase;
+  final DeleteVisitedSitesUseCase _deleteVisitedSiteUseCase;
+
+  final VisitedSitesEventBus _eventBus;
   StreamSubscription? _eventSubscription;
+
+  late final Command0<MessageModel> exportCommand;
+  late final Command0<MessageModel> deleteCommand;
+
   GetVisitedSitesCubit()
-      : getVisitedSitesUseCase = getIt(),
-        eventBus = getIt(),
+      : _getVisitedSitesUseCase = getIt(),
+        _exportVisitedSitesUseCase = getIt(),
+        _deleteVisitedSiteUseCase = getIt(),
+        _eventBus = getIt(),
         super(GetVisitedSiteInitial()) {
+    exportCommand = Command0<MessageModel>(_exportSelectedSites);
+    deleteCommand = Command0<MessageModel>(_deleteSelectedSites);
     _listenToEvents();
   }
 
@@ -27,7 +45,7 @@ class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
   late Animation<double> animation;
 
   void _listenToEvents() {
-    _eventSubscription = eventBus.events.listen((event) {
+    _eventSubscription = _eventBus.events.listen((event) {
       if (state is GetVisitedSiteSuccess) {
         final currentSites = (state as GetVisitedSiteSuccess).sites;
         List<GetVisitedSitesEntity> updatedItems = List.from(currentSites);
@@ -66,7 +84,7 @@ class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
 
   fetchSites() async {
     emit(GetVisitedSiteLoading());
-    final response = await getVisitedSitesUseCase.call();
+    final response = await _getVisitedSitesUseCase.call();
     response.fold(
       (error) {
         emit(GetVisitedSitesError(error.errMessage));
@@ -117,22 +135,31 @@ class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
     }
   }
 
-  void confirmDelete() {
-    //todo
-    // In a real app, you would call your API to delete sites
+  Future<Either<Failure, MessageModel>> _deleteSelectedSites() async {
+    if (state is! GetVisitedSiteSuccess) return Left(Failure(errMessage: "there is no selected sites"));
+    if ((state as GetVisitedSiteSuccess).selectedSites.isEmpty) return Left(Failure(errMessage: "there is no selected sites"));
 
-    // setState(() {
-    //   _mockSites.removeWhere((site) => _selectedSites.contains(site));
-    //   _toggleSelectionMode();
-    // });
-    // Navigator.pop(context);
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(
-    //     content: Text('Sites deleted successfully'),
-    //     backgroundColor: Colors.green,
-    //     behavior: SnackBarBehavior.floating,
-    //   ),
-    // );
+    final body = {
+      "ids": (state as GetVisitedSiteSuccess).selectedSites.map((e) => e.id).toList(),
+    };
+    final response = await _deleteVisitedSiteUseCase.call(body: body);
+    return response;
+  }
+
+  Future<Either<Failure, MessageModel>> _exportSelectedSites() async {
+    if (state is! GetVisitedSiteSuccess) return Left(Failure(errMessage: "there is no selected sites"));
+    if ((state as GetVisitedSiteSuccess).selectedSites.isEmpty) return Left(Failure(errMessage: "there is no selected sites"));
+    final body = {
+      "site_ids": (state as GetVisitedSiteSuccess).selectedSites.map((e) => e.id).toList(),
+    };
+
+    //todo edit file name to be recieved from user:
+    log(body.toString());
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd_HH-mm-ss'); // Safe format
+    final String formattedDate = formatter.format(now);
+    final response = await _exportVisitedSitesUseCase.call(body: body, fileName:formattedDate);
+    return response;
   }
 
   void handleApplyFilterAndSort() {

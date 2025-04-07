@@ -12,6 +12,7 @@ class UserRemoteDataSource {
     final response = await apiConsumer.post(
       EndPoints.loginUser,
       data: body,
+      extra: {"no_auth": true},
     );
     return UserModel.fromJson(response);
   }

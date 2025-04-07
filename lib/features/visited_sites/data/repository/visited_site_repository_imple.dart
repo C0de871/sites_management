@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:sites_management/core/shared/enums/visited_site_additional_images_type.dart';
 import 'package:sites_management/core/shared/models/message_model.dart';
@@ -28,7 +30,7 @@ class VisitedSiteRepositoryImple extends VisitedSiteRepository {
     if (await networkInfo.isConnected!) {
       try {
         final response = await remoteDataSource.addVisitedSite(body: body);
-        _emit(body);
+        // _emit(body);
         return Right(response);
       } on ServerException catch (e) {
         return Left(Failure(errMessage: e.errorModel.errorMessage));
@@ -60,6 +62,7 @@ class VisitedSiteRepositoryImple extends VisitedSiteRepository {
       city: body[RequestKeys.sites][RequestKeys.city],
       street: body[RequestKeys.sites][RequestKeys.street],
       area: body[RequestKeys.sites][RequestKeys.area],
+      id: body[RequestKeys.sites][RequestKeys.id],
     );
     visitedSitesEventBus.emit(VisitedSiteAddedEvent(siteGeneralInfo));
   }
@@ -99,6 +102,7 @@ class VisitedSiteRepositoryImple extends VisitedSiteRepository {
         final response = await remoteDataSource.exportSites(body: body, fileName: fileName);
         return Right(response);
       } on ServerException catch (e) {
+        log("server exception while exporting");
         return Left(Failure(errMessage: e.errorModel.errorMessage));
       }
     } else {

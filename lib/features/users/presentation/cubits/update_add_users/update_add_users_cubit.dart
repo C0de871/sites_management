@@ -71,13 +71,14 @@ class UpdateAddUserCubit extends Cubit<UpdateAddUserState> {
     );
   }
 
-  void updateUser() async {
+  void updateUser(int? id) async {
     emit(const UpdateAddUserState.submitting());
 
     Map<String, dynamic> body = {
       RequestKeys.username: updateUserUsernameController.text,
       RequestKeys.password: updateUserPasswordController.text,
       RequestKeys.role: updateUserSelectedRole.userRoleName,
+      RequestKeys.id: id,
     };
     final response = await editUserUseCase.call(body: body);
     response.fold(

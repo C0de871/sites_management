@@ -19,7 +19,7 @@ class UserCardLeading extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: role.color.withValues(alpha: 0.2),
       child: Text(
-        user.username ?? "U".substring(0, 1).toUpperCase(),
+        user.username?.substring(0, 1) ?? "U",
         style: TextStyle(
           color: role.color,
           fontWeight: FontWeight.bold,

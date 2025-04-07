@@ -271,7 +271,7 @@ class AppRouter with CubitProviderMixin {
               BlocProvider(
                 lazy: false,
                 create: (context) => getCubit(
-                  () => GetUsersCubit(),
+                  () => GetUsersCubit()..loadUsers(),
                 ),
               ),
               BlocProvider(

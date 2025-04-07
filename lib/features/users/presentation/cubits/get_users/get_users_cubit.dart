@@ -29,16 +29,16 @@ class GetUsersCubit extends Cubit<GetUsersState> {
       switch (state) {
         case GetUsersLoaded(getUserEntity: var currentUsersEntity):
           final List<UserEntity> updatedItems = List.from(currentUsersEntity.users);
-          {
-            switch (event) {
-              case UserAddedEvent():
-                updatedItems.add(event.user);
-              case UserUpdatedEvent():
-                updatedItems[updatedItems.indexWhere((user) => user.id == event.user.id)] = event.user;
-              case UsersDeletedEvent():
-                updatedItems.removeWhere((user) => event.usersIds.contains(user.id));
-            }
+          switch (event) {
+            case UserAddedEvent():
+              updatedItems.add(event.user);
+            case UserUpdatedEvent():
+              updatedItems[updatedItems.indexWhere((user) => user.id == event.user.id)] = event.user;
+            case UsersDeletedEvent():
+              updatedItems.removeWhere((user) => event.usersIds.contains(user.id.toString()));
           }
+          final GetUsersEntity updatedUsersEntity = currentUsersEntity.copyWith(users: updatedItems);
+          emit(GetUsersState.loaded(updatedUsersEntity));
         case _:
       }
     });

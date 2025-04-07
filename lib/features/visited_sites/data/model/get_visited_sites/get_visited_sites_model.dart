@@ -10,6 +10,7 @@ class GetVisitedSitesModel extends GetVisitedSitesEntity with EquatableMixin {
     super.area,
     super.street,
     super.city,
+    required super.id,
   });
 
   factory GetVisitedSitesModel.fromMap(Map<String, dynamic> data) {
@@ -19,6 +20,7 @@ class GetVisitedSitesModel extends GetVisitedSitesEntity with EquatableMixin {
       area: data[ApiKey.area] as String?,
       street: data[ApiKey.street] as String?,
       city: data[ApiKey.city] as String?,
+      id: data[ApiKey.id] as int?,
     );
   }
 
@@ -28,6 +30,7 @@ class GetVisitedSitesModel extends GetVisitedSitesEntity with EquatableMixin {
         ApiKey.area: area,
         ApiKey.street: street,
         ApiKey.city: city,
+        ApiKey.id: id,
       };
 
   GetVisitedSitesModel copyWith({
@@ -36,6 +39,7 @@ class GetVisitedSitesModel extends GetVisitedSitesEntity with EquatableMixin {
     String? area,
     String? street,
     String? city,
+    int? id,
   }) {
     return GetVisitedSitesModel(
       name: name ?? this.name,
@@ -43,6 +47,7 @@ class GetVisitedSitesModel extends GetVisitedSitesEntity with EquatableMixin {
       area: area ?? this.area,
       street: street ?? this.street,
       city: city ?? this.city,
+      id: id ?? this.id,
     );
   }
 

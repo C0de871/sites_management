@@ -4,6 +4,7 @@ class GetVisitedSitesEntity {
   final String? area;
   final String? street;
   final String? city;
+  final int? id;
 
   const GetVisitedSitesEntity({
     this.name,
@@ -11,5 +12,6 @@ class GetVisitedSitesEntity {
     this.area,
     this.street,
     this.city,
+    required this.id,
   });
 }

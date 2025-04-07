@@ -32,7 +32,7 @@ class UserLocalDataSource {
     return null;
   }
 
-  String? retrieveAccessToken() {
-    return cacheHelper.getData(key: CacheKey.accessToken);
+  Future<String?> retrieveAccessToken() async {
+    return await cacheHelper.getData(key: CacheKey.accessToken);
   }
 }

@@ -6,8 +6,8 @@ class ConfirmExportButton extends StatelessWidget {
   const ConfirmExportButton({super.key, required this.onExport});
 
   void _handleExport(BuildContext context) {
+    onExport();
     Navigator.pop(context);
-
     // Show loading indicator
     showDialog(
       context: context,
@@ -27,26 +27,24 @@ class ConfirmExportButton extends StatelessWidget {
       ),
     );
 
-    // Simulate export completion
+    // // Simulate export completion
 
-    Navigator.pop(context); // Close loading dialog
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Icon(Icons.check_circle,
-                color: Theme.of(context).colorScheme.surfaceContainerLowest),
-            const SizedBox(width: 8),
-            const Text('Sites exported successfully'),
-          ],
-        ),
-        backgroundColor: Colors.green,
-        duration: const Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-
-    onExport();
+    // Navigator.pop(context); // Close loading dialog
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Row(
+    //       children: [
+    //         Icon(Icons.check_circle,
+    //             color: Theme.of(context).colorScheme.surfaceContainerLowest),
+    //         const SizedBox(width: 8),
+    //         const Text('Sites exported successfully'),
+    //       ],
+    //     ),
+    //     backgroundColor: Colors.green,
+    //     duration: const Duration(seconds: 3),
+    //     behavior: SnackBarBehavior.floating,
+    //   ),
+    // );
   }
 
   @override

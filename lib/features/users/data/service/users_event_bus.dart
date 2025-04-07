@@ -29,6 +29,6 @@ class UserUpdatedEvent extends UsersEvent {
 }
 
 class UsersDeletedEvent extends UsersEvent {
-  List<int> usersIds;
+  List<String> usersIds;
   UsersDeletedEvent(this.usersIds);
 }

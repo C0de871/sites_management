@@ -12,9 +12,13 @@ class AddUserSelelctRole extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoleSelector(
-      selectedRole: context.read<UpdateAddUserCubit>().addUserSelectedRole,
-      onTap: () => context.read<UpdateAddUserCubit>().selectAddUserRole(context.read<UpdateAddUserCubit>().addUserSelectedRole),
+    return BlocBuilder<UpdateAddUserCubit, UpdateAddUserState>(
+      builder: (context, state) {
+        return RoleSelector(
+          selectedRole: context.read<UpdateAddUserCubit>().addUserSelectedRole,
+          onTap: context.read<UpdateAddUserCubit>().selectAddUserRole,
+        );
+      },
     );
   }
 }

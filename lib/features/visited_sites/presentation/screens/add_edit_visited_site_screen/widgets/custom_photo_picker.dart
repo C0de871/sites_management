@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,8 +9,7 @@ import '../../../../../../core/helper/app_functions.dart';
 import '../cubit/add_visited_site_cubit.dart';
 
 class CustomPhotoPicker extends StatelessWidget {
-  const CustomPhotoPicker(
-      {super.key, required this.title, required this.images});
+  const CustomPhotoPicker({super.key, required this.title, required this.images});
   final String title;
   final List<XFile> images;
 
@@ -100,10 +98,7 @@ class AddNewPhoto extends StatelessWidget {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer
-                        .withOpacity(0.1),
+                    color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -119,8 +114,7 @@ class AddNewPhoto extends StatelessWidget {
                 ),
                 onTap: () async {
                   Navigator.pop(context);
-                  final image =
-                      await ImagePicker().pickImage(source: ImageSource.camera);
+                  final image = await ImagePicker().pickImage(source: ImageSource.camera);
                   if (image != null) {
                     final compressedImage = await compressImage(image);
                     if (parentContext.mounted) {
@@ -137,10 +131,7 @@ class AddNewPhoto extends StatelessWidget {
                 leading: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primaryContainer
-                        .withOpacity(0.1),
+                    color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -156,8 +147,7 @@ class AddNewPhoto extends StatelessWidget {
                 ),
                 onTap: () async {
                   Navigator.pop(context);
-                  final image = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
+                  final image = await ImagePicker().pickImage(source: ImageSource.gallery);
                   if (image != null) {
                     final compressedImage = await compressImage(image);
                     if (parentContext.mounted) {
@@ -189,8 +179,7 @@ class AddNewPhoto extends StatelessWidget {
         height: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color:
-              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+          color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: 0.1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -207,8 +196,7 @@ class AddNewPhoto extends StatelessWidget {
   }
 }
 
-Row imageBuilder(List<XFile> images, int index,
-    AddVisitedSiteCubit visitFormCubit, BuildContext context) {
+Row imageBuilder(List<XFile> images, int index, AddVisitedSiteCubit visitFormCubit, BuildContext context) {
   return Row(
     children: [
       Stack(

@@ -31,7 +31,7 @@ extension UserRoleExtension on UserRole {
       case UserRole.MTN:
         return 'MTN';
       case UserRole.SITE_ADMIN:
-        return 'Sites Admin';
+        return 'sites_admin';
       case UserRole.MANAGER:
         return 'Manager';
       case UserRole.GUEST:

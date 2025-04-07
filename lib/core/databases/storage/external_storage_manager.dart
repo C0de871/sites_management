@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sites_management/core/databases/errors/error_model.dart';
 import 'package:sites_management/core/databases/errors/expentions.dart';

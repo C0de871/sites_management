@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-import '../../shared/enums/storage_exception_type.dart';
 import 'error_model.dart';
 
 //!ServerException

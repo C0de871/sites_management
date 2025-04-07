@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:sites_management/core/databases/storage/external_storage_manager.dart';
 import 'package:sites_management/core/shared/enums/visited_site_additional_images_type.dart';
@@ -79,8 +81,11 @@ class VisitedSiteRemoteDataSource {
       responseType: ResponseType.bytes,
     );
     final baseDirPath = externalStorageManager.baseDirPath;
+    log("base dir path: $baseDirPath");
     final file = await externalStorageManager.createFile("$baseDirPath/$fileName.xls");
+    log("file is created");
     await externalStorageManager.writeBytesOnFile(file, response as List<int>);
+    log("bytes written on the file");
     return MessageModel.fromJson(Constant.massageMap("seleceted visited sites exported successfully"));
   }
 }

@@ -7,9 +7,12 @@ import 'package:sites_management/features/users/presentation/widgets/success_ani
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';
 
 class EditUserButton extends StatelessWidget {
-  const EditUserButton({
+  const EditUserButton(
+    this.id, {
     super.key,
   });
+
+  final int? id;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +52,7 @@ class EditUserButton extends StatelessWidget {
             UpdateAddUserLoading() => null,
             _ => () {
                 if (updateAddUserCubit.editUserFormKey.currentState!.validate()) {
-                  context.read<UpdateAddUserCubit>().updateUser();
+                  context.read<UpdateAddUserCubit>().updateUser(id);
                 }
               },
           },

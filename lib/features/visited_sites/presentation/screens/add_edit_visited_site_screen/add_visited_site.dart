@@ -65,9 +65,11 @@ class SuccessSnackBar extends SnackBar {
             children: [
               const Icon(Icons.check_circle, color: Colors.green),
               const SizedBox(width: 8),
-              Text(
-                message,
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                ),
               ),
             ],
           ),
@@ -87,9 +89,11 @@ class FailedSnackBar extends SnackBar {
             children: [
               const Icon(Icons.error, color: Colors.red),
               const SizedBox(width: 8),
-              Text(
-                message,
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
+                ),
               ),
             ],
           ),

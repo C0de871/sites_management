@@ -9,6 +9,15 @@ class GetUsersEntity extends Equatable {
     required this.users,
   });
 
+  //generate copywith
+  GetUsersEntity copyWith({
+    List<UserEntity>? users,
+  }) {
+    return GetUsersEntity(
+      users: users ?? this.users,
+    );
+  }
+
   @override
   List<Object?> get props => [users];
 }

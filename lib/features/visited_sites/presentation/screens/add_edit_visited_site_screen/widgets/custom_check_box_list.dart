@@ -23,17 +23,14 @@ class CustomCheckBoxList extends StatelessWidget {
           runSpacing: 8, // Vertical spacing between rows
           children: checkboxOptions.keys.map((String key) {
             return SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.35, // Adjust width as needed
+              width: MediaQuery.of(context).size.width * 0.35, // Adjust width as needed
               child: CheckboxListTile(
                 title: Text(
                   key,
                   style: const TextStyle(fontSize: 14),
                 ),
                 value: checkboxOptions[key],
-                enabled: isdisablable
-                    ? (key == "TCU" ? true : checkboxOptions['TCU'])
-                    : true,
+                enabled: isdisablable ? (key == "TCU" ? true : checkboxOptions['TCU']) : true,
                 onChanged: (bool? value) {
                   visitFormCubit.changeCheckBoxStatus(checkboxOptions, key);
                 },

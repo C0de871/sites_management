@@ -10,14 +10,6 @@ class GetUsersModel extends GetUsersEntity with EquatableMixin {
 
   static const String usersKey = "users";
 
-  GetUsersModel copyWith({
-    List<UserModel>? users,
-  }) {
-    return GetUsersModel(
-      users: users ?? this.users,
-    );
-  }
-
   factory GetUsersModel.fromJson(Map<String, dynamic> json) {
     return GetUsersModel(
       users: json[usersKey] == null ? [] : List<UserModel>.from(json[usersKey]!.map((x) => UserModel.fromJson(x))),

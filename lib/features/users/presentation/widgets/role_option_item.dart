@@ -7,7 +7,7 @@ import 'package:sites_management/core/shared/enums/user_role.dart';
 class RoleOptionItem extends StatelessWidget {
   final UserRole role;
   final bool isSelected;
-  final VoidCallback onTap;
+  final Function(UserRole selectedRole) onTap;
 
   const RoleOptionItem({
     super.key,
@@ -21,7 +21,9 @@ class RoleOptionItem extends StatelessWidget {
     final roleColor = isSelected ? role.color : Theme.of(context).colorScheme.outline;
 
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap(role);
+      },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(

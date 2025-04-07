@@ -25,6 +25,7 @@ class EndPoints {
 }
 
 class ApiKey {
+  static const String id = "id";
   static const String message = "message";
   static const String capacity = 'capacity';
   static const String time = 'time';
@@ -154,6 +155,7 @@ class CacheKey {
 }
 
 class RequestKeys {
+  static const String id = "id";
   static const String sites = "sites";
   static const String name = "name";
   static const String code = "code";
