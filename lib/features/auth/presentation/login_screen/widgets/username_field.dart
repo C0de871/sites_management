@@ -20,15 +20,6 @@ class UsernameField extends StatelessWidget {
         }
         return null;
       },
-      // decoration: const InputDecoration(
-      //   labelText: 'Username',
-      //   hintText: 'Enter your username',
-      //   prefixIcon: Icon(Icons.person_outline),
-      // ),
-      // onChanged: (value) {
-      //   context.read<LoginCubit>().usernameChanged(value);
-      // },
-      // textInputAction: TextInputAction.next,
     );
   }
 }

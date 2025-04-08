@@ -3,8 +3,8 @@ import 'widgets/custom_app_bar.dart';
 import 'widgets/page_body.dart';
 import 'widgets/page_title.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -73,7 +73,7 @@ class AppRouter with CubitProviderMixin {
           settings: settings,
           builder: (_) => BlocProvider(
             create: (context) => getCubit(() => HomeCubit()..retrieveUser()),
-            child: const HomePage(),
+            child: const HomeScreen(),
           ),
         );
 

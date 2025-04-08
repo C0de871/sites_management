@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/core/shared/widgets/failed_snack_bar.dart';
+import 'package:sites_management/core/shared/widgets/success_snack_bar.dart';
 
 import '../../../../core/Routes/app_routes.dart';
 import '../../../visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';
@@ -33,18 +35,29 @@ class LoginScreen extends StatelessWidget {
               break;
           }
         },
-        child: const SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                LoginHeader(),
-                SizedBox(height: 32),
-                LoginForm(),
-              ],
-            ),
-          ),
+        child: const LoginScreenView(),
+      ),
+    );
+  }
+}
+
+class LoginScreenView extends StatelessWidget {
+  const LoginScreenView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SafeArea(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            LoginHeader(),
+            SizedBox(height: 32),
+            LoginForm(),
+          ],
         ),
       ),
     );

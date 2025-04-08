@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/core/shared/widgets/failed_snack_bar.dart';
 import 'package:sites_management/features/users/presentation/cubits/update_add_users/update_add_users_cubit.dart';
 import 'package:sites_management/features/users/presentation/widgets/success_animation.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';

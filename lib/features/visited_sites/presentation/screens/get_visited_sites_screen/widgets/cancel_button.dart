@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DeleteButton extends StatelessWidget {
-  const DeleteButton({
+class CancelButton extends StatelessWidget {
+  const CancelButton({
     super.key,
   });
 

@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/users/presentation/cubits/get_users/get_users_cubit.dart';
-import 'package:sites_management/features/users/presentation/widgets/empty_or_users_list_view.dart';
 import 'package:sites_management/features/users/presentation/widgets/failed_view.dart';
 import 'package:sites_management/features/users/presentation/widgets/loading_users_view.dart';
+
+import 'empty_users_view.dart';
+import 'enhanced_user_list_view.dart';
 
 class EmptyOrLoadingOrUsersListView extends StatelessWidget {
   const EmptyOrLoadingOrUsersListView({
@@ -19,10 +21,12 @@ class EmptyOrLoadingOrUsersListView extends StatelessWidget {
         switch (state) {
           case GetUsersLoading():
             return const LoadingUsersView();
+          case GetUsersLoaded() when state.getUserEntity.users.isEmpty:
+            return const Expanded(child: EmptyUsersView());
           case GetUsersLoaded():
-            return const EmptyOrUsersListView();
-          case GetUsersFailed():
-            return const FailedView();
+            return Expanded(child: EnhancedUserListView(users: state.getUserEntity.users));
+          case GetUsersFailed(message: var message):
+            return FailedView(message: message);
           case _:
             return Container();
         }

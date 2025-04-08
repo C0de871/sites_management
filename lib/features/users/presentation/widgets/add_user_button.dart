@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/core/shared/widgets/failed_snack_bar.dart';
 import 'package:sites_management/features/users/presentation/cubits/update_add_users/update_add_users_cubit.dart';
 import 'package:sites_management/features/users/presentation/widgets/success_animation.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';
@@ -15,7 +16,6 @@ class AddUserButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<UpdateAddUserCubit, UpdateAddUserState>(
       listener: (context, state) {
-        //use switch instead of if else
         switch (state) {
           case UpdateAddUserSuccess():
             _showSuccessAnimatedIcon(context);

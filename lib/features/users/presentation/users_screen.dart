@@ -5,7 +5,6 @@ import 'package:sites_management/features/users/presentation/widgets/app_bar_tit
 import 'package:sites_management/features/users/presentation/widgets/app_bar_user_counts_action.dart';
 import 'package:sites_management/features/users/presentation/widgets/users_management_body.dart';
 
-
 class UsersManagementScreen extends StatelessWidget {
   const UsersManagementScreen({super.key});
 
@@ -18,7 +17,7 @@ class UsersManagementScreen extends StatelessWidget {
           AppBarUserCountsAction(),
         ],
       ),
-      body: const UsersManagementBody(),
+      body: const UsersManagementView(),
       floatingActionButton: const AddUserFloatingButton(),
     );
   }
