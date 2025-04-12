@@ -24,37 +24,18 @@ extension StringValidation on String? {
 }
 
 extension UserRoleExtension on UserRole {
-  String get userRoleName {
-    switch (this) {
-      case UserRole.WORKER:
-        return 'Worker';
-      case UserRole.MTN:
-        return 'MTN';
-      case UserRole.SITE_ADMIN:
-        return 'sites_admin';
-      case UserRole.MANAGER:
-        return 'Manager';
-      case UserRole.GUEST:
-        return 'Guest';
-    }
-  }
-
   Color get color {
     switch (this) {
-      case UserRole.WORKER:
+      case UserRole.employee:
         return Colors.blue;
-      case UserRole.MTN:
+      case UserRole.mtn_account:
         return Colors.amber;
-      case UserRole.SITE_ADMIN:
+      case UserRole.sites_admin:
         return Colors.green;
-      case UserRole.MANAGER:
+      case UserRole.manager:
         return Colors.purple;
-      case UserRole.GUEST:
-        return Colors.blueGrey;
     }
   }
-
- 
 }
 
 // reposit

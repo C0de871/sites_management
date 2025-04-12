@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 
 class CustomSwitchTile extends StatelessWidget {
-  const CustomSwitchTile(
-      {super.key,
-      required this.getValue,
-      required this.onChanged,
-      required this.title});
+  const CustomSwitchTile({super.key, required this.getValue, required this.onChanged, required this.title});
 
   final Function(bool) onChanged;
   final bool Function() getValue;
@@ -16,7 +12,7 @@ class CustomSwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+    return BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
       builder: (context, state) {
         return SwitchListTile(
           contentPadding: EdgeInsets.zero,

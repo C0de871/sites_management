@@ -21,13 +21,13 @@ class VisitedSiteRemoteDataSource {
     required this.api,
     required this.externalStorageManager,
   });
-  Future<AddVisitedSiteModel> addVisitedSite({required Map<String, dynamic> body}) async {
+  Future<MessageModel> addVisitedSite({required Map<String, dynamic> body}) async {
     final response = await api.post(
       EndPoints.postVisitedSite,
       data: body,
       isFormData: true,
     );
-    return AddVisitedSiteModel.fromMap(response);
+    return MessageModel.fromJson(response);
   }
 
   Future<List<GetVisitedSitesModel>> getVisitedSites() async {
@@ -57,7 +57,7 @@ class VisitedSiteRemoteDataSource {
       "${EndPoints.editSite}/$id",
       data: body,
     );
-    return MessageModel.fromJson(response);
+    return MessageModel.fromJson(Constant.massageMap("edit site successfuly"));
   }
 
   Future<GetVisitedSiteImagesModel> getAdditionalSiteImages({required String id, required VisitedSiteAdditionalImagesType type}) async {
@@ -67,7 +67,7 @@ class VisitedSiteRemoteDataSource {
     return GetVisitedSiteImagesModel.fromJson(response);
   }
 
-  Future<GetVisitedSiteImagesModel> getSectionImages({required String id, required VisitedSiteAdditionalImagesType type}) async {
+  Future<GetVisitedSiteImagesModel> getSectionImages({required String id, required VisitedSiteSectionImagesType type}) async {
     final response = await api.get(
       "${EndPoints.getSectionImages}/$id/${type.name}",
     );

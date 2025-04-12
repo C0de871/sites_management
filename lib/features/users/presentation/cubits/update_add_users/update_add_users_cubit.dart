@@ -25,8 +25,8 @@ class UpdateAddUserCubit extends Cubit<UpdateAddUserState> {
   TextEditingController updateUserPasswordController = TextEditingController();
   final addUserFormKey = GlobalKey<FormState>();
   final editUserFormKey = GlobalKey<FormState>();
-  UserRole addUserSelectedRole = UserRole.WORKER;
-  UserRole updateUserSelectedRole = UserRole.WORKER;
+  UserRole addUserSelectedRole = UserRole.employee;
+  UserRole updateUserSelectedRole = UserRole.employee;
   bool isVisible = false;
 
   UpdateAddUserCubit()
@@ -62,7 +62,7 @@ class UpdateAddUserCubit extends Cubit<UpdateAddUserState> {
     Map<String, dynamic> body = {
       RequestKeys.username: addUserUsernameController.text,
       RequestKeys.password: addUserPasswordController.text,
-      RequestKeys.role: addUserSelectedRole.userRoleName,
+      RequestKeys.role: addUserSelectedRole.name,
     };
     final response = await addUserUseCase.call(body: body);
     response.fold(
@@ -77,7 +77,7 @@ class UpdateAddUserCubit extends Cubit<UpdateAddUserState> {
     Map<String, dynamic> body = {
       RequestKeys.username: updateUserUsernameController.text,
       RequestKeys.password: updateUserPasswordController.text,
-      RequestKeys.role: updateUserSelectedRole.userRoleName,
+      RequestKeys.role: updateUserSelectedRole.name,
       RequestKeys.id: id,
     };
     final response = await editUserUseCase.call(body: body);

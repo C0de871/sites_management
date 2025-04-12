@@ -20,7 +20,7 @@ class CustomFlotingActionButton extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  AppRoutes.siteGeneralInfo,
+                  AppRoutes.postSiteGeneralInfo,
                 );
               },
               icon: Icon(
@@ -41,7 +41,7 @@ class CustomFlotingActionButton extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamed(
               context,
-              AppRoutes.siteGeneralInfo,
+              AppRoutes.postSiteGeneralInfo,
             );
           },
           icon: Icon(

@@ -21,11 +21,16 @@ mixin _$UpdateAddUserState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $UpdateAddUserStateCopyWith<UpdateAddUserState> get copyWith => _$UpdateAddUserStateCopyWithImpl<UpdateAddUserState>(this as UpdateAddUserState, _$identity);
+  $UpdateAddUserStateCopyWith<UpdateAddUserState> get copyWith =>
+      _$UpdateAddUserStateCopyWithImpl<UpdateAddUserState>(
+          this as UpdateAddUserState, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is UpdateAddUserState && (identical(other.dummy, dummy) || other.dummy == dummy));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateAddUserState &&
+            (identical(other.dummy, dummy) || other.dummy == dummy));
   }
 
   @override
@@ -39,13 +44,16 @@ mixin _$UpdateAddUserState {
 
 /// @nodoc
 abstract mixin class $UpdateAddUserStateCopyWith<$Res> {
-  factory $UpdateAddUserStateCopyWith(UpdateAddUserState value, $Res Function(UpdateAddUserState) _then) = _$UpdateAddUserStateCopyWithImpl;
+  factory $UpdateAddUserStateCopyWith(
+          UpdateAddUserState value, $Res Function(UpdateAddUserState) _then) =
+      _$UpdateAddUserStateCopyWithImpl;
   @useResult
   $Res call({bool dummy});
 }
 
 /// @nodoc
-class _$UpdateAddUserStateCopyWithImpl<$Res> implements $UpdateAddUserStateCopyWith<$Res> {
+class _$UpdateAddUserStateCopyWithImpl<$Res>
+    implements $UpdateAddUserStateCopyWith<$Res> {
   _$UpdateAddUserStateCopyWithImpl(this._self, this._then);
 
   final UpdateAddUserState _self;
@@ -81,11 +89,16 @@ class UpdateAddUserInitial implements UpdateAddUserState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $InitialCopyWith<UpdateAddUserInitial> get copyWith => _$InitialCopyWithImpl<UpdateAddUserInitial>(this, _$identity);
+  $UpdateAddUserInitialCopyWith<UpdateAddUserInitial> get copyWith =>
+      _$UpdateAddUserInitialCopyWithImpl<UpdateAddUserInitial>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is UpdateAddUserInitial && (identical(other.dummy, dummy) || other.dummy == dummy));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateAddUserInitial &&
+            (identical(other.dummy, dummy) || other.dummy == dummy));
   }
 
   @override
@@ -98,16 +111,20 @@ class UpdateAddUserInitial implements UpdateAddUserState {
 }
 
 /// @nodoc
-abstract mixin class $InitialCopyWith<$Res> implements $UpdateAddUserStateCopyWith<$Res> {
-  factory $InitialCopyWith(UpdateAddUserInitial value, $Res Function(UpdateAddUserInitial) _then) = _$InitialCopyWithImpl;
+abstract mixin class $UpdateAddUserInitialCopyWith<$Res>
+    implements $UpdateAddUserStateCopyWith<$Res> {
+  factory $UpdateAddUserInitialCopyWith(UpdateAddUserInitial value,
+          $Res Function(UpdateAddUserInitial) _then) =
+      _$UpdateAddUserInitialCopyWithImpl;
   @override
   @useResult
   $Res call({bool dummy});
 }
 
 /// @nodoc
-class _$InitialCopyWithImpl<$Res> implements $InitialCopyWith<$Res> {
-  _$InitialCopyWithImpl(this._self, this._then);
+class _$UpdateAddUserInitialCopyWithImpl<$Res>
+    implements $UpdateAddUserInitialCopyWith<$Res> {
+  _$UpdateAddUserInitialCopyWithImpl(this._self, this._then);
 
   final UpdateAddUserInitial _self;
   final $Res Function(UpdateAddUserInitial) _then;
@@ -142,11 +159,16 @@ class UpdateAddUserLoading implements UpdateAddUserState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $SubmittingCopyWith<UpdateAddUserLoading> get copyWith => _$SubmittingCopyWithImpl<UpdateAddUserLoading>(this, _$identity);
+  $UpdateAddUserLoadingCopyWith<UpdateAddUserLoading> get copyWith =>
+      _$UpdateAddUserLoadingCopyWithImpl<UpdateAddUserLoading>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is UpdateAddUserLoading && (identical(other.dummy, dummy) || other.dummy == dummy));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateAddUserLoading &&
+            (identical(other.dummy, dummy) || other.dummy == dummy));
   }
 
   @override
@@ -159,16 +181,20 @@ class UpdateAddUserLoading implements UpdateAddUserState {
 }
 
 /// @nodoc
-abstract mixin class $SubmittingCopyWith<$Res> implements $UpdateAddUserStateCopyWith<$Res> {
-  factory $SubmittingCopyWith(UpdateAddUserLoading value, $Res Function(UpdateAddUserLoading) _then) = _$SubmittingCopyWithImpl;
+abstract mixin class $UpdateAddUserLoadingCopyWith<$Res>
+    implements $UpdateAddUserStateCopyWith<$Res> {
+  factory $UpdateAddUserLoadingCopyWith(UpdateAddUserLoading value,
+          $Res Function(UpdateAddUserLoading) _then) =
+      _$UpdateAddUserLoadingCopyWithImpl;
   @override
   @useResult
   $Res call({bool dummy});
 }
 
 /// @nodoc
-class _$SubmittingCopyWithImpl<$Res> implements $SubmittingCopyWith<$Res> {
-  _$SubmittingCopyWithImpl(this._self, this._then);
+class _$UpdateAddUserLoadingCopyWithImpl<$Res>
+    implements $UpdateAddUserLoadingCopyWith<$Res> {
+  _$UpdateAddUserLoadingCopyWithImpl(this._self, this._then);
 
   final UpdateAddUserLoading _self;
   final $Res Function(UpdateAddUserLoading) _then;
@@ -204,11 +230,17 @@ class UpdateAddUserSuccess implements UpdateAddUserState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $SuccessCopyWith<UpdateAddUserSuccess> get copyWith => _$SuccessCopyWithImpl<UpdateAddUserSuccess>(this, _$identity);
+  $UpdateAddUserSuccessCopyWith<UpdateAddUserSuccess> get copyWith =>
+      _$UpdateAddUserSuccessCopyWithImpl<UpdateAddUserSuccess>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is UpdateAddUserSuccess && (identical(other.dummy, dummy) || other.dummy == dummy) && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateAddUserSuccess &&
+            (identical(other.dummy, dummy) || other.dummy == dummy) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -221,16 +253,20 @@ class UpdateAddUserSuccess implements UpdateAddUserState {
 }
 
 /// @nodoc
-abstract mixin class $SuccessCopyWith<$Res> implements $UpdateAddUserStateCopyWith<$Res> {
-  factory $SuccessCopyWith(UpdateAddUserSuccess value, $Res Function(UpdateAddUserSuccess) _then) = _$SuccessCopyWithImpl;
+abstract mixin class $UpdateAddUserSuccessCopyWith<$Res>
+    implements $UpdateAddUserStateCopyWith<$Res> {
+  factory $UpdateAddUserSuccessCopyWith(UpdateAddUserSuccess value,
+          $Res Function(UpdateAddUserSuccess) _then) =
+      _$UpdateAddUserSuccessCopyWithImpl;
   @override
   @useResult
   $Res call({bool dummy, String message});
 }
 
 /// @nodoc
-class _$SuccessCopyWithImpl<$Res> implements $SuccessCopyWith<$Res> {
-  _$SuccessCopyWithImpl(this._self, this._then);
+class _$UpdateAddUserSuccessCopyWithImpl<$Res>
+    implements $UpdateAddUserSuccessCopyWith<$Res> {
+  _$UpdateAddUserSuccessCopyWithImpl(this._self, this._then);
 
   final UpdateAddUserSuccess _self;
   final $Res Function(UpdateAddUserSuccess) _then;
@@ -271,11 +307,16 @@ class UpdateAddUserFailed implements UpdateAddUserState {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ErrorCopyWith<UpdateAddUserFailed> get copyWith => _$ErrorCopyWithImpl<UpdateAddUserFailed>(this, _$identity);
+  $UpdateAddUserFailedCopyWith<UpdateAddUserFailed> get copyWith =>
+      _$UpdateAddUserFailedCopyWithImpl<UpdateAddUserFailed>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is UpdateAddUserFailed && (identical(other.dummy, dummy) || other.dummy == dummy) && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is UpdateAddUserFailed &&
+            (identical(other.dummy, dummy) || other.dummy == dummy) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -288,16 +329,20 @@ class UpdateAddUserFailed implements UpdateAddUserState {
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res> implements $UpdateAddUserStateCopyWith<$Res> {
-  factory $ErrorCopyWith(UpdateAddUserFailed value, $Res Function(UpdateAddUserFailed) _then) = _$ErrorCopyWithImpl;
+abstract mixin class $UpdateAddUserFailedCopyWith<$Res>
+    implements $UpdateAddUserStateCopyWith<$Res> {
+  factory $UpdateAddUserFailedCopyWith(
+          UpdateAddUserFailed value, $Res Function(UpdateAddUserFailed) _then) =
+      _$UpdateAddUserFailedCopyWithImpl;
   @override
   @useResult
   $Res call({bool dummy, String message});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(this._self, this._then);
+class _$UpdateAddUserFailedCopyWithImpl<$Res>
+    implements $UpdateAddUserFailedCopyWith<$Res> {
+  _$UpdateAddUserFailedCopyWithImpl(this._self, this._then);
 
   final UpdateAddUserFailed _self;
   final $Res Function(UpdateAddUserFailed) _then;

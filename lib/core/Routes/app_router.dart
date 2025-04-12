@@ -12,7 +12,7 @@ import '../../features/home/presentation/home_page.dart';
 import '../../features/splash/presentation/spalsh_screen.dart';
 import '../../features/users/presentation/cubits/delete_users/delete_users_cubit.dart';
 import '../../features/users/presentation/cubits/get_users/get_users_cubit.dart';
-import '../../features/visited_sites/presentation/screens/add_edit_visited_site_screen/cubit/add_visited_site_cubit.dart';
+import '../../features/visited_sites/presentation/screens/add_edit_visited_site_screen/cubit/visited_site_details_cubit.dart';
 import '../../features/visited_sites/presentation/screens/add_edit_visited_site_screen/form_hub_screen.dart';
 import '../../features/visited_sites/presentation/screens/add_edit_visited_site_screen/widgets/ampere_section.dart';
 import '../../features/visited_sites/presentation/screens/add_edit_visited_site_screen/widgets/environment_section.dart';
@@ -37,22 +37,6 @@ import '../utils/constants/constant.dart';
 import 'app_routes.dart';
 
 class AppRouter with CubitProviderMixin {
-  GetVisitedSitesCubit? _getVisitedSiteCubit;
-  AddVisitedSiteCubit? _addVisitedSiteCubit;
-
-  // PostVisitedSiteCubit get postVisitedSiteCubit => _getCubit(_postVisitedSiteCubit, () => PostVisitedSiteCubit());
-  GetVisitedSitesCubit get getVisitedSiteCubit => _getCubit(_getVisitedSiteCubit, () => GetVisitedSitesCubit());
-
-  AddVisitedSiteCubit get addVisitedSiteCubit {
-    if (_addVisitedSiteCubit == null || _addVisitedSiteCubit!.isClosed) {
-      _addVisitedSiteCubit = AddVisitedSiteCubit();
-    }
-    _addVisitedSiteCubit!.stream.listen((_) {}, onDone: () {
-      _addVisitedSiteCubit = null;
-    });
-    return _addVisitedSiteCubit!;
-  }
-
   T _getCubit<T extends Cubit<Object>>(T? cubit, T Function() createCubit) {
     if (cubit == null || cubit.isClosed) {
       cubit = createCubit();
@@ -85,40 +69,59 @@ class AppRouter with CubitProviderMixin {
             providers: [
               BlocProvider(
                 lazy: false,
-                create: (context) => addVisitedSiteCubit,
-              ),
-              BlocProvider(
-                lazy: false,
-                create: (context) => getVisitedSiteCubit,
+                create: (context) => getCubit(() => GetVisitedSitesCubit()),
               ),
             ],
             child: const SitesListPage(),
           ),
         );
-      case AppRoutes.siteGeneralInfo:
+      case AppRoutes.postSiteGeneralInfo:
         return MaterialPageRoute(
           settings: settings,
           builder: (_) {
-            log("cubit is null ====================================== : ${_addVisitedSiteCubit == null}");
-            return BlocProvider.value(
-              value: addVisitedSiteCubit,
+            return BlocProvider(
+              create: (context) => getCubit(() => VisitedSiteDetailsCubit()),
               child: const SiteGeneralInfo(),
             );
           },
         );
-      case AppRoutes.formHubScreen:
+      case AppRoutes.editSiteGeneralInfo:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
-            child: const FormHubScreen(),
-          ),
+          builder: (_) {
+            return BlocProvider.value(
+              value: getCubit(() => VisitedSiteDetailsCubit()),
+              child: const SiteGeneralInfo(),
+            );
+          },
+        );
+      case AppRoutes.addFormHubScreen:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) {
+            return BlocProvider.value(
+              value: getCubit(() => VisitedSiteDetailsCubit()),
+              child: const FormHubScreen(),
+            );
+          },
+        );
+      case AppRoutes.editFormHubScreen:
+        String id = settings.arguments as String;
+        log("site id after pushing is $id");
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) {
+            return BlocProvider(
+              create: (context) => getCubit(() => VisitedSiteDetailsCubit(visitedSiteId: id)),
+              child: const FormHubScreen(),
+            );
+          },
         );
       case AppRoutes.siteTypeAndConfig:
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const SiteConfiguration(),
           ),
         );
@@ -126,7 +129,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const SiteAdditionalInfo(),
           ),
         );
@@ -134,7 +137,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const AmpereSection(),
           ),
         );
@@ -142,7 +145,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const TcuSection(),
           ),
         );
@@ -150,7 +153,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const FiberSection(),
           ),
         );
@@ -158,7 +161,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const GsmSection(band: MapKeys.gsm900),
           ),
         );
@@ -166,7 +169,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const GsmSection(band: MapKeys.gsm1800),
           ),
         );
@@ -174,7 +177,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const ThreeGSection(),
           ),
         );
@@ -182,7 +185,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const LteSection(),
           ),
         );
@@ -190,7 +193,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const RectifierSection(),
           ),
         );
@@ -198,7 +201,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const EnvironmentSection(),
           ),
         );
@@ -206,7 +209,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const TowerSection(),
           ),
         );
@@ -214,7 +217,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const SolarAndWindSection(),
           ),
         );
@@ -222,7 +225,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const GeneratorSection(),
           ),
         );
@@ -230,7 +233,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const LvdpSection(),
           ),
         );
@@ -238,7 +241,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => BlocProvider.value(
-            value: addVisitedSiteCubit,
+            value: getCubit(() => VisitedSiteDetailsCubit()),
             child: const PhotoSection(),
           ),
         );
@@ -246,21 +249,13 @@ class AppRouter with CubitProviderMixin {
       case AppRoutes.loading:
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => BlocProvider(
-            create: (context) => getCubit(() => LoginCubit()..retrieveUser()),
-            child: const SpalshScreen(),
-          ),
-        );
+          builder: (_) => const SpalshScreen(),
+    );
 
       case AppRoutes.login:
-        closeCubit<LoginCubit>();
         return MaterialPageRoute(
           settings: settings,
-          builder: (_) => BlocProvider(
-            lazy: false,
-            create: (context) => getCubit(() => LoginCubit()),
-            child: const LoginScreen(),
-          ),
+          builder: (_) => const LoginScreen(),
         );
 
       case AppRoutes.usersManagement:

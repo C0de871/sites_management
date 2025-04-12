@@ -69,7 +69,7 @@ class ShowSiteDetailsModel extends ShowSiteDetailsEntity with EquatableMixin {
         siteKey: (site as SiteGeneralInformationModel?)?.toJson(),
         towerInformationsKey: (towerInformations as TowerInformationsModel?)?.toJson(),
         bandInformationsKey: (bandInformations as BandInformationsModel?)?.toJson(),
-        generatorInformationsKey: generatorInformations.map((x) => (x as GeneratorInformationModel?)?.toJson()).toList(),
+        generatorInformationsKey: generatorInformations?.map((x) => (x as GeneratorInformationModel?)?.toJson()).toList(),
         solarWindInformationsKey: (solarWindInformations as SolarWindInformations?)?.toJson(),
         rectifierInformationsKey: (rectifierInformations as RectifierInformationsModel?)?.toJson(),
         environmentInformationsKey: (environmentInformations as EnvironmentInformationsModel?)?.toJson(),

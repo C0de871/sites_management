@@ -8,6 +8,11 @@ class Constant {
       "message": message,
     };
   }
+
+  static const String employee = "employee";
+  static const String mtnAccount = "mtn_account";
+  static const String sitesAdmin = "sites_admin";
+  static const String manager= "manager";
 }
 
 class MapKeys {
@@ -30,3 +35,8 @@ class MapKeys {
   static const String gsm900 = "GSM 900";
   static const String gsm1800 = "GSM 1800";
 }
+// هي اسماء الرولات 
+// employee
+// mtn_account
+// sites_admin
+// manager

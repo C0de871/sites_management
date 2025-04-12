@@ -6,7 +6,7 @@ import 'custom_check_box_list.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 import 'custom_switch_tile.dart';
 import 'custom_text_field.dart';
 
@@ -15,7 +15,7 @@ class EnvironmentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<AddVisitedSiteCubit>();
+    final visitFormCubit = context.read<VisitedSiteDetailsCubit>();
     onChanged(bool value) {
       visitFormCubit.changeSwitchStatus(() {
         visitFormCubit.earthingSystem = value;
@@ -103,7 +103,7 @@ class EnvironmentSection extends StatelessWidget {
     );
   }
 
-  Row fireStates(AddVisitedSiteCubit visitFormCubit) {
+  Row fireStates(VisitedSiteDetailsCubit visitFormCubit) {
     return Row(
       children: [
         Expanded(

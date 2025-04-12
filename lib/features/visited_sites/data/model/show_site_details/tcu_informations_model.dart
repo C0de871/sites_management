@@ -6,33 +6,35 @@ class TcuInformationsModel extends TcuInformationsEntity with EquatableMixin {
     required super.tcu,
     required super.the3G,
     required super.the2G,
-    required super.ite,
+    required super.lte,
     required super.remarks,
   });
 
   static const String tcuKey = "tcu";
 
-  static const String the3GKey = "3g";
+  static const String the3GKey = "3G";
 
-  static const String the2GKey = "2g";
+  static const String the2GKey = "2G";
 
-  static const String iteKey = "ite";
+  static const String lteKey = "LTE";
 
   static const String remarksKey = "remarks";
+
+  static const String tcuTypeKey = "tcu_types";
 
   @override
   TcuInformationsModel copyWith({
     int? tcu,
-    int? the3G,
-    int? the2G,
-    int? ite,
+    bool? the3G,
+    bool? the2G,
+    bool? lte,
     String? remarks,
   }) {
     return TcuInformationsModel(
       tcu: tcu ?? this.tcu,
       the3G: the3G ?? this.the3G,
       the2G: the2G ?? this.the2G,
-      ite: ite ?? this.ite,
+      lte: lte ?? this.lte,
       remarks: remarks ?? this.remarks,
     );
   }
@@ -40,9 +42,9 @@ class TcuInformationsModel extends TcuInformationsEntity with EquatableMixin {
   factory TcuInformationsModel.fromJson(Map<String, dynamic> json) {
     return TcuInformationsModel(
       tcu: json[tcuKey],
-      the3G: json[the3GKey],
-      the2G: json[the2GKey],
-      ite: json[iteKey],
+      the3G: json[tcuTypeKey][the3GKey],
+      the2G: json[tcuTypeKey][the2GKey],
+      lte: json[tcuTypeKey][lteKey],
       remarks: json[remarksKey],
     );
   }
@@ -51,7 +53,7 @@ class TcuInformationsModel extends TcuInformationsEntity with EquatableMixin {
         tcuKey: tcu,
         the3GKey: the3G,
         the2GKey: the2G,
-        iteKey: ite,
+        lteKey: lte,
         remarksKey: remarks,
       };
 
@@ -60,7 +62,7 @@ class TcuInformationsModel extends TcuInformationsEntity with EquatableMixin {
         tcu,
         the3G,
         the2G,
-        ite,
+        lte,
         remarks,
       ];
 }

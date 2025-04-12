@@ -1,9 +1,11 @@
 class AppRoutes {
   static const String homePage = 'homePage';
-  static const String formHubScreen = 'form-hub-screen';
+  static const String addFormHubScreen = 'add-form-hub-screen';
+  static const String editFormHubScreen = 'edit-form-hub-screen';
   static const String showVisitedSites = 'show-visited-sites';
   static const String showVisitedSiteDetails = 'show-visited-site-details';
-  static const String siteGeneralInfo = "site-general-info";
+  static const String postSiteGeneralInfo = "post-site-general-info";
+  static const String editSiteGeneralInfo = "edit-site-general-info";
   static const String siteTypeAndConfig = "site-type-and-config";
   static const String siteAdditionalInfo = "site-additional-info";
   static const String siteAmpereInfo = "site-ampere-info";

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/features/auth/presentation/login_screen/cubits/login_cubit.dart';
 import 'package:sites_management/features/home/presentation/cubits/home_cubit.dart';
 
 import '../../../../core/Routes/app_routes.dart';
@@ -54,7 +55,7 @@ class PageBody extends StatelessWidget {
             BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 switch (state) {
-                  case HomeSuccess() when state.role == UserRole.MANAGER:
+                  case HomeSuccess() when state.role == UserRole.manager:
                     return VisitButton(
                       text: "المستخدمين",
                       icon: Icons.person_2_outlined,
@@ -68,6 +69,14 @@ class PageBody extends StatelessWidget {
                   case _:
                     return const SizedBox.shrink();
                 }
+              },
+            ),
+            VisitButton(
+              text: "تسجيل الخروج من الحساب",
+              icon: Icons.logout,
+              color: Colors.red,
+              press: () {
+                context.read<LoginCubit>().logout();
               },
             ),
           ],

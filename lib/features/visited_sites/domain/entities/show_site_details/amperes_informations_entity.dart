@@ -9,9 +9,9 @@ class AmperesInformationsEntity extends Equatable {
   });
 
   final String? capacity;
-  final String time;
-  final String cableLength;
-  final String details;
+  final String? time;
+  final String? cableLength;
+  final String? details;
 
   AmperesInformationsEntity copyWith({
     String? capacity,

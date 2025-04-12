@@ -1,25 +1,318 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sites_management/core/databases/errors/failure.dart';
 import 'package:sites_management/core/shared/enums/form_type.dart';
+import 'package:sites_management/features/visited_sites/domain/entities/show_site_details/generator_information_entity.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/edit_visited_site_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/get_additional_visited_site_images_use_case.dart';
+import 'package:sites_management/features/visited_sites/domain/use_cases/show_visited_site_details_use_case.dart';
+import '../../../../../../core/shared/entity/message_entity.dart';
+import '../../../../../../core/shared/enums/visited_site_additional_images_type.dart';
+import '../../../../../../core/utils/commands/command.dart';
 import '../../../../../../core/utils/constants/constant.dart';
 
 import '../../../../../../core/databases/api/end_points.dart';
 import '../../../../../../core/utils/services/service_locator.dart';
-import '../../../../domain/entities/add_visited_site/add_visited_site_entity.dart';
+import '../../../../domain/entities/get_visited_site_images/get_visited_site_images_entity.dart';
+import '../../../../domain/entities/show_site_details/show_site_details_entity.dart';
 import '../../../../domain/use_cases/add_visited_site_use_case.dart';
+import '../../../../domain/use_cases/get_section_visited_site_images_use_case.dart';
 
-part 'add_visited_site_state.dart';
+part 'visited_site_details_state.dart';
+// 'original',
+// 'additional',
+// 'transmission',
+// 'fuel_cage'
 
-class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
-  AddVisitedSite postVisitedSiteUseCase;
+// 'tower_images'
+// 'solar_and_wind_batteries_images'
+// 'rectifier_images' => Rectifier_information::class,
+// 'rectifier_batteries_images'
+// 'generator_images'
+// 'rbs_images'
 
-  AddVisitedSiteCubit()
+class VisitedSiteDetailsCubit extends Cubit<VisitedSiteDetailsState> {
+  final String? visitedSiteId;
+
+  AddVisitedSiteUseCase postVisitedSiteUseCase;
+  ShowVisitedSiteDetailsUseCase showVisitedSiteDetailsUseCase;
+  EditVisitedSiteUseCase editVisitedSiteUseCase;
+  GetAdditionalVisitedSiteImagesUseCase getAdditionalVisitedSiteImagesUseCase;
+  GetSectionVisitedSiteImagesUseCase getSectionVisitedSiteImagesUseCase;
+
+  late final Command3<MessageEntity, String, String, String> editCommand;
+  late final Command0<MessageEntity> postCommand;
+  late final Command1<ShowSiteDetailsEntity, String> showDetailsCommand;
+
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType> getOriginalImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType> getAdditionalImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType> getTransmissionImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType> getFuelCageImagesCommand;
+
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteSectionImagesType> getTowerImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteSectionImagesType> getSolarAndWindSystemImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteSectionImagesType> getRectifierImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteSectionImagesType> getRectifierBatteriesImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteSectionImagesType> getGeneratorImagesCommand;
+  late final Command2<GetVisitedSiteImagesEntity, String, VisitedSiteSectionImagesType> getRbsImagesCommand;
+
+  VisitedSiteDetailsCubit({this.visitedSiteId})
       : postVisitedSiteUseCase = getIt(),
-        super(AddVisitedSiteInitial());
+        getAdditionalVisitedSiteImagesUseCase = getIt(),
+        getSectionVisitedSiteImagesUseCase = getIt(),
+        editVisitedSiteUseCase = getIt(),
+        showVisitedSiteDetailsUseCase = getIt(),
+        super(VisitedSiteDetailsInitial()) {
+    initCommands();
+    initformValues();
+  }
+
+  void initCommands() {
+    editCommand = Command3<MessageEntity, String, String, String>((a, b, c) => editTrigger(generator1Id: a, generator2Id: b, siteId: c));
+    postCommand = Command0<MessageEntity>(postVisitedSiteTrigger);
+    showDetailsCommand = Command1<ShowSiteDetailsEntity, String>((a) => showDetailsTrigger(siteId: a));
+    getOriginalImagesCommand = Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType>((a, b) => getGeneralImagesTrigger(id: a, type: b));
+    getAdditionalImagesCommand = Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType>((a, b) => getGeneralImagesTrigger(id: a, type: b));
+    getTransmissionImagesCommand = Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType>((a, b) => getGeneralImagesTrigger(id: a, type: b));
+    getFuelCageImagesCommand = Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType>((a, b) => getGeneralImagesTrigger(id: a, type: b));
+    getTowerImagesCommand = Command2((a, b) => getSectionImagesTrigger(id: a, type: b));
+    getSolarAndWindSystemImagesCommand = Command2((a, b) => getSectionImagesTrigger(id: a, type: b));
+    getRectifierImagesCommand = Command2((a, b) => getSectionImagesTrigger(id: a, type: b));
+    getRectifierBatteriesImagesCommand = Command2((a, b) => getSectionImagesTrigger(id: a, type: b));
+  }
+
+  Future<void> initformValues() async {
+    if (visitedSiteId != null) {
+      await showDetailsCommand.execute(visitedSiteId!);
+    }
+    if (showDetailsCommand.state case CommandSuccess<ShowSiteDetailsEntity>(data: ShowSiteDetailsEntity siteDetails)) {
+      final site = siteDetails.site;
+      final towerInfo = siteDetails.towerInformations;
+      final bandInfo = siteDetails.bandInformations;
+      final generatorInfo = siteDetails.generatorInformations;
+      final solarWindInfo = siteDetails.solarWindInformations;
+      final rectifierInfo = siteDetails.rectifierInformations;
+      final environmentInfo = siteDetails.environmentInformations;
+      final lvdpInfo = siteDetails.lvdpInformations;
+      final fiberInfo = siteDetails.fiberInformations;
+      final amperesInfo = siteDetails.amperesInformations;
+      final tcuInfo = siteDetails.tcuInformations;
+
+      //! validate all forms:
+      isGeneralInfoValid = true;
+      isTypeAndConfigValid = true;
+      isAdditionalInfoValid = true;
+      isAmpereInfoValid = true;
+      isTcuInfoValid = true;
+      isFiberInfoValid = true;
+      isGsm900InfoValid = true;
+      isGsm1800InfoValid = true;
+      is3GInfoValid = true;
+      isLTEInfoValid = true;
+      isRectifierInfoValid = true;
+      isEnvironmentInfoValid = true;
+      isTowerMastMonopoleInfoValid = true;
+      isSolarAndWindSystemInfoValid = true;
+      isGeneratorInfoValid = true;
+      isLvdpInfoValid = true;
+      isAdditionalPhotoInfoValid = true;
+
+      //!init site info:
+      selectedCode = site?.code;
+      selectedName = site?.name;
+      governorateController.text = site?.governorate ?? "";
+      log("site street is ${site?.street}");
+      streetController.text = site?.street ?? "";
+      areaController.text = site?.area ?? "";
+      cityController.text = site?.city ?? "";
+      selectedSiteType = site?.type;
+      numberOfCabinetsController.text = site?.cabinetNumber?.toString() ?? "";
+      electricityMeterController.text = site?.electricityMeter ?? "";
+      electricityMeterReadingController.text = site?.electricityMeterReading ?? "";
+      generatorRemarksController.text = site?.generatorRemark ?? "";
+
+      //! Configurations
+      configurations['GSM 1900'] = site?.gsm1900 == 1;
+      configurations['GSM 1800'] = site?.gsm1800 == 1;
+      configurations['3G'] = site?.the3G == 1;
+      configurations['LTE'] = site?.lte == 1;
+      configurations['Generator'] = site?.generator == 1;
+      configurations['Solar'] = site?.solar == 1;
+      configurations['Wind'] = site?.wind == 1;
+      configurations['Grid'] = site?.grid == 1;
+      configurations['Fence'] = site?.fence == 1;
+
+      //! Tower/Mast/Monopole Info
+      structureOptions['Mast'] = towerInfo?.mast == 1;
+      structureOptions['Tower'] = towerInfo?.tower == 1;
+      structureOptions['Monopole'] = towerInfo?.monopole == 1;
+
+      mastNumberController.text = towerInfo?.mastNumber?.toString() ?? "";
+      mastStatusController.text = towerInfo?.mastStatus ?? "";
+      towerNumberController.text = towerInfo?.towerNumber?.toString() ?? "";
+      towerStatusController.text = towerInfo?.towerStatus ?? "";
+      beaconStatusController.text = towerInfo?.beaconStatus ?? "";
+      monopoleNumberController.text = towerInfo?.monopoleNumber?.toString() ?? "";
+      monopoleStatusController.text = towerInfo?.monopoleStatus ?? "";
+      mast1HeightController.text = towerInfo?.mast1Height?.toString() ?? "";
+      mast2HeightController.text = towerInfo?.mast2Height?.toString() ?? "";
+      mast3HeightController.text = towerInfo?.mast3Height?.toString() ?? "";
+      tower1HeightController.text = towerInfo?.tower1Height?.toString() ?? "";
+      tower2HeightController.text = towerInfo?.tower2Height?.toString() ?? "";
+      monopoleHeightController.text = towerInfo?.monopoleHeight?.toString() ?? "";
+      remarksController.text = towerInfo?.remarks ?? "";
+
+      //! Generator Info
+      if (generatorInfo?.isNotEmpty ?? false) {
+        GeneratorInformationEntity? gen1, gen2;
+        if (generatorInfo != null) {
+          gen1 = generatorInfo.isNotEmpty ? (generatorInfo[0]) : null;
+          gen2 = generatorInfo.length > 1 ? generatorInfo[1] : null;
+        }
+
+        if (gen1 != null) {
+          gen1TypeAndCapacityController.text = gen1.genTypeAndCapacity ?? "";
+          gen1HourMeterController.text = gen1.genHourMeter?.toString() ?? "";
+          gen1FuelConsumptionController.text = gen1.genFuelConsumption?.toString() ?? "";
+          internalFuelCapacity1Controller.text = gen1.internalCapacity?.toString() ?? "";
+          internalExistingFuel1Controller.text = gen1.internalExistingFuel?.toString() ?? "";
+          internalFuelTankCage1 = gen1.internalCage == 1;
+          externalFuelCapacity1Controller.text = gen1.externalCapacity?.toString() ?? "";
+          externalExistingFuel1Controller.text = gen1.externalExistingFuel?.toString() ?? "";
+          externalFuelTankCage1 = gen1.externalCage == 1;
+          fuelSensor1Existing = gen1.fuelSensorExiting == 1;
+          fuelSensor1Working = gen1.fuelSensorWorking == 1;
+          gen1FuelSensorTypeController.text = gen1.fuelSensorType ?? "";
+          gen1AmpereToOwnerController.text = gen1.ampereToOwner?.toString() ?? "";
+          gen1CircuitBreakersController.text = gen1.circuitBreakersQuantity?.toString() ?? "";
+        }
+
+        if (gen2 != null) {
+          gen2TypeAndCapacityController.text = gen2.genTypeAndCapacity ?? "";
+          gen2HourMeterController.text = gen2.genHourMeter?.toString() ?? "";
+          gen2FuelConsumptionController.text = gen2.genFuelConsumption?.toString() ?? "";
+          internalFuelCapacity2Controller.text = gen2.internalCapacity?.toString() ?? "";
+          internalExistingFuel2Controller.text = gen2.internalExistingFuel?.toString() ?? "";
+          internalFuelTankCage2 = gen2.internalCage == 1;
+          externalFuelCapacity2Controller.text = gen2.externalCapacity?.toString() ?? "";
+          externalExistingFuel2Controller.text = gen2.externalExistingFuel?.toString() ?? "";
+          externalFuelTankCage2 = gen2.externalCage == 1;
+          fuelSensor2Existing = gen2.fuelSensorExiting == 1;
+          fuelSensor2Working = gen2.fuelSensorWorking == 1;
+          gen2FuelSensorTypeController.text = gen2.fuelSensorType ?? "";
+          gen2AmpereToOwnerController.text = gen2.ampereToOwner?.toString() ?? "";
+          gen2CircuitBreakersController.text = gen2.circuitBreakersQuantity?.toString() ?? "";
+        }
+      }
+
+      //! Solar and Wind System Info
+      solarTypeController.text = solarWindInfo?.solarType ?? "";
+      solarCapacityController.text = solarWindInfo?.solarCapacity?.toString() ?? "";
+      numPanelsController.text = solarWindInfo?.numberOfPanels?.toString() ?? "";
+      numModulesController.text = solarWindInfo?.numberOfModules?.toString() ?? "";
+      numFaultyModulesController.text = solarWindInfo?.numberOfFaultyModules?.toString() ?? "";
+      solarAndWindBatteriesNumController.text = solarWindInfo?.numberOfBatteries?.toString() ?? "";
+      solarAndWindBatteriesbatteriesTypeController.text = solarWindInfo?.batteryType ?? "";
+      selectedSolarAndWindBatteriesStatus = solarAndWindBatteriesStatus.containsKey(solarWindInfo?.batteryStatus) ? solarWindInfo?.batteryStatus : null;
+      windRemarksController.text = solarWindInfo?.windRemarks ?? "";
+      solarAndWindRemarksController.text = solarWindInfo?.remarks ?? "";
+
+      //! Rectifier Info
+      rectifier1TypeController.text = rectifierInfo?.rectifier1TypeAndVoltage ?? "";
+      rectifier1ModuleQuantityController.text = rectifierInfo?.module1Quantity?.toString() ?? "";
+      rectifier1FaultyModuleController.text = rectifierInfo?.faultyModule1Quantity?.toString() ?? "";
+      rectifier2TypeController.text = rectifierInfo?.rectifier2TypeAndVoltage ?? "";
+      rectifier2ModuleQuantityController.text = rectifierInfo?.module2Quantity?.toString() ?? "";
+      rectifier2FaultyModuleController.text = rectifierInfo?.faultyModule2Quantity?.toString() ?? "";
+      rectifierBatteriesNumController.text = rectifierInfo?.numberOfBatteries?.toString() ?? "";
+      rectifierbatteriesTypeController.text = rectifierInfo?.batteryType ?? "";
+      batteriesCabinetTypeController.text = rectifierInfo?.batteriesCabinetType ?? "";
+      rectifierBatteriesRemarksController.text = rectifierInfo?.remarks ?? "";
+      cabinetCage = rectifierInfo?.cabinetCage == 1;
+      selectedRectifierBatteriesStatus = rectifierBatteriesStatus.containsKey(rectifierInfo?.batteriesStatus) ? rectifierInfo?.batteriesStatus : null;
+
+      //! Environment Info
+      powerControlSerialNumberController.text = environmentInfo?.powerControlSerialNumber ?? "";
+      amperConsumptionController.text = environmentInfo?.ampereConsumption?.toString() ?? "";
+      phaseOptions['Three Phase'] = environmentInfo?.threePhase == 1;
+      phaseOptions['Mini Phase'] = environmentInfo?.miniPhase == 1;
+      fanQuantityController.text = environmentInfo?.fanQuantity?.toString() ?? "";
+      faultyFanQuantityController.text = environmentInfo?.faultyFanQuantity?.toString() ?? "";
+      airConditioner1TypeController.text = environmentInfo?.airConditioner1Type ?? "";
+      airConditioner2TypeController.text = environmentInfo?.airConditioner2Type ?? "";
+      powerControlOwnershipController.text = environmentInfo?.powerControlOwnership ?? "";
+      stabilizerQuantityController.text = environmentInfo?.stabilizerQuantity?.toString() ?? "";
+      stabilizerTypeController.text = environmentInfo?.stabilizerType ?? "";
+      earthingSystem = environmentInfo?.earthingSystem == 1;
+      fireExiting = environmentInfo?.exiting == 1;
+      fireWorking = environmentInfo?.working == 1;
+      environmentRemarksController.text = environmentInfo?.remarks ?? "";
+
+      //! LVDP Info
+      lVDPExiting = lvdpInfo?.exiting == 1;
+      lVDPWorking = lvdpInfo?.working == 1;
+      lvdPStatusController.text = lvdpInfo?.status ?? "";
+      lvdPRemarksController.text = lvdpInfo?.remarks ?? "";
+
+      //! Ampere Info
+      ampereCapacityController.text = amperesInfo?.capacity?.toString() ?? "";
+      ampereTimeController.text = amperesInfo?.time.toString() ?? "";
+      ampereCableLengthController.text = amperesInfo?.cableLength?.toString() ?? "";
+      ampereDetailsController.text = amperesInfo?.details ?? "";
+
+      //! TCU Info
+      tcuConfigurations['TCU'] = (tcuInfo != null && tcuInfo.tcu != null && tcuInfo.tcu! >= 1);
+      tcuConfigurations['2G'] = tcuInfo?.the2G ?? false;
+      tcuConfigurations['3G'] = tcuInfo?.the3G ?? false;
+      tcuConfigurations['LTE'] = tcuInfo?.lte ?? false;
+      tcuRemarksController.text = tcuInfo?.remarks ?? "";
+
+      //! Fiber Info
+      fiberDestinationController.text = fiberInfo?.destination ?? "";
+      fiberRemarksController.text = fiberInfo?.remarks ?? "";
+
+      //! Band Info (GSM 900, GSM 1800, 3G, LTE)
+      if (bandInfo != null) {
+        final gsm900 = bandInfo.gsm900;
+        getGSMController(MapKeys.gsm900, MapKeys.rbs1Type).text = gsm900?.rbs1Type ?? "";
+        getGSMController(MapKeys.gsm900, MapKeys.du1Type).text = gsm900?.du1Type ?? "";
+        getGSMController(MapKeys.gsm900, MapKeys.ru1Type).text = gsm900?.ru1Type ?? "";
+        getGSMController(MapKeys.gsm900, MapKeys.rbs2Type).text = gsm900?.rbs2Type ?? "";
+        getGSMController(MapKeys.gsm900, MapKeys.du2Type).text = gsm900?.du2Type ?? "";
+        getGSMController(MapKeys.gsm900, MapKeys.ru2Type).text = gsm900?.ru2Type ?? "";
+        getGSMController(MapKeys.gsm900, MapKeys.remarks).text = gsm900?.remarks ?? "";
+
+        final gsm1800 = bandInfo.gsm1800;
+
+        getGSMController(MapKeys.gsm1800, MapKeys.rbs1Type).text = gsm1800?.rbs1Type ?? "";
+        getGSMController(MapKeys.gsm1800, MapKeys.du1Type).text = gsm1800?.du1Type ?? "";
+        getGSMController(MapKeys.gsm1800, MapKeys.ru1Type).text = gsm1800?.ru1Type ?? "";
+        getGSMController(MapKeys.gsm1800, MapKeys.rbs2Type).text = gsm1800?.rbs2Type ?? "";
+        getGSMController(MapKeys.gsm1800, MapKeys.du2Type).text = gsm1800?.du2Type ?? "";
+        getGSMController(MapKeys.gsm1800, MapKeys.ru2Type).text = gsm1800?.ru2Type ?? "";
+        getGSMController(MapKeys.gsm1800, MapKeys.remarks).text = gsm1800?.remarks ?? "";
+        final threeG = bandInfo.the3G;
+
+        rbs1Type3GController.text = threeG?.rbs1Type ?? "";
+        du1Type3GController.text = threeG?.du1Type ?? "";
+        ru1Type3GController.text = threeG?.ru1Type ?? "";
+        remarks3GController.text = threeG?.remarks ?? "";
+
+        final lte = bandInfo.lte;
+        rbs1TypeLTEController.text = lte?.rbs1Type ?? "";
+        du1TypeLTEController.text = lte?.du1Type ?? "";
+        ru1TypeLTEController.text = lte?.ru1Type ?? "";
+        remarksLTEController.text = lte?.remarks ?? "";
+      }
+    }
+
+    emit(VisitedSiteDetailsInitial()); // Emit to update UI
+  }
 
   final siteGeneralInfoKey = GlobalKey<FormState>();
   final siteTypeAndConfigKey = GlobalKey<FormState>();
@@ -192,7 +485,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
   final TextEditingController ampereCableLengthController = TextEditingController();
   final TextEditingController ampereDetailsController = TextEditingController();
 
-// TCU Section
+  // TCU Section
   final tcuRemarksController = TextEditingController();
 
   // Fiber Section
@@ -278,7 +571,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     return newMap;
   }
 
-  Future<Map<String, dynamic>> createRequestBody() async {
+  Future<Map<String, dynamic>> createRequestBody({String? generator1Id, String? generator2Id}) async {
     return {
       RequestKeys.sites: {
         RequestKeys.name: selectedName,
@@ -361,6 +654,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
       ),
       RequestKeys.generatorInformations: [
         {
+          if (generator1Id != null) RequestKeys.id: generator1Id,
           RequestKeys.genTypeAndCapacity: gen1TypeAndCapacityController.text,
           RequestKeys.genHourMeter: gen1HourMeterController.text,
           RequestKeys.genFuelConsumption: gen1FuelConsumptionController.text,
@@ -377,6 +671,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
           RequestKeys.circuitBreakersQuantity: gen1CircuitBreakersController.text,
         },
         {
+          if (generator2Id != null) RequestKeys.id: generator2Id,
           RequestKeys.genTypeAndCapacity: gen2TypeAndCapacityController.text,
           RequestKeys.genHourMeter: gen2HourMeterController.text,
           RequestKeys.genFuelConsumption: gen2FuelConsumptionController.text,
@@ -474,9 +769,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     return mappedImages;
   }
 
-  void postVisitedSiteTrigger() async {
-    emit(AddVisitedSiteLoading());
-
+  Future<Either<Failure, MessageEntity>> postVisitedSiteTrigger() async {
     final body = await createRequestBody();
     body.addAll(await uploadImagesToApi(RequestKeys.generalSiteImages, generalSitePhotos));
     body.addAll(await uploadImagesToApi(RequestKeys.rectifierImages, rectifierImages));
@@ -488,38 +781,54 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
     body.addAll(await uploadImagesToApi(RequestKeys.transmissionImages, transmissionPhotos));
     body.addAll(await uploadImagesToApi(RequestKeys.fuelCageImages, fuelCageImages));
     final response = await postVisitedSiteUseCase.call(body: body);
-    response.fold(
-      (failure) => emit(AddVisitedSiteFailed(msg: failure.errMessage)),
-      (data) => emit(
-        AddVisitedSiteSuccess(data: data),
-      ),
-    );
+    return response;
+  }
+
+  Future<Either<Failure, MessageEntity>> editTrigger({required String siteId, required String generator1Id, required String generator2Id}) async {
+    final body = await createRequestBody(generator1Id: generator1Id, generator2Id: generator2Id);
+    final response = await editVisitedSiteUseCase.call(body: body, id: siteId);
+    return response;
+  }
+
+  Future<Either<Failure, ShowSiteDetailsEntity>> showDetailsTrigger({required String siteId}) async {
+    final response = await showVisitedSiteDetailsUseCase.call(id: siteId);
+    return response;
+  }
+
+  Future<Either<Failure, GetVisitedSiteImagesEntity>> getGeneralImagesTrigger({required String id, required VisitedSiteAdditionalImagesType type}) async {
+    final response = getAdditionalVisitedSiteImagesUseCase.call(id: id, type: type);
+    return response;
+  }
+
+  Future<Either<Failure, GetVisitedSiteImagesEntity>> getSectionImagesTrigger({required String id, required VisitedSiteSectionImagesType type}) async {
+    final response = getSectionVisitedSiteImagesUseCase.call(id: id, type: type);
+    return response;
   }
 
   changeCheckBoxStatus(Map<String, bool> checkboxOptions, String key) {
     checkboxOptions[key] = !checkboxOptions[key]!;
 
-    emit(AddVisitedSiteInitial());
+    emit(VisitedSiteDetailsInitial());
   }
 
   changeSwitchStatus(void Function() onPressed) {
     onPressed();
-    emit(AddVisitedSiteInitial());
+    emit(VisitedSiteDetailsInitial());
   }
 
   changeDropDownSelectedType(void Function() onPressed) {
     onPressed();
-    emit(AddVisitedSiteInitial());
+    emit(VisitedSiteDetailsInitial());
   }
 
   addRemoveImage(void Function() onPressed) {
     onPressed();
-    emit(AddVisitedSiteInitial());
+    emit(VisitedSiteDetailsInitial());
   }
 
   void validateForm(GlobalKey<FormState> formKey, FormType formType) {
     // Get the current form state
-    bool isValid = true;
+    bool isValid = formKey.currentState?.validate() ?? false;
 
     log(isValid.toString());
     // Update the corresponding validation variable based on form type
@@ -609,7 +918,7 @@ class AddVisitedSiteCubit extends Cubit<AddVisitedSiteState> {
   }
 
   @override
-  void onChange(Change<AddVisitedSiteState> change) {
+  void onChange(Change<VisitedSiteDetailsState> change) {
     super.onChange(change);
   }
 

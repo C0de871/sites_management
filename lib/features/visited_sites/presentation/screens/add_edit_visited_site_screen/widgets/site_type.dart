@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/helper/extensions.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 import 'custom_drop_down.dart';
 
 class SiteType extends StatelessWidget {
@@ -11,18 +11,12 @@ class SiteType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final siteTypes = [
-      'Outdoor',
-      'Indoor',
-      'Micro',
-      'PTS Shelter',
-      'Old Shelter'
-    ];
-    final visitFormCubit = context.read<AddVisitedSiteCubit>();
+    final siteTypes = ['Outdoor', 'Indoor', 'Micro', 'PTS Shelter', 'Old Shelter'];
+    final visitFormCubit = context.read<VisitedSiteDetailsCubit>();
     return FormContainer(
       title: 'Site Type',
       children: [
-        BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+        BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
           builder: (context, state) {
             return CustomDropDown(
                 validator: (value) {

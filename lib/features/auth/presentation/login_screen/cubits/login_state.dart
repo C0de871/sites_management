@@ -12,6 +12,10 @@ sealed class LoginState with _$LoginState {
     @Default(false) bool dummy,
     required UserEntity user,
   }) = LoginSuccess;
+    const factory LoginState.logout({
+    @Default(false) bool dummy,
+    required String message,
+  }) = LogoutSuccess;
   const factory LoginState.failure({
     @Default(false) bool dummy,
     required String errorMessage,

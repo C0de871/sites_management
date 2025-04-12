@@ -5,28 +5,28 @@ class TcuInformationsEntity extends Equatable {
     required this.tcu,
     required this.the3G,
     required this.the2G,
-    required this.ite,
+    required this.lte,
     required this.remarks,
   });
 
   final int? tcu;
-  final int? the3G;
-  final int? the2G;
-  final int? ite;
+  final bool? the3G;
+  final bool? the2G;
+  final bool? lte;
   final String? remarks;
 
   TcuInformationsEntity copyWith({
     int? tcu,
-    int? the3G,
-    int? the2G,
-    int? ite,
+    bool? the3G,
+    bool? the2G,
+    bool? lte,
     String? remarks,
   }) {
     return TcuInformationsEntity(
       tcu: tcu ?? this.tcu,
       the3G: the3G ?? this.the3G,
       the2G: the2G ?? this.the2G,
-      ite: ite ?? this.ite,
+      lte: lte ?? this.lte,
       remarks: remarks ?? this.remarks,
     );
   }
@@ -36,7 +36,7 @@ class TcuInformationsEntity extends Equatable {
         tcu,
         the3G,
         the2G,
-        ite,
+        lte,
         remarks,
       ];
 }

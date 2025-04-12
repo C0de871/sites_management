@@ -10,6 +10,7 @@ import 'package:sites_management/features/auth/data/data_sources/user_local_data
 import 'package:sites_management/features/auth/data/data_sources/user_remote_data_source.dart';
 import 'package:sites_management/features/auth/domain/repository/repository.dart';
 import 'package:sites_management/features/auth/domain/usecases/login_user_use_case.dart';
+import 'package:sites_management/features/auth/domain/usecases/logout_use_use_case.dart';
 import 'package:sites_management/features/auth/domain/usecases/retreive_access_token_use_case.dart';
 import 'package:sites_management/features/auth/domain/usecases/retreive_user_use_case.dart';
 import 'package:sites_management/features/users/data/datasources/users_remote_data_source.dart';
@@ -92,7 +93,7 @@ void setupServicesLocator() {
       ));
 
   //! Use Cases
-  getIt.registerLazySingleton<AddVisitedSite>(() => AddVisitedSite(repository: getIt()));
+  getIt.registerLazySingleton<AddVisitedSiteUseCase>(() => AddVisitedSiteUseCase(repository: getIt()));
   getIt.registerLazySingleton<GetVisitedSitesUseCase>(() => GetVisitedSitesUseCase(repository: getIt()));
   getIt.registerLazySingleton<ShowVisitedSiteDetailsUseCase>(() => ShowVisitedSiteDetailsUseCase(repository: getIt()));
   getIt.registerLazySingleton<DeleteVisitedSitesUseCase>(() => DeleteVisitedSitesUseCase(repository: getIt()));
@@ -109,6 +110,7 @@ void setupServicesLocator() {
   getIt.registerLazySingleton<AddUserUseCase>(() => AddUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<EditUserUseCase>(() => EditUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<DeleteUserUseCase>(() => DeleteUserUseCase(repository: getIt()));
+  getIt.registerLazySingleton<LogoutUserUseCase>(()=> LogoutUserUseCase(repository: getIt()));
 
   //! Interceptors
   getIt.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(retrieveAccessTokenUseCase: getIt()));

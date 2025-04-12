@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../../../core/utils/constants/app_numbers.dart';
 
 import '../../../../../../core/helper/app_functions.dart';
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 
 class CustomPhotoPicker extends StatelessWidget {
   const CustomPhotoPicker({super.key, required this.title, required this.images});
@@ -15,7 +15,7 @@ class CustomPhotoPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitedFormCubit = context.read<AddVisitedSiteCubit>();
+    final visitedFormCubit = context.read<VisitedSiteDetailsCubit>();
     return SizedBox(
       height: 100,
       child: InputDecorator(
@@ -36,7 +36,7 @@ class CustomPhotoPicker extends StatelessWidget {
             ),
           ),
         ),
-        child: BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+        child: BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
           builder: (context, state) {
             return ListView(
               scrollDirection: Axis.horizontal,
@@ -69,7 +69,7 @@ class AddNewPhoto extends StatelessWidget {
   final List<XFile> images;
 
   Future<void> _showImageSourceSheet(BuildContext parentContext) async {
-    final visitFormCubit = parentContext.read<AddVisitedSiteCubit>();
+    final visitFormCubit = parentContext.read<VisitedSiteDetailsCubit>();
 
     showModalBottomSheet(
       context: parentContext,
@@ -196,7 +196,7 @@ class AddNewPhoto extends StatelessWidget {
   }
 }
 
-Row imageBuilder(List<XFile> images, int index, AddVisitedSiteCubit visitFormCubit, BuildContext context) {
+Row imageBuilder(List<XFile> images, int index, VisitedSiteDetailsCubit visitFormCubit, BuildContext context) {
   return Row(
     children: [
       Stack(

@@ -29,7 +29,7 @@ class ShowSiteDetailsEntity extends Equatable {
   final SiteInformationsGeneralEntity? site;
   final TowerInformationsEntity? towerInformations;
   final BandInformationsEntity? bandInformations;
-  final List<GeneratorInformationEntity> generatorInformations;
+  final List<GeneratorInformationEntity>? generatorInformations;
   final SolarWindInformationsEntity? solarWindInformations;
   final RectifierInformationsEntity? rectifierInformations;
   final EnvironmentInformationsEntity? environmentInformations;

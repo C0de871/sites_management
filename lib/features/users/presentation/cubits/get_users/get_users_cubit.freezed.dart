@@ -14,10 +14,11 @@ part of 'get_users_cubit.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$UsersState {
+mixin _$GetUsersState {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is GetUsersState);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is GetUsersState);
   }
 
   @override
@@ -25,13 +26,13 @@ mixin _$UsersState {
 
   @override
   String toString() {
-    return 'UsersState()';
+    return 'GetUsersState()';
   }
 }
 
 /// @nodoc
-class $UsersStateCopyWith<$Res> {
-  $UsersStateCopyWith(GetUsersState _, $Res Function(GetUsersState) __);
+class $GetUsersStateCopyWith<$Res> {
+  $GetUsersStateCopyWith(GetUsersState _, $Res Function(GetUsersState) __);
 }
 
 /// @nodoc
@@ -41,7 +42,8 @@ class GetUsersInitial implements GetUsersState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is GetUsersInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is GetUsersInitial);
   }
 
   @override
@@ -49,7 +51,7 @@ class GetUsersInitial implements GetUsersState {
 
   @override
   String toString() {
-    return 'UsersState.initial()';
+    return 'GetUsersState.initial()';
   }
 }
 
@@ -60,7 +62,8 @@ class GetUsersLoading implements GetUsersState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is GetUsersLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is GetUsersLoading);
   }
 
   @override
@@ -68,7 +71,7 @@ class GetUsersLoading implements GetUsersState {
 
   @override
   String toString() {
-    return 'UsersState.loading()';
+    return 'GetUsersState.loading()';
   }
 }
 
@@ -79,15 +82,20 @@ class GetUsersLoaded implements GetUsersState {
 
   final GetUsersEntity getUserEntity;
 
-  /// Create a copy of UsersState
+  /// Create a copy of GetUsersState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $LoadedCopyWith<GetUsersLoaded> get copyWith => _$LoadedCopyWithImpl<GetUsersLoaded>(this, _$identity);
+  $GetUsersLoadedCopyWith<GetUsersLoaded> get copyWith =>
+      _$GetUsersLoadedCopyWithImpl<GetUsersLoaded>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is GetUsersLoaded && (identical(other.getUserEntity, getUserEntity) || other.getUserEntity == getUserEntity));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GetUsersLoaded &&
+            (identical(other.getUserEntity, getUserEntity) ||
+                other.getUserEntity == getUserEntity));
   }
 
   @override
@@ -95,25 +103,29 @@ class GetUsersLoaded implements GetUsersState {
 
   @override
   String toString() {
-    return 'UsersState.loaded(getUserEntity: $getUserEntity)';
+    return 'GetUsersState.loaded(getUserEntity: $getUserEntity)';
   }
 }
 
 /// @nodoc
-abstract mixin class $LoadedCopyWith<$Res> implements $UsersStateCopyWith<$Res> {
-  factory $LoadedCopyWith(GetUsersLoaded value, $Res Function(GetUsersLoaded) _then) = _$LoadedCopyWithImpl;
+abstract mixin class $GetUsersLoadedCopyWith<$Res>
+    implements $GetUsersStateCopyWith<$Res> {
+  factory $GetUsersLoadedCopyWith(
+          GetUsersLoaded value, $Res Function(GetUsersLoaded) _then) =
+      _$GetUsersLoadedCopyWithImpl;
   @useResult
   $Res call({GetUsersEntity getUserEntity});
 }
 
 /// @nodoc
-class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
-  _$LoadedCopyWithImpl(this._self, this._then);
+class _$GetUsersLoadedCopyWithImpl<$Res>
+    implements $GetUsersLoadedCopyWith<$Res> {
+  _$GetUsersLoadedCopyWithImpl(this._self, this._then);
 
   final GetUsersLoaded _self;
   final $Res Function(GetUsersLoaded) _then;
 
-  /// Create a copy of UsersState
+  /// Create a copy of GetUsersState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
@@ -135,15 +147,19 @@ class GetUsersFailed implements GetUsersState {
 
   final String message;
 
-  /// Create a copy of UsersState
+  /// Create a copy of GetUsersState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ErrorCopyWith<GetUsersFailed> get copyWith => _$ErrorCopyWithImpl<GetUsersFailed>(this, _$identity);
+  $GetUsersFailedCopyWith<GetUsersFailed> get copyWith =>
+      _$GetUsersFailedCopyWithImpl<GetUsersFailed>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is GetUsersFailed && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is GetUsersFailed &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -151,25 +167,29 @@ class GetUsersFailed implements GetUsersState {
 
   @override
   String toString() {
-    return 'UsersState.error(message: $message)';
+    return 'GetUsersState.error(message: $message)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res> implements $UsersStateCopyWith<$Res> {
-  factory $ErrorCopyWith(GetUsersFailed value, $Res Function(GetUsersFailed) _then) = _$ErrorCopyWithImpl;
+abstract mixin class $GetUsersFailedCopyWith<$Res>
+    implements $GetUsersStateCopyWith<$Res> {
+  factory $GetUsersFailedCopyWith(
+          GetUsersFailed value, $Res Function(GetUsersFailed) _then) =
+      _$GetUsersFailedCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(this._self, this._then);
+class _$GetUsersFailedCopyWithImpl<$Res>
+    implements $GetUsersFailedCopyWith<$Res> {
+  _$GetUsersFailedCopyWithImpl(this._self, this._then);
 
   final GetUsersFailed _self;
   final $Res Function(GetUsersFailed) _then;
 
-  /// Create a copy of UsersState
+  /// Create a copy of GetUsersState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({

@@ -20,7 +20,7 @@ class HomeCubit extends Cubit<HomeState> {
     final result = await retreiveUserUseCase.call();
     result.fold(
       (failure) {
-        log("user not found");  
+        log("user not found");
         emit(HomeState.failure(
           errorMessage: failure.errMessage,
         ));
@@ -28,14 +28,9 @@ class HomeCubit extends Cubit<HomeState> {
       (user) {
         log("user role: ${user.role}");
         emit(HomeState.success(
-            role: switch (user.role) {
-          "manager" => UserRole.MANAGER,
-          "guest" => UserRole.GUEST,
-          "employee" => UserRole.WORKER,
-          "sites_admin" => UserRole.SITE_ADMIN,
-          "mtn_account" => UserRole.MTN,
-          String() => UserRole.GUEST,
-        }));
+            role: UserRole.roleFromString(
+          user.role,
+        )));
       },
     );
   }

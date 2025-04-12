@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/shared/enums/form_type.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/cubit/add_visited_site_cubit.dart';
+import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/cubit/visited_site_details_cubit.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/widgets/continue_button.dart';
 
 class ContinueSection extends StatelessWidget {
@@ -20,7 +20,7 @@ class ContinueSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+    return BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
       builder: (context, state) {
         return ContinueButton(
           routeName: routeName,

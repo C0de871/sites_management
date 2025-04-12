@@ -7,7 +7,7 @@ enum VisitedSiteAdditionalImagesType {
   fuel_cage,
 }
 
-enum VisitedSiteImagesType {
+enum VisitedSiteSectionImagesType {
   tower_images,
   solar_and_wind_batteries_images,
   rectifier_images,

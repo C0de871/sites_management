@@ -7,7 +7,7 @@ import 'custom_photo_picker.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 import '../add_visited_site.dart';
 
 class PhotoSection extends StatelessWidget {
@@ -15,13 +15,13 @@ class PhotoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<AddVisitedSiteCubit>();
+    final visitFormCubit = context.read<VisitedSiteDetailsCubit>();
     log(visitFormCubit.hashCode.toString());
 
     return SiteInfoForm(
       formType: FormType.additionalPhotoInfo,
       formKey: visitFormCubit.siteAdditionalPhotoInfoKey,
-      routeName: AppRoutes.formHubScreen,
+      routeName: AppRoutes.addFormHubScreen,
       formSection: FormContainer(
         title: "Other photos:",
         children: [

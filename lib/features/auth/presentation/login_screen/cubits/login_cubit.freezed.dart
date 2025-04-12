@@ -286,6 +286,82 @@ class _$LoginSuccessCopyWithImpl<$Res> implements $LoginSuccessCopyWith<$Res> {
 
 /// @nodoc
 
+class LogoutSuccess implements LoginState {
+  const LogoutSuccess({this.dummy = false, required this.message});
+
+  @override
+  @JsonKey()
+  final bool dummy;
+  final String message;
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $LogoutSuccessCopyWith<LogoutSuccess> get copyWith =>
+      _$LogoutSuccessCopyWithImpl<LogoutSuccess>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is LogoutSuccess &&
+            (identical(other.dummy, dummy) || other.dummy == dummy) &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, dummy, message);
+
+  @override
+  String toString() {
+    return 'LoginState.logout(dummy: $dummy, message: $message)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $LogoutSuccessCopyWith<$Res>
+    implements $LoginStateCopyWith<$Res> {
+  factory $LogoutSuccessCopyWith(
+          LogoutSuccess value, $Res Function(LogoutSuccess) _then) =
+      _$LogoutSuccessCopyWithImpl;
+  @override
+  @useResult
+  $Res call({bool dummy, String message});
+}
+
+/// @nodoc
+class _$LogoutSuccessCopyWithImpl<$Res>
+    implements $LogoutSuccessCopyWith<$Res> {
+  _$LogoutSuccessCopyWithImpl(this._self, this._then);
+
+  final LogoutSuccess _self;
+  final $Res Function(LogoutSuccess) _then;
+
+  /// Create a copy of LoginState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? dummy = null,
+    Object? message = null,
+  }) {
+    return _then(LogoutSuccess(
+      dummy: null == dummy
+          ? _self.dummy
+          : dummy // ignore: cast_nullable_to_non_nullable
+              as bool,
+      message: null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
 class LoginFailure implements LoginState {
   const LoginFailure({this.dummy = false, required this.errorMessage});
 

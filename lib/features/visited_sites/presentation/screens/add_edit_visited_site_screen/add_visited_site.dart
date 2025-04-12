@@ -1,3 +1,6 @@
+//todo: add visited site cubit should be edited
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/shared/enums/form_type.dart';
@@ -5,7 +8,7 @@ import 'package:sites_management/core/shared/widgets/failed_snack_bar.dart';
 import 'package:sites_management/core/shared/widgets/success_snack_bar.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/widgets/continue_section.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/widgets/site_information_app_bar.dart';
-import 'cubit/add_visited_site_cubit.dart';
+import 'cubit/visited_site_details_cubit.dart';
 
 import '../../../../../core/utils/constants/app_numbers.dart';
 
@@ -17,13 +20,13 @@ class SiteInformationListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddVisitedSiteCubit, AddVisitedSiteState>(
+    return BlocListener<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
       listener: (context, state) {
-        if (state is AddVisitedSiteSuccess) {
+        if (state is VisitedSiteDetailsSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(SuccessSnackBar(
             message: 'site added successfully',
           ));
-        } else if (state is AddVisitedSiteFailed) {
+        } else if (state is VisitedSiteDetailsFailed) {
           ScaffoldMessenger.of(context).showSnackBar(FailedSnackBar(
             message: state.msg,
           ));
@@ -62,6 +65,10 @@ class SiteInfoForm extends StatelessWidget {
               key: formKey,
               autovalidateMode: AutovalidateMode.always,
               child: formSection,
+              onChanged: () {
+                log("the form is changes....");
+                context.read<VisitedSiteDetailsCubit>().validateForm(formKey, formType);
+              },
             ),
             const SizedBox(height: padding4 * 4),
             ContinueSection(

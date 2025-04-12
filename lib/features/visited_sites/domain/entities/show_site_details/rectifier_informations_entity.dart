@@ -25,7 +25,7 @@ class RectifierInformationsEntity extends Equatable {
   final String? numberOfBatteries;
   final String? batteryType;
   final String? batteriesCabinetType;
-  final String? cabinetCage;
+  final int? cabinetCage;
   final String? batteriesStatus;
   final String? remarks;
 
@@ -39,7 +39,7 @@ class RectifierInformationsEntity extends Equatable {
     String? numberOfBatteries,
     String? batteryType,
     String? batteriesCabinetType,
-    String? cabinetCage,
+    int? cabinetCage,
     String? batteriesStatus,
     String? remarks,
   }) {

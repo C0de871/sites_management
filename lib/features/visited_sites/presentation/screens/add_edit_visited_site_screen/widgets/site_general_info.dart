@@ -10,7 +10,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/utils/constants/site_code_name.dart';
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 import '../add_visited_site.dart';
 
 class SiteGeneralInfo extends StatelessWidget {
@@ -18,7 +18,7 @@ class SiteGeneralInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<AddVisitedSiteCubit>();
+    final visitFormCubit = context.read<VisitedSiteDetailsCubit>();
     return SiteInfoForm(
       formType: FormType.generalInfo,
       formKey: visitFormCubit.siteGeneralInfoKey,
@@ -26,7 +26,7 @@ class SiteGeneralInfo extends StatelessWidget {
       formSection: FormContainer(
         title: 'General Information',
         children: [
-          BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+          BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
             builder: (context, state) {
               return DropdownSearch<String>(
                 // value: visitFormCubit.selectedCode,
@@ -55,8 +55,7 @@ class SiteGeneralInfo extends StatelessWidget {
                 popupProps: PopupProps.dialog(
                   showSearchBox: true,
                   title: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primaryContainer),
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
                     alignment: Alignment.center,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Text(
@@ -88,10 +87,8 @@ class SiteGeneralInfo extends StatelessWidget {
                     ),
                   ),
                   dialogProps: DialogProps(
-                    surfaceTintColor:
-                        Theme.of(context).colorScheme.surfaceContainerLowest,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.surfaceContainerLowest,
+                    surfaceTintColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
                     clipBehavior: Clip.antiAlias,
                     shape: OutlineInputBorder(
                       borderSide: const BorderSide(width: 0),
@@ -118,7 +115,7 @@ class SiteGeneralInfo extends StatelessWidget {
           const SizedBox(
             height: padding4 * 4,
           ),
-          BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+          BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
             builder: (context, state) {
               return DropdownSearch<String>(
                 // value: visitFormCubit.selectedCode,
@@ -181,10 +178,8 @@ class SiteGeneralInfo extends StatelessWidget {
                     ),
                   ),
                   dialogProps: DialogProps(
-                    surfaceTintColor:
-                        Theme.of(context).colorScheme.surfaceContainerLowest,
-                    backgroundColor:
-                        Theme.of(context).colorScheme.surfaceContainerLowest,
+                    surfaceTintColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
                     clipBehavior: Clip.antiAlias,
                     shape: OutlineInputBorder(
                       borderSide: const BorderSide(width: 0),
@@ -196,9 +191,7 @@ class SiteGeneralInfo extends StatelessWidget {
                 onChanged: (value) {
                   visitFormCubit.changeSwitchStatus(() {
                     visitFormCubit.selectedName = value;
-                    visitFormCubit.selectedCode = siteData.entries
-                        .firstWhere((entry) => entry.value == value)
-                        .key;
+                    visitFormCubit.selectedCode = siteData.entries.firstWhere((entry) => entry.value == value).key;
                   });
                 },
                 validator: (value) {

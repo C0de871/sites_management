@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 
 class CustomCheckBoxList extends StatelessWidget {
   const CustomCheckBoxList({
@@ -15,8 +15,8 @@ class CustomCheckBoxList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final visitFormCubit = context.read<AddVisitedSiteCubit>();
-    return BlocBuilder<AddVisitedSiteCubit, AddVisitedSiteState>(
+    final visitFormCubit = context.read<VisitedSiteDetailsCubit>();
+    return BlocBuilder<VisitedSiteDetailsCubit, VisitedSiteDetailsState>(
       builder: (context, state) {
         return Wrap(
           spacing: 16, // Horizontal spacing between checkboxes

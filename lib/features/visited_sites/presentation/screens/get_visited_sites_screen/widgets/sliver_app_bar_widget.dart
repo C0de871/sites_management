@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/features/auth/presentation/login_screen/cubits/login_cubit.dart';
+import '../../../../../../core/shared/enums/user_role.dart';
 import '../cubit/get_visited_site_cubit.dart';
 import '../cubit/get_visited_site_state.dart';
 import 'action_button_list.dart';
@@ -163,11 +165,23 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
         builder: (context, state) {
           if (state is GetVisitedSiteSuccess) {
             if (state.isSelectionMode) {
-              return IconButton(
-                icon: const Icon(
-                  Icons.delete_outline,
-                ),
-                onPressed: state.selectedSites.isEmpty ? null : _deleteSelectedSites,
+              return BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, userState) {
+                  switch (userState) {
+                    case LoginSuccess():
+                      UserRole role = UserRole.roleFromString(userState.user.role);
+                      if (role == UserRole.sites_admin || role == UserRole.manager) {
+                        return IconButton(
+                          icon: const Icon(
+                            Icons.delete_outline,
+                          ),
+                          onPressed: state.selectedSites.isEmpty ? null : _deleteSelectedSites,
+                        );
+                      }
+                    case _:
+                  }
+                  return const SizedBox.shrink();
+                },
               );
             }
           }
@@ -190,11 +204,23 @@ class _SliverAppBarWidgetState extends State<SliverAppBarWidget> {
       BlocBuilder<GetVisitedSitesCubit, GetVisitedSitesState>(
         builder: (context, state) {
           if (state is GetVisitedSiteSuccess) {
-            return IconButton(
-              icon: const Icon(
-                Icons.file_download,
-              ),
-              onPressed: _exportSelectedSites,
+            return BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state) {
+                switch (state) {
+                  case LoginSuccess():
+                    UserRole role = UserRole.roleFromString(state.user.role);
+                    if (role == UserRole.sites_admin || role == UserRole.manager) {
+                      return IconButton(
+                        icon: const Icon(
+                          Icons.file_download,
+                        ),
+                        onPressed: _exportSelectedSites,
+                      );
+                    }
+                  case _:
+                }
+                return const SizedBox.shrink();
+              },
             );
           }
           return const SizedBox.shrink();

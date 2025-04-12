@@ -16,6 +16,7 @@ class EndPoints {
 
   //! auth apis:
   static String loginUser = dotenv.env["LOGINUSER"]!;
+  static String logoutUser = dotenv.env["LOGOUTUSER"]!;
 
   //! user managmenent apis:
   static String addUser = dotenv.env["ADDUSER"]!;

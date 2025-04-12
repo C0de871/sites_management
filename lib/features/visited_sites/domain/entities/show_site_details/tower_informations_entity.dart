@@ -28,7 +28,7 @@ class TowerInformationsEntity extends Equatable {
   final String? mastStatus;
   final String? towerNumber;
   final String? towerStatus;
-  final String beaconStatus;
+  final String? beaconStatus;
   final int? monopoleNumber;
   final String? monopoleStatus;
   final String? mast1Height;

@@ -57,17 +57,12 @@ abstract class Command<T> extends Cubit<CommandState<T>> {
 
     emit(CommandLoading<T>());
 
-    try {
-      final result = await action();
-      result.fold((error) {
-        emit(CommandFailure<T>(error.errMessage));
-      }, (data) {
-        emit(CommandSuccess<T>(data));
-      });
-    } catch (e) {
-      log(e.toString());
-      emit(CommandFailure<T>(e.toString()));
-    }
+    final result = await action();
+    result.fold((error) {
+      emit(CommandFailure<T>(error.errMessage));
+    }, (data) {
+      emit(CommandSuccess<T>(data));
+    });
   }
 }
 
@@ -94,7 +89,7 @@ class Command1<T, A> extends Command<T> {
 }
 
 // Command2 that takes two arguments
-class Command2<T, A, B> extends Command {
+class Command2<T, A, B> extends Command<T> {
   final Future<Either<Failure, T>> Function(A, B) _action;
 
   Command2(this._action);
@@ -105,7 +100,7 @@ class Command2<T, A, B> extends Command {
 }
 
 // Command3 that takes three arguments
-class Command3<T, A, B, C> extends Command {
+class Command3<T, A, B, C> extends Command<T> {
   final Future<Either<Failure, T>> Function(A, B, C) _action;
 
   Command3(this._action);

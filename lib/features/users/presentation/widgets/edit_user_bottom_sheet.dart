@@ -60,8 +60,6 @@ class _EditUserBottomSheetState extends State<EditUserBottomSheet> {
                           const EditUserLabel(),
                           const SizedBox(height: 24),
                           const EditUsernameField(),
-                          const SizedBox(height: 16),
-                          const EditPasswordField(),
                           const SizedBox(height: 24),
                           const EditUserRole(),
                           const SizedBox(height: 32),

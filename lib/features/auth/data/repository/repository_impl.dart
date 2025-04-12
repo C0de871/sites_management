@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/databases/connection/network_info.dart';
 import '../../../../core/databases/errors/expentions.dart';
 import '../../../../core/databases/errors/failure.dart';
+import '../../../../core/shared/entity/message_entity.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repository/repository.dart';
 import '../data_sources/user_local_data_source.dart';
@@ -63,6 +64,24 @@ class UserRepositoryImpl extends UserRepository {
       return Right(user);
     } catch (e) {
       return Left(Failure(errMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MessageEntity>> logout() async {
+    if (await networkInfo.isConnected!) {
+      try {
+        final response = await remoteDataSource.logout();
+        await localDataSource.deleteAccessToken();
+        localDataSource.deleteUser();
+        return Right(response);
+      } on ServerException catch (e) {
+        return Left(Failure(errMessage: e.errorModel.errorMessage));
+      } catch (e) {
+        return Left(Failure(errMessage: e.toString()));
+      }
+    } else {
+      return Left(Failure(errMessage: "There is no internet connnect"));
     }
   }
 }

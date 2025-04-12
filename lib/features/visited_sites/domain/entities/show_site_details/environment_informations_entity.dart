@@ -28,9 +28,9 @@ class EnvironmentInformationsEntity extends Equatable {
   final int? faultyFanQuantity;
   final int? earthingSystem;
   final String? airConditioner1Type;
-  final dynamic airConditioner2Type;
-  final dynamic stabilizerQuantity;
-  final dynamic stabilizerType;
+  final String? airConditioner2Type;
+  final String? stabilizerQuantity;
+  final String? stabilizerType;
   final int? exiting;
   final int? working;
   final dynamic remarks;

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
+import 'package:sites_management/core/shared/entity/message_entity.dart';
 import 'package:sites_management/core/shared/enums/visited_site_additional_images_type.dart';
 import 'package:sites_management/core/shared/models/message_model.dart';
 import 'package:sites_management/features/visited_sites/domain/entities/get_visited_site_images/get_visited_site_images_entity.dart';
@@ -26,7 +27,7 @@ class VisitedSiteRepositoryImple extends VisitedSiteRepository {
     required this.visitedSitesEventBus,
   });
   @override
-  Future<Either<Failure, AddVisitedSiteEntity>> addVisitedSite({required Map<String, dynamic> body}) async {
+  Future<Either<Failure, MessageEntity>> addVisitedSite({required Map<String, dynamic> body}) async {
     if (await networkInfo.isConnected!) {
       try {
         final response = await remoteDataSource.addVisitedSite(body: body);
@@ -125,7 +126,7 @@ class VisitedSiteRepositoryImple extends VisitedSiteRepository {
   }
 
   @override
-  Future<Either<Failure, GetVisitedSiteImagesEntity>> getSectionImages({required String id, required VisitedSiteAdditionalImagesType type}) async {
+  Future<Either<Failure, GetVisitedSiteImagesEntity>> getSectionImages({required String id, required VisitedSiteSectionImagesType type}) async {
     if (await networkInfo.isConnected!) {
       try {
         final response = await remoteDataSource.getSectionImages(id: id, type: type);

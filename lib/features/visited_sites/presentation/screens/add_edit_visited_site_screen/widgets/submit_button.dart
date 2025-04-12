@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/shared/widgets/failed_snack_bar.dart';
-import '../cubit/add_visited_site_cubit.dart';
+import '../cubit/visited_site_details_cubit.dart';
 import '../add_visited_site.dart';
 
 class SubmitButton extends StatelessWidget {
@@ -19,7 +19,7 @@ class SubmitButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          context.read<AddVisitedSiteCubit>().postVisitedSiteTrigger();
+          context.read<VisitedSiteDetailsCubit>().postVisitedSiteTrigger();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             FailedSnackBar(message: "Please fill in all required fields."),

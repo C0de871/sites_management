@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sites_management/core/Routes/app_routes.dart';
 import '../cubit/get_visited_site_cubit.dart';
 import '../cubit/get_visited_site_state.dart';
 import 'site_card.dart';
@@ -14,18 +15,7 @@ class SiteList extends StatelessWidget {
   });
 
   void _navigateToSiteDetails(GetVisitedSitesEntity site, BuildContext context) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => SiteDetailsPage(site: site),
-    //   ),
-    // ).then((needsRefresh) {
-    //   if (needsRefresh == true) {
-    //     if (context.mounted) {
-    //       // ScaffoldMessenger.of(context).showSnackBar( SuccessSnackBar(message: ,));
-    //     }
-    //   }
-    // });
+    Navigator.pushNamed(context, AppRoutes.editFormHubScreen, arguments: site.id.toString());
   }
 
   @override

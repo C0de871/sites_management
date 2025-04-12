@@ -17,6 +17,14 @@ class UserLocalDataSource {
     );
   }
 
+  Future<void> deleteAccessToken() async {
+    cacheHelper.removeData(key: CacheKey.accessToken);
+  }
+
+  Future<void> deleteUser() async {
+    cacheHelper.removeData(key: CacheKey.user);
+  }
+
   void saveUser(UserModel user) {
     String userJson = jsonEncode((user).toJson());
     cacheHelper.saveData(key: CacheKey.user, value: userJson);

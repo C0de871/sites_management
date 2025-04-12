@@ -1,13 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/core/shared/models/message_model.dart';
 import 'package:sites_management/core/shared/widgets/failed_snack_bar.dart';
 import 'package:sites_management/core/shared/widgets/success_snack_bar.dart';
 import 'package:sites_management/core/utils/commands/command.dart';
+import 'package:sites_management/features/auth/presentation/login_screen/cubits/login_cubit.dart';
 import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/add_visited_site.dart';
 
+import '../../../../../core/shared/enums/user_role.dart';
 import '../../../../../core/theme/app_theme.dart';
 import 'cubit/get_visited_site_cubit.dart';
 import 'widgets/custom_floting_action_button.dart';
@@ -37,7 +37,6 @@ class _SitesListPageState extends State<SitesListPage> with SingleTickerProvider
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     Theme.of(context).extension<ExtentionColors>()!.extendedColorScheme(context).ex;
@@ -48,7 +47,7 @@ class _SitesListPageState extends State<SitesListPage> with SingleTickerProvider
           listener: (context, state) {
             switch (state) {
               case CommandLoading():
-               Navigator.pop(context);
+                Navigator.pop(context);
                 showDialog(
                   context: context,
                   barrierDismissible: false,
@@ -123,7 +122,19 @@ class _SitesListPageState extends State<SitesListPage> with SingleTickerProvider
           },
           body: const SiteListAndFilterInfoBody(),
         ),
-        floatingActionButton: const CustomFlotingActionButton(),
+        floatingActionButton: BlocBuilder<LoginCubit, LoginState>(
+          builder: (context, state) {
+            switch (state) {
+              case LoginSuccess():
+                UserRole role = UserRole.roleFromString(state.user.role);
+                if (role == UserRole.manager || role == UserRole.manager) {
+                  return const CustomFlotingActionButton();
+                }
+              case _:
+            }
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }

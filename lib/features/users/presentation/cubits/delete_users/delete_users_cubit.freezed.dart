@@ -17,7 +17,8 @@ T _$identity<T>(T value) => value;
 mixin _$DeleteUserState {
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is DeleteUserState);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DeleteUserState);
   }
 
   @override
@@ -31,7 +32,8 @@ mixin _$DeleteUserState {
 
 /// @nodoc
 class $DeleteUserStateCopyWith<$Res> {
-  $DeleteUserStateCopyWith(DeleteUserState _, $Res Function(DeleteUserState) __);
+  $DeleteUserStateCopyWith(
+      DeleteUserState _, $Res Function(DeleteUserState) __);
 }
 
 /// @nodoc
@@ -41,7 +43,8 @@ class DeleteUsersInitial implements DeleteUserState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is DeleteUsersInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DeleteUsersInitial);
   }
 
   @override
@@ -60,7 +63,8 @@ class DeleteUsersLoading implements DeleteUserState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is DeleteUsersLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DeleteUsersLoading);
   }
 
   @override
@@ -83,11 +87,15 @@ class DeleteUsersSuccess implements DeleteUserState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $SuccessCopyWith<DeleteUsersSuccess> get copyWith => _$SuccessCopyWithImpl<DeleteUsersSuccess>(this, _$identity);
+  $DeleteUsersSuccessCopyWith<DeleteUsersSuccess> get copyWith =>
+      _$DeleteUsersSuccessCopyWithImpl<DeleteUsersSuccess>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is DeleteUsersSuccess && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DeleteUsersSuccess &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -100,15 +108,19 @@ class DeleteUsersSuccess implements DeleteUserState {
 }
 
 /// @nodoc
-abstract mixin class $SuccessCopyWith<$Res> implements $DeleteUserStateCopyWith<$Res> {
-  factory $SuccessCopyWith(DeleteUsersSuccess value, $Res Function(DeleteUsersSuccess) _then) = _$SuccessCopyWithImpl;
+abstract mixin class $DeleteUsersSuccessCopyWith<$Res>
+    implements $DeleteUserStateCopyWith<$Res> {
+  factory $DeleteUsersSuccessCopyWith(
+          DeleteUsersSuccess value, $Res Function(DeleteUsersSuccess) _then) =
+      _$DeleteUsersSuccessCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$SuccessCopyWithImpl<$Res> implements $SuccessCopyWith<$Res> {
-  _$SuccessCopyWithImpl(this._self, this._then);
+class _$DeleteUsersSuccessCopyWithImpl<$Res>
+    implements $DeleteUsersSuccessCopyWith<$Res> {
+  _$DeleteUsersSuccessCopyWithImpl(this._self, this._then);
 
   final DeleteUsersSuccess _self;
   final $Res Function(DeleteUsersSuccess) _then;
@@ -139,11 +151,15 @@ class DeleteUsersFailed implements DeleteUserState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ErrorCopyWith<DeleteUsersFailed> get copyWith => _$ErrorCopyWithImpl<DeleteUsersFailed>(this, _$identity);
+  $DeleteUsersFailedCopyWith<DeleteUsersFailed> get copyWith =>
+      _$DeleteUsersFailedCopyWithImpl<DeleteUsersFailed>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType && other is DeleteUsersFailed && (identical(other.message, message) || other.message == message));
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DeleteUsersFailed &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
@@ -156,15 +172,19 @@ class DeleteUsersFailed implements DeleteUserState {
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res> implements $DeleteUserStateCopyWith<$Res> {
-  factory $ErrorCopyWith(DeleteUsersFailed value, $Res Function(DeleteUsersFailed) _then) = _$ErrorCopyWithImpl;
+abstract mixin class $DeleteUsersFailedCopyWith<$Res>
+    implements $DeleteUserStateCopyWith<$Res> {
+  factory $DeleteUsersFailedCopyWith(
+          DeleteUsersFailed value, $Res Function(DeleteUsersFailed) _then) =
+      _$DeleteUsersFailedCopyWithImpl;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
-  _$ErrorCopyWithImpl(this._self, this._then);
+class _$DeleteUsersFailedCopyWithImpl<$Res>
+    implements $DeleteUsersFailedCopyWith<$Res> {
+  _$DeleteUsersFailedCopyWithImpl(this._self, this._then);
 
   final DeleteUsersFailed _self;
   final $Res Function(DeleteUsersFailed) _then;

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sites_management/features/auth/domain/usecases/logout_use_use_case.dart';
 
 import '../../../../../core/utils/services/service_locator.dart';
 import '../../../domain/entities/user_entity.dart';
@@ -17,8 +18,10 @@ class LoginCubit extends Cubit<LoginState> {
   LoginUserUseCase loginUserUseCase;
   RetreiveAccessTokenUseCase retreiveAccessTokenUseCase;
   RetreiveUserUseCase retreiveUserUseCase;
+  LogoutUserUseCase logoutUserUseCase;
   LoginCubit()
       : loginUserUseCase = getIt(),
+        logoutUserUseCase = getIt(),
         retreiveAccessTokenUseCase = getIt(),
         retreiveUserUseCase = getIt(),
         super(const LoginState.inital()) {
@@ -72,6 +75,15 @@ class LoginCubit extends Cubit<LoginState> {
         log("user: $user");
         emit(LoginState.success(user: user));
       },
+    );
+  }
+
+  logout() async {
+    emit(const LoginState.loading());
+    final result = await logoutUserUseCase.call();
+    result.fold(
+      (failure) => emit(LoginState.failure(errorMessage: failure.errMessage)),
+      (data) => emit(LoginState.logout(message: data.message ?? "")),
     );
   }
 
