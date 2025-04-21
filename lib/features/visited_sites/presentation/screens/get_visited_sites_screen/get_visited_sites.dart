@@ -127,7 +127,7 @@ class _SitesListPageState extends State<SitesListPage> with SingleTickerProvider
             switch (state) {
               case LoginSuccess():
                 UserRole role = UserRole.roleFromString(state.user.role);
-                if (role == UserRole.manager || role == UserRole.manager) {
+                if (role == UserRole.manager || role == UserRole.employee) {
                   return const CustomFlotingActionButton();
                 }
               case _:

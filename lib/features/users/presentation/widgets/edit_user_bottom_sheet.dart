@@ -10,7 +10,7 @@ import 'edit_user_button.dart';
 import 'edit_user_label.dart';
 import 'edit_user_role.dart';
 import 'edit_username_field.dart';
-import 'users_screen.dart';
+import 'edit_password_field.dart';
 
 class EditUserBottomSheet extends StatefulWidget {
   final UserEntity user;

@@ -45,7 +45,7 @@ class VisitedSiteDetailsCubit extends Cubit<VisitedSiteDetailsState> {
   GetAdditionalVisitedSiteImagesUseCase getAdditionalVisitedSiteImagesUseCase;
   GetSectionVisitedSiteImagesUseCase getSectionVisitedSiteImagesUseCase;
 
-  late final Command3<MessageEntity, String, String, String> editCommand;
+  late final Command3<MessageEntity, String, String?, String?> editCommand;
   late final Command0<MessageEntity> postCommand;
   late final Command1<ShowSiteDetailsEntity, String> showDetailsCommand;
 
@@ -73,7 +73,7 @@ class VisitedSiteDetailsCubit extends Cubit<VisitedSiteDetailsState> {
   }
 
   void initCommands() {
-    editCommand = Command3<MessageEntity, String, String, String>((a, b, c) => editTrigger(generator1Id: a, generator2Id: b, siteId: c));
+    editCommand = Command3<MessageEntity, String, String?, String?>((a, b, c) => editTrigger(siteId: a, generator1Id: b, generator2Id: c));
     postCommand = Command0<MessageEntity>(postVisitedSiteTrigger);
     showDetailsCommand = Command1<ShowSiteDetailsEntity, String>((a) => showDetailsTrigger(siteId: a));
     getOriginalImagesCommand = Command2<GetVisitedSiteImagesEntity, String, VisitedSiteAdditionalImagesType>((a, b) => getGeneralImagesTrigger(id: a, type: b));
@@ -617,7 +617,7 @@ class VisitedSiteDetailsCubit extends Cubit<VisitedSiteDetailsState> {
       ...bandsConverter(
         [
           {
-            RequestKeys.bandType: "gsm 900",
+            RequestKeys.bandType: "GSM 900",
             RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.rbs1Type]?.text,
             RequestKeys.du1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.du1Type]?.text,
             RequestKeys.ru1Type: gsmControllers[MapKeys.gsm900]?[MapKeys.ru1Type]?.text,
@@ -627,7 +627,7 @@ class VisitedSiteDetailsCubit extends Cubit<VisitedSiteDetailsState> {
             RequestKeys.remarks: gsmControllers[MapKeys.gsm900]?[MapKeys.remarks]?.text,
           },
           {
-            RequestKeys.bandType: "gsm 1800",
+            RequestKeys.bandType: "GSM 1800",
             RequestKeys.rbs1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.rbs1Type]?.text,
             RequestKeys.du1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.du1Type]?.text,
             RequestKeys.ru1Type: gsmControllers[MapKeys.gsm1800]?[MapKeys.ru1Type]?.text,
@@ -784,8 +784,9 @@ class VisitedSiteDetailsCubit extends Cubit<VisitedSiteDetailsState> {
     return response;
   }
 
-  Future<Either<Failure, MessageEntity>> editTrigger({required String siteId, required String generator1Id, required String generator2Id}) async {
+  Future<Either<Failure, MessageEntity>> editTrigger({required String siteId, required String? generator1Id, required String? generator2Id}) async {
     final body = await createRequestBody(generator1Id: generator1Id, generator2Id: generator2Id);
+    log(body.toString());
     final response = await editVisitedSiteUseCase.call(body: body, id: siteId);
     return response;
   }

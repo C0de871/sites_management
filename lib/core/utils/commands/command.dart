@@ -101,11 +101,11 @@ class Command2<T, A, B> extends Command<T> {
 
 // Command3 that takes three arguments
 class Command3<T, A, B, C> extends Command<T> {
-  final Future<Either<Failure, T>> Function(A, B, C) _action;
+  final Future<Either<Failure, T>> Function(A, B?, C?) _action;
 
   Command3(this._action);
 
-  Future<void> execute(A argumentA, B argumentB, C argumentC) async {
+  Future<void> execute(A argumentA, B? argumentB, C? argumentC) async {
     return await _execute(() => _action(argumentA, argumentB, argumentC));
   }
 }

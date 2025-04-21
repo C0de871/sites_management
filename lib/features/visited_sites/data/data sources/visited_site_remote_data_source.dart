@@ -56,6 +56,9 @@ class VisitedSiteRemoteDataSource {
     final response = await api.put(
       "${EndPoints.editSite}/$id",
       data: body,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     );
     return MessageModel.fromJson(Constant.massageMap("edit site successfuly"));
   }

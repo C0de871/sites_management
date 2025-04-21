@@ -89,6 +89,7 @@ class SolarAndWindSection extends StatelessWidget {
             icon: Icons.notes,
             controller: visitFormCubit.solarAndWindRemarksController,
           ),
+          if(visitFormCubit.visitedSiteId==null)
           CustomPhotoPicker(images: visitFormCubit.solarAndWindBatteriesImages, title: "Solar and Wind Batteries images:"),
         ],
       ),

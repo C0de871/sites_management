@@ -95,6 +95,18 @@ class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
     );
   }
 
+  Future<void> refreshSites() async {
+    final response = await _getVisitedSitesUseCase.call();
+    response.fold(
+      (error) {
+        emit(GetVisitedSitesError(error.errMessage));
+      },
+      (data) {
+        emit(GetVisitedSiteSuccess(sites: data, filteredSites: data));
+      },
+    );
+  }
+
   void toggleSearchMode() {
     if (state is GetVisitedSiteSuccess) {
       final currentState = state as GetVisitedSiteSuccess;
@@ -158,7 +170,7 @@ class GetVisitedSitesCubit extends Cubit<GetVisitedSitesState> {
     final DateTime now = DateTime.now();
     final DateFormat formatter = DateFormat('yyyy-MM-dd_HH-mm-ss'); // Safe format
     final String formattedDate = formatter.format(now);
-    final response = await _exportVisitedSitesUseCase.call(body: body, fileName:formattedDate);
+    final response = await _exportVisitedSitesUseCase.call(body: body, fileName: formattedDate);
     return response;
   }
 

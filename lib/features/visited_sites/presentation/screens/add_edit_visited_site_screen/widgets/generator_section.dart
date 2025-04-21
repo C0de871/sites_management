@@ -34,6 +34,7 @@ class GeneratorSection extends StatelessWidget {
             controller: visitFormCubit.generatorRemarksController,
           ),
           const SizedBox(height: 16),
+          if(visitFormCubit.visitedSiteId==null)
           CustomPhotoPicker(images: visitFormCubit.generatorImages, title: "Generator images:"),
         ],
       ),

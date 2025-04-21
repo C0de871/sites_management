@@ -1,0 +1,6 @@
+{
+  "tcu_informations": { "tcu": 1, " remarks": "edit" },
+  "tcu_informations[tcu_types][0]": "3G",
+  "tcu_informations[tcu_types][0]": "LTE",
+  "tcu_informations[tcu_types][0]": "2G"
+}

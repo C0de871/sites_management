@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sites_management/core/Routes/app_routes.dart';
 import 'package:sites_management/core/shared/enums/form_type.dart';
+import 'package:sites_management/core/shared/enums/user_role.dart';
 import 'package:sites_management/core/utils/commands/command.dart';
+import 'package:sites_management/features/auth/presentation/login_screen/cubits/login_cubit.dart';
 
 import '../../../../../core/shared/entity/message_entity.dart';
 import '../../../domain/entities/show_site_details/show_site_details_entity.dart';
@@ -197,13 +199,14 @@ class FormHubScreen extends StatelessWidget {
                               isValid: cubit.isLvdpInfoValid,
                               onTap: () => _navigateToFormScreen(context, FormType.lvdpInfo),
                             ),
-                            _buildFormCard(
-                              context: context,
-                              title: 'Additional Photos',
-                              icon: Icons.photo_library,
-                              isValid: cubit.isAdditionalPhotoInfoValid,
-                              onTap: () => _navigateToFormScreen(context, FormType.additionalPhotoInfo),
-                            ),
+                            if (cubit.visitedSiteId == null)
+                              _buildFormCard(
+                                context: context,
+                                title: 'Additional Photos',
+                                icon: Icons.photo_library,
+                                isValid: cubit.isAdditionalPhotoInfoValid,
+                                onTap: () => _navigateToFormScreen(context, FormType.additionalPhotoInfo),
+                              ),
                           ],
                         ),
                       ),
@@ -221,40 +224,53 @@ class FormHubScreen extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: BlocBuilder<Command<ShowSiteDetailsEntity>, CommandState<ShowSiteDetailsEntity>>(
-        bloc: cubit.showDetailsCommand,
-        builder: (context, state) {
-          if (state is CommandSuccess || state is CommandInitial) {
-            return BlocBuilder<Command<MessageEntity>, CommandState<MessageEntity>>(
-              bloc: cubit.postCommand,
-              builder: (context, postState) {
-                return BlocBuilder<Command<MessageEntity>, CommandState<MessageEntity>>(
-                  bloc: cubit.editCommand,
-                  builder: (context, editState) {
-                    return FloatingActionButton.extended(
-                      onPressed: isLoading(postState, editState)
-                          ? null
-                          : () {
-                              // Handle submission of all forms
-                              _handleSubmitAllForms(context);
+      floatingActionButton: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, userState) {
+          switch (userState) {
+            case LoginSuccess():
+              UserRole role = UserRole.roleFromString(userState.user.role);
+              if (role == UserRole.sites_admin || role == UserRole.manager) {
+                return BlocBuilder<Command<ShowSiteDetailsEntity>, CommandState<ShowSiteDetailsEntity>>(
+                  bloc: cubit.showDetailsCommand,
+                  builder: (context, state) {
+                    if (state is CommandSuccess || state is CommandInitial) {
+                      return BlocBuilder<Command<MessageEntity>, CommandState<MessageEntity>>(
+                        bloc: cubit.postCommand,
+                        builder: (context, postState) {
+                          return BlocBuilder<Command<MessageEntity>, CommandState<MessageEntity>>(
+                            bloc: cubit.editCommand,
+                            builder: (context, editState) {
+                              return FloatingActionButton.extended(
+                                onPressed: isLoading(postState, editState)
+                                    ? null
+                                    : () {
+                                        // Handle submission of all forms
+                                        _handleSubmitAllForms(context);
+                                      },
+                                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                                label: isLoading(postState, editState)
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : Text(cubit.visitedSiteId != null ? "save" : 'Submit All'),
+                                icon: const Icon(Icons.send),
+                              );
                             },
-                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                      label: isLoading(postState, editState)
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : Text(cubit.visitedSiteId != null ? "save" : 'Submit All'),
-                      icon: const Icon(Icons.send),
-                    );
+                          );
+                        },
+                      );
+                    }
+                    return const SizedBox.shrink();
                   },
                 );
-              },
-            );
+              }
+            case _:
+              return const SizedBox.shrink();
           }
           return const SizedBox.shrink();
         },
@@ -394,8 +410,14 @@ class FormHubScreen extends StatelessWidget {
 
     if (cubit.formCompletionPercentage == 1.0) {
       if (state case CommandSuccess<ShowSiteDetailsEntity>(data: var data) when cubit.visitedSiteId != null) {
-        log("${data?.generatorInformations![0].id}");
-        cubit.editCommand.execute(data!.generatorInformations![0].id.toString(), data.generatorInformations![1].id.toString(), cubit.visitedSiteId!);
+        // log("${data?.generatorInformations?[0].id}");
+        if (data!.generatorInformations?.length == 1) {
+          cubit.editCommand.execute(cubit.visitedSiteId!, data.generatorInformations?[0].id.toString(), null);
+        } else if (data.generatorInformations?.isEmpty ?? true) {
+          cubit.editCommand.execute(cubit.visitedSiteId!, null, null);
+        } else {
+          cubit.editCommand.execute(cubit.visitedSiteId!, data.generatorInformations?[0].id.toString(), data.generatorInformations?[1].id.toString());
+        }
       } else {
         cubit.postCommand.execute();
       }

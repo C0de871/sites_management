@@ -25,27 +25,30 @@ class SiteList extends StatelessWidget {
       builder: (context, state) {
         GetVisitedSiteSuccess data = state as GetVisitedSiteSuccess;
         log(data.filteredSites.toString());
-        return ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: data.filteredSites.length,
-          itemBuilder: (context, index) {
-            final site = data.filteredSites[index];
-            final isSelected = data.selectedSites.contains(site);
+        return RefreshIndicator(
+          onRefresh: cubit.refreshSites,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: data.filteredSites.length,
+            itemBuilder: (context, index) {
+              final site = data.filteredSites[index];
+              final isSelected = data.selectedSites.contains(site);
 
-            return SiteCard(
-              isSelected: isSelected,
-              site: site,
-              isSelectionMode: data.isSelectionMode,
-              onTap: data.isSelectionMode ? () => cubit.toggleSiteSelection(site) : () => _navigateToSiteDetails(site, context),
-              onLongPress: () {
-                if (!data.isSelectionMode) {
-                  cubit.toggleSelectionMode();
-                  cubit.toggleSiteSelection(site);
-                }
-              },
-              onCheckboxChanged: (value) => cubit.toggleSiteSelection(site),
-            );
-          },
+              return SiteCard(
+                isSelected: isSelected,
+                site: site,
+                isSelectionMode: data.isSelectionMode,
+                onTap: data.isSelectionMode ? () => cubit.toggleSiteSelection(site) : () => _navigateToSiteDetails(site, context),
+                onLongPress: () {
+                  if (!data.isSelectionMode) {
+                    cubit.toggleSelectionMode();
+                    cubit.toggleSiteSelection(site);
+                  }
+                },
+                onCheckboxChanged: (value) => cubit.toggleSiteSelection(site),
+              );
+            },
+          ),
         );
       },
     );

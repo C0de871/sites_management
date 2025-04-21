@@ -44,8 +44,7 @@ class GetUsersCubit extends Cubit<GetUsersState> {
     });
   }
 
-  Future<void> loadUsers() async {
-    emit(const GetUsersState.loading());
+  Future<void> _loadUsersAbstract() async {
     final users = await getUsersUseCase.call();
     emit(
       users.fold(
@@ -55,9 +54,18 @@ class GetUsersCubit extends Cubit<GetUsersState> {
     );
   }
 
+  Future<void> loadUsers() async {
+    emit(const GetUsersState.loading());
+    await _loadUsersAbstract();
+  }
+
   @override
   Future<void> close() {
     _usersSubscription!.cancel();
     return super.close();
+  }
+
+  Future<void> refreshUsers() async {
+    await _loadUsersAbstract();
   }
 }

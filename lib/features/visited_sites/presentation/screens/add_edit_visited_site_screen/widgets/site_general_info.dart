@@ -232,6 +232,7 @@ class SiteGeneralInfo extends StatelessWidget {
             icon: Icons.place,
             controller: visitFormCubit.cityController,
           ),
+          if(visitFormCubit.visitedSiteId==null)
           CustomPhotoPicker(
             images: visitFormCubit.generalSitePhotos,
             title: "General Site Photos",

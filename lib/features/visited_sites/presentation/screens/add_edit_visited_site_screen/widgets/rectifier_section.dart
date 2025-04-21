@@ -83,6 +83,7 @@ class RectifierSection extends StatelessWidget {
             icon: Icons.work_outline,
             controller: visitFormCubit.batteriesCabinetTypeController,
           ),
+          if(visitFormCubit.visitedSiteId==null)
           CustomPhotoPicker(
             images: visitFormCubit.rectifierImages,
             title: "Rectifier images:",
@@ -115,6 +116,7 @@ class RectifierSection extends StatelessWidget {
             icon: Icons.notes,
             controller: visitFormCubit.rectifierBatteriesRemarksController,
           ),
+          if(visitFormCubit.visitedSiteId==null)
           CustomPhotoPicker(
             images: visitFormCubit.rectifierBatteriesImages,
             title: "Rectifier Batteries images:",
