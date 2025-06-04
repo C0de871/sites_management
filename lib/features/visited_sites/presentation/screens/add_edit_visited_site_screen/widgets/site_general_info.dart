@@ -5,7 +5,7 @@ import '../../../../../../core/helper/extensions.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
 import '../../../../../../core/utils/constants/app_numbers.dart';
 import 'custom_photo_picker.dart';
-import 'custom_text_field.dart';
+import '../../../../../../core/shared/widgets/custom_text_field.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../../../../core/Routes/app_routes.dart';

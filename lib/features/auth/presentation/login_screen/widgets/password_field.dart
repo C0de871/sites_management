@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sites_management/features/auth/presentation/login_screen/cubits/login_cubit.dart';
-import 'package:sites_management/features/visited_sites/presentation/screens/add_edit_visited_site_screen/widgets/custom_text_field.dart';
+import 'package:sites_management/core/shared/widgets/custom_text_field.dart';
 
 class PasswordField extends StatelessWidget {
   const PasswordField({super.key});

@@ -105,12 +105,12 @@ void setupServicesLocator() {
   getIt.registerLazySingleton<LoginUserUseCase>(() => LoginUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<RetreiveUserUseCase>(() => RetreiveUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<RetreiveAccessTokenUseCase>(() => RetreiveAccessTokenUseCase(repository: getIt()));
+  getIt.registerLazySingleton<LogoutUserUseCase>(()=> LogoutUserUseCase(repository: getIt()));
 
   getIt.registerLazySingleton<GetUsersUseCase>(() => GetUsersUseCase(repository: getIt()));
   getIt.registerLazySingleton<AddUserUseCase>(() => AddUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<EditUserUseCase>(() => EditUserUseCase(repository: getIt()));
   getIt.registerLazySingleton<DeleteUserUseCase>(() => DeleteUserUseCase(repository: getIt()));
-  getIt.registerLazySingleton<LogoutUserUseCase>(()=> LogoutUserUseCase(repository: getIt()));
 
   //! Interceptors
   getIt.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(retrieveAccessTokenUseCase: getIt()));

@@ -9,7 +9,7 @@ import '../add_visited_site.dart';
 import '../cubit/visited_site_details_cubit.dart';
 import 'custom_drop_down.dart';
 import 'custom_switch_tile.dart';
-import 'custom_text_field.dart';
+import '../../../../../../core/shared/widgets/custom_text_field.dart';
 
 class RectifierSection extends StatelessWidget {
   const RectifierSection({super.key});

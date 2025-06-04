@@ -7,7 +7,7 @@ import '../../../../../../core/shared/widgets/form_container.dart';
 import '../add_visited_site.dart';
 import '../cubit/visited_site_details_cubit.dart';
 import 'custom_check_box_list.dart';
-import 'custom_text_field.dart';
+import '../../../../../../core/shared/widgets/custom_text_field.dart';
 
 class TcuSection extends StatelessWidget {
   const TcuSection({super.key});

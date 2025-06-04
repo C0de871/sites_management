@@ -250,7 +250,7 @@ class AppRouter with CubitProviderMixin {
         return MaterialPageRoute(
           settings: settings,
           builder: (_) => const SpalshScreen(),
-    );
+        );
 
       case AppRoutes.login:
         return MaterialPageRoute(

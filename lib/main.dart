@@ -8,4 +8,5 @@ void main() async {
   // await FireBaseService.initializeApp();
   // await FireBaseService().initNotifications();
   runApp(const MyApp());
+  
 }

@@ -5,7 +5,7 @@ import '../add_visited_site.dart';
 import '../../../../../../core/Routes/app_routes.dart';
 import '../../../../../../core/shared/widgets/form_container.dart';
 import '../cubit/visited_site_details_cubit.dart';
-import 'custom_text_field.dart';
+import '../../../../../../core/shared/widgets/custom_text_field.dart';
 
 class AmpereSection extends StatelessWidget {
   const AmpereSection({super.key});
